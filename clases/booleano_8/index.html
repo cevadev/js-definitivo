@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Javascript Boolean</title>
+</head>
+<body>
+    <script>
+        let verdad = true;
+        let falso = false;
+
+        //valores truthy or falsy
+        function testTruthyFalsy(val)
+        {
+            return val ? console.log('tiende a true') : console.log('tiende a false')
+        }
+
+        console.log(testTruthyFalsy(0)); //tiende a falso
+        console.log(testTruthyFalsy(-4)); //tiende a true
+        console.log(testTruthyFalsy("")); //tiende a falso
+        console.log(testTruthyFalsy(' ')); //tiende a true
+        console.log(testTruthyFalsy({})); //tiende a true
+        console.log(testTruthyFalsy([])); //tiende a true
+        console.log(testTruthyFalsy(5.30)); //tiende a true
+        console.log(testTruthyFalsy(null)); //tiende a false
+        console.log(testTruthyFalsy(undefined)); //tiende a false
+    </script>
+</body>
+</html>

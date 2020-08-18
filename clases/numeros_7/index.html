@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Javascript - Numbers</title>
+</head>
+<body>
+    <script>
+        let a = 5;
+        let b = new Number(6);
+        let c = 7.19;
+        let d = "5.32";
+        console.log(c.toFixed(1)); //7.2
+        console.log(parseInt(c)); // 7 -> retorna parte entera
+
+        //casting
+        console.log(parseInt(d) + c); //solo suma la parte entera de d pero no el decima
+        let valor = parseFloat(d) + c; //suma parte entera y decimal.
+        console.log(valor.toFixed(2));
+    </script>
+</body>
+</html>
