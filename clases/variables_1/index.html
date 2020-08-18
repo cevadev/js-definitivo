@@ -9,7 +9,33 @@
     <h1>Fundamentos de JavaScript</h1>
 
     <script>
-        
+        //Declaracion de variable
+        var hello = "Hello world";
+        console.log(hello);
+        let hola = "Hola mundo"; //let define variable de bloque, no aparece dentro del objeto window
+        console.log(hola);
+        console.log(window);
+
+        //ambito de bloque
+        console.log('*********** CON VAR ************');
+        var musica= 'rock';
+        console.log("Variable musica antes del bloque: ", musica); // rock
+        //esto es un bloque
+        {
+            var musica = 'pop';
+            console.log("Variable musica dentro del bloque: ", musica); // pop
+        }
+        console.log("Variable musica despues del bloque: ", musica); // pop
+
+        console.log('*********** CON LET ************');
+        let musica2 = 'rock';
+        console.log("Variable musica antes del bloque: ", musica2); //ROCK
+        //esto es un bloque
+        {
+            let musica2 = 'pop';
+            console.log("Variable musica dentro del bloque: ", musica2); //POP
+        }
+        console.log("Variable musica despues del bloque: ", musica2); //ROCK
     </script>
 </body>
 </html>
