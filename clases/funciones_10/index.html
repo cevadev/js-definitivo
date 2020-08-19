@@ -7,7 +7,44 @@
 </head>
 <body>
     <script>
+        //Funcion declarada
+        function myFunction(){
+            console.log('Uno');
+            console.log('Dos');
+            console.log('Tres');
+        }
+
+        //invocamos la funcion
+        myFunction();
+
+        function saludo(){
+            return 'Hello world';
+        }
+        const hi = saludo();
+        console.log(hi);
+
+        //funcion con parametros con valores por defecto
+        function saludar(nombre = 'NA', apellido = 'NA'){
+            console.log(`Hola ${nombre} ${apellido}`);
+        }
+        saludar();
+        saludar('Carlos', 'V.');
+
+        //orden de invocacion de las funciones
+        function funcionDeclarada(){
+            console.log('Esto es una funcion declarada que puede invocarse en cualquier parte de nuestro codigo'+
+            'incluso antes de que la funcion sea declarada');
+        }
+        //invocamos las funcion declarada
+        funcionDeclarada();
         
+        //funcion expresada / funcion anonima
+        const funcionExpresada = function(){
+            console.log('Esto es una funcion expresada');
+        }
+
+        //invocamos la funcion expresada
+        funcionExpresada();
     </script>
 </body>
 </html>
