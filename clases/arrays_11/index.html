@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Javascript - Arrays</title>
+</head>
+<body>
+    <script>
+        const a = [];
+        const b = [1, true, 'Hi', ['A', 'B', 'C']];
+        //Accediendo a elementos
+        console.log(b[0]); //print -> 1
+        console.log(b[3][1]); // -> print B
+
+        //2da forma de creacion de un Array
+        const c = Array.of('X', 'Y', 'Z', 9, 8, 7);
+        console.log(c);
+
+        //3era forma. inicializamos un arreglo y le asignamos a sus elementos un valor
+        const d = Array(10).fill(false);
+        console.log(d);
+
+
+        //metodos de los arrays
+        const colores = ['Rojo', 'Verde', 'Blue'];
+        //add element a la ultima posicion
+        colores.push('Negro')
+        console.log(colores);
+
+        //quitamos un elemento enla ultima posicion
+        colores.pop();
+        console.log(colores);
+
+        //metodo que nos permite invocar una funcion sobre cada elemento que posee el array
+        colores.forEach(function(item, indice){
+            console.log(`<li id="${indice}">${item}</li>`);
+        });
+    </script>
+</body>
+</html>
