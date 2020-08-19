@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Javascript - Objetos</title>
+</head>
+<body>
+    <script>
+        //declaracion de objetos
+        const b = {}
+        console.log(b);
+
+        //2 forma, pero antigua
+        const c = new Object();
+        console.log(c);
+
+        const persona1 = {
+            nombre: 'Carlos',
+            apellido: 'Villa',
+            edad: 37,
+            pasatiempos: ['leer', 'cocinar'],
+            soltero: true,
+            //tipo de dato object
+            contacto: {
+                email: 'barcvilla@gmail.com',
+                twitter: '@harpazos'
+            },
+            //tipo de dato function
+            saludar: function(){
+                console.log(`Hola amigo, me llamo ${this.nombre} ${this.apellido}`);
+            }
+        };
+
+        console.log(persona1);
+
+        //accediendo a propiedades del objeto y al propedad tipo array y objeto
+        console.log(`${persona1.nombre} ${persona1.apellido}, Pasatiempo: ${persona1.pasatiempos[0]}, Contacto: ${persona1.contacto.email}`);
+
+        //invocamos a la funcion saludar del objeto
+        persona1.saludar();
+
+        //listamos las llaves del objeto persona1
+        console.log(Object.keys(persona1));
+
+        //listamos los valores del objeto
+        console.log(Object.values(persona1));
+        //preguntamos si elobjeto tiene una determinada propiedad
+        console.log(persona1.hasOwnProperty('apellido'));
+        console.log(persona1.hasOwnProperty('nacimiento'));
+
+    </script>
+</body>
+</html>
