@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Javascript - Objetos Literales</title>
+</head>
+<body>
+    <script>
+        let nombre = 'Chato';
+        let edad = 7;
+        const perro = {
+            nombre: nombre,
+            edad: edad,
+            ladrar: function(){
+                console.log('guauu, guauu');
+            }
+        };
+
+        //creacion de un objeto literal
+        const dog = {
+            nombre,
+            edad,
+            raza: 'Callejero',
+            ladrar(){
+                console.log('guauu, guauu, guau');
+            }
+        }
+
+        console.log(dog); 
+        dog.ladrar();
+    </script>
+</body>
+</html>

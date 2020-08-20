@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const numeros = [1,2,3];
+        //sin dstructuracion
+        let uno = numeros[0];
+        let dos = numeros[1];
+        let tres = numeros[2];
+
+        //con destrcuturacion -< en cada una de las posiciones almacenamos cada elemento del array
+        const [ one, two, three ] = numeros;
+        console.log(`${one} ${two} ${three}`);
+
+        let persona = {
+            nombre: 'Carlos',
+            apellido: 'Villanueva',
+            edad: 38,
+        }
+
+        let { nombre, apellido, edad } = persona;
+        console.log(`${nombre}, ${apellido}, ${edad}`);
+    </script>
+</body> 
+</html>
