@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Javascript - Manejo de Errores</title>
+</head>
+<body>
+    <script>
+        try
+        {
+            console.log('en el try se coloca el codigo a ejecutar');
+            noExiste;
+            console.log('Segundo mensaje en el try');
+        } catch (error)
+        {
+            console.log('catch captura cualquier error surgido en el try');
+            console.log(error)
+        }
+        finally
+        {
+            console.log('El bloque finally se ejecutara siempre al final');
+        }
+
+        //Personalizando un mensaje de error
+        try {
+            let numero = A;
+            //evaluamos que no sea un numero. isNaN -> si no es un numero retorna true, de lo contario false
+            if(isNaN(numero))
+            {
+                //no es un numero. Lanzamos un error
+                throw new Error("El caracter introducido no es un número");
+            }
+            console.log(numero * numero);
+        } catch (error) {
+            console.log(`Se produjo el siguiente error: ${error}`);
+        }
+    </script>
+</body>
+</html>

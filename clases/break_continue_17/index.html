@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Javascript -  Break & Contine</title>
+</head>
+<body>
+    <script>
+        const numeros = [1,2,3,4,5,6,7,8,9,0];
+        console.log('=========== recorrido con break =========');
+        for(let i = 0; i < numeros.length; i++)
+        {
+            //cuando i === 5 salimos del for
+            if(i === 5)
+            {
+                break;
+            }
+            console.log(numeros[i]);
+        }
+
+        console.log('========== Recorrido con continue');
+        for (let i = 0; i < numeros.length; i++) {
+                //cuando i === a la posicion 5 y omitimos esa iteracion y pasamos a la siguiente iteracion
+                if (i === 5) {
+                    continue;
+                }
+                console.log(numeros[i]);
+            }
+    </script>
+</body>
+</html>
