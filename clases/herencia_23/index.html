@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Javascript - Herencia</title>
+</head>
+<body>
+    <script>
+    function Animal(nombre, genero)
+    {
+        this.nombre = nombre,
+        this.genero = genero
+    }
+
+    //definimos los metodos y lo agregamos al prototipo de la funcion constructora
+    Animal.prototype.sonar = function () {
+        console.log('Hago sonidos porque estoy vivo');
+    }
+
+    Animal.prototype.saludar = function () {
+        console.log(`Hola, me llamo ${this.nombre}`);
+    }
+
+    //Herencia Prototipal
+    function Perro(nombre, genero, tamano){
+         //variable super que es igual al prototipo del cual nos basamos para hacer la herencia
+         //el padre de perro es animal
+        this.super = Animal;
+        this.super(nombre, genero)
+        this.tamano = tamano;
+    }
+
+    //aplicamos la herencia. Asignamos al prototipo de Perro que sea una nueva instancia de animal
+    Perro.prototype = new Animal();
+    Perro.prototype.constructor = Perro;
+
+    //sobrescritura de metodos del prototipo padre enel hijo
+    Perro.prototype.sonar = function(){
+        console.log('soy un perro y mi sonido es un ladrido');
+    }
+
+    //creamos un nuevo metodo propio de Perro
+    Perro.prototype.ladrar= function(){
+        console.log('guau guau');
+    }
+
+    //creamos un objeto perro
+    const snoopy = new Perro('Snoopy', 'Macho', 'Grande');
+    snoopy.sonar();
+    snoopy.ladrar();
+
+    console.log(snoopy);
+
+    </script>
+</body>
+</html>
