@@ -7,7 +7,33 @@
 </head>
 <body>
     <script>
-        
+        /*
+        * Esta es una funcion constructora, las propiedades son pasadas como parametros de la funcion y con estos
+        * se podrá construir el objeto.
+        * La funcion constructora solo debe contener los atributos
+        */
+        function Animal(nombre, genero){
+            this.nombre = nombre,
+            this.genero = genero
+        }
+
+        //definimos los metodos y lo agregamos al prototipo de la funcion constructora
+        Animal.prototype.sonar = function () {
+            console.log('Hago sonidos porque estoy vivo');
+        }
+
+        Animal.prototype.saludar = function () {
+            console.log(`Hola, me llamo ${this.nombre}`);
+        }
+
+        //creamos instancias de la funcion constructora Animal
+        const snoopy = new Animal('Snoopy', 'Macho');
+        const lolyBunny = new Animal('Lola Bunny', 'Hembra');
+
+        snoopy.sonar();
+        snoopy.saludar();
+
+        console.log(snoopy);
     </script>
 </body>
 </html>
