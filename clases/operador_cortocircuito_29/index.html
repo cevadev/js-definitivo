@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Javascript - Operador de cortocircuito</title>
+</head>
+<body>
+    <script>
+        //Operador cortocircuito
+        function saludar(nombre){
+            nombre = nombre || "desconocido"; //cortocircuito
+            console.log(`Hola ${nombre}`);
+        }
+
+        saludar('Carlos');
+        saludar();
+
+        //Cortocircuito OR con valores truthy / falsy
+        /*
+        * Cuando el valor de la izquierda en la expresión siempre pueda validar a true, es el valor que se cargará por defecto.
+        */
+        console.log('cadena' || 'valor de la derecha'); //cadena
+
+        console.log(19 || 'valor de la derecha');//19
+
+        console.log(true || 'valor de la derecha');//true
+
+        console.log([] || 'valor de la derecha');//[]
+
+        console.log({} || 'valor de la derecha');//{}
+
+        console.log(-2 || 'valor de la derecha');// -2
+
+        console.log(false || 'valor de la derecha');//valor de la derecha
+
+        console.log(null || 'valor de la derecha');//valor de ...
+
+        console.log(undefined || 'valor de la derecha');//valor de ...
+
+        console.log(NaN || 'valor de la derecha'); //valor de..
+
+        console.log('' || 'valor de la derecha');//valor de...
+
+        console.log(0 || 'valor de la derecha');// 0
+
+        //Cortocircuito AND
+        /*
+        * Cuando el valor de la izquierda en la expresion siempre pueda validar a false, es el valor que se cargará por defecto
+        */
+        console.log(false && 'valor de la derecha');// false
+
+        console.log(null && 'valor de la derecha');// null
+
+        console.log(undefined && 'valor de la derecha');//undefined
+
+        console.log(NaN && 'valor de la derecha');//NaN
+
+        console.log(5 && 'valor de la derecha');//VALOR DE LA...
+
+        console.log(-1 && 'valor de la derecha');//VALOR DE LA...
+
+        console.log([] && 'valor de la derecha');//VALOR DE ...
+
+        console.log({} && 'valor de la derecha');//VALOR DE..
+
+    </script>
+</body>
+</html>
