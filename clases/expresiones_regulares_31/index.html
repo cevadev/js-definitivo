@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Javascript - Expresiones regulares</title>
+</head>
+<body>
+    <script>
+        let cadena = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+        /*
+        * "lorem" -> cadena que se va a buscar
+        * "ig" -> flag i significa que va ignorar entre mayousculas y minusculas. el flag g significa que va a buscar
+        * en toda la cadena las coincidencia, si no colocamos el flag g en la primera coincidencia se detiene la busqueda
+        */
+        let expReg = new RegExp("Lorem", "ig");
+        console.log(expReg.test(cadena)); //retorna un boolean
+        console.log(expReg.exec(cadena)); //retorna un objeto con mayor info
+        
+        //2da forma de expresion regular
+        let expReg2 = /lorem/ig;
+        console.log(expReg2.test(cadena));
+        console.log(expReg2.exec(cadena));
+
+        //buscamos numeros en la cadena
+        let regExp3 = /\d/ig;
+        console.log(regExp3.test(cadena));
+
+        //buscamos numeros del 0-9
+        let regExp4 = /[0-9]/ig;
+        console.log(regExp4.test(cadena));
+    </script>
+</body>
+</html>
