@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Javascript - Date</title>
+</head>
+<body>
+    <script>
+        console.log(Date());
+        let fecha = new Date();
+        //día del mes
+        console.log(`día del mes: ${fecha.getDate()}`);
+
+        //dia de la semana -> 0 dom / 1 lun / 2 mar ...
+        console.log(`día de la semana: ${fecha.getDay()+1}`);
+
+        //mes-> 0 ene / 1 feb / 2 mar ...
+        console.log(`mes: ${fecha.getMonth()+1}`);
+
+        //año
+        console.log(`Año: ${fecha.getFullYear()}`);
+
+        //hora del dia
+        console.log(`La hora: ${fecha.getHours()}`);
+
+        //minuto del dia
+        console.log(`El minuto: ${fecha.getMinutes()}`);
+
+        //segundo del dia
+        console.log(`El segundo: ${fecha.getSeconds()}`);
+
+        //milisegundos
+        console.log(`Milisegundos: ${fecha.getMilliseconds()}`);
+
+        //la fecha completa en toString()
+        console.log(`Fecha: ${fecha.toString()}`);
+
+        //la fecha corta
+        console.log(`Fecha corta: ${fecha.toDateString()}`);
+
+        //Solo la fecha
+        console.log(`Fecha: ${fecha.toLocaleDateString()}`);
+
+        //Solo la hora
+        console.log(`Hora: ${fecha.toLocaleTimeString()}`);
+
+        //Fecha y hora
+        console.log(`Fecha y hora: ${fecha.toLocaleString()}`);
+
+        //now -> el instante en numeros
+        console.log(Date.now());
+
+    </script>
+</body>
+</html>

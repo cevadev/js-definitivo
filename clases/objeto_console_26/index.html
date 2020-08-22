@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Javascript - Objeto Console</title>
+</head>
+<body>
+    <script>
+        console.log(console);
+        console.error('Se produjo un error');
+        console.warn('La BD esta desactualizada');
+
+        let nombre = 'Carlos';
+        let apellido = 'Villanueva';
+        let edad = 38;
+
+        console.log(`Mi nombre es: %s %s tengo %d`, nombre, apellido, edad);
+
+        console.dir(window);
+        console.dir(document);
+
+        console.group('Numeros');
+        console.log('1');
+        console.log('2');
+        console.log('3');
+        console.groupEnd();
+
+        const perro = {
+            nombre: 'Chato',
+            razo: 'Chusca',
+            color: 'negro'
+        };
+        console.table(perro);
+
+        //assert
+        let x = 5;
+        let y = 2;
+        let pruebaXY = 'se espera que x siempre sea menor que y';
+
+        console.assert(x < y, {x,y,pruebaXY});
+    </script>
+</body>
+</html>
