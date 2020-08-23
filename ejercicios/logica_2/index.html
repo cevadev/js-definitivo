@@ -7,7 +7,67 @@
 </head>
 <body>
     <script>
-        
+        //============ Ejercicio 5 ==================//
+        const invertirCadena = (cadena='')=>
+            (!cadena)
+                ? console.warn('Ud no ingresó un texto')
+                : console.info(cadena.split("").reverse().join(''));
+        /* invertirCadena();
+        invertirCadena('Hola mundo'); */
+
+        //=========== Ejercicio 6 ======================//
+        const textoEnCadena = (cadena='', texto='')=>{
+            if(!cadena) return console.warn('No ingresó una cadena');
+            if(!texto) return console.warn('No ingresó un texto a buscar');
+
+            /*
+            * i -> controla ciclo while
+            * contador -> contabiliza las veces que aparece la palabra
+            */
+            let i = 0;
+            let contador = 0;
+            while(i !== -1) //cuando indexOf() no encuentra el texto retorna -1
+            {
+                i = cadena.indexOf(texto, i);//i significa si el texto esta varias veces ¿cuál debe ser devuelto?
+                if(i !== -1)
+                {
+                    i++; //incrementamos i para que pase al siguiente elemento
+                    contador++; //cada vez que se encuentra el texto a busca, aumentamos contador
+                }
+            }
+            return console.info(`La palabra ${texto} se repite ${contador} veces`);
+        }
+        /* textoEnCadena();
+        textoEnCadena('hola a todos');
+        textoEnCadena('', 'hola');
+        textoEnCadena('todos hola amigos', 'hola'); */
+
+        //============== Ejercicio 7 =====================//
+        const palindromo = (palabra='')=>{
+            if(!palabra) return console.warn('No ingresó una palabra');
+
+            palabra = palabra.toLowerCase();
+            //split("") no le pasamos separador para que cada caracter sea una posicion
+            let alReves = palabra.split('').reverse().join(''); //join('') une las letras para formar una cadena    
+
+            return (palabra === alReves) 
+                ? console.info(`La palabra ${palabra} es un palíndromo`) 
+                : console.info(`La palabra ${palabra} no es un palíndromo`);
+        }
+        /* palindromo();
+        palindromo('Carlos');
+        palindromo('Salas'); */
+
+        //============== Ejercicio 8 ============================//
+        const eliminarCaracteres = (texto='', patron='')=>{
+            (!texto)
+                ? console.warn('No ingresó un texto')
+                : (!patron)
+                    ? console.warn('No ingresó un patrón de caracteres')
+                    //expresion regular-> ig -> no distingue entre mayus/minus y que busque en todo el texto(global)
+                    :console.info(texto.replace(new RegExp(patron, "ig"), ""));//que lo reemplace con nada
+        };
+        eliminarCaracteres('xyzAdempiere', 'xyz');
     </script>
 </body>
 </html>
