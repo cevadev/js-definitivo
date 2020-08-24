@@ -67,7 +67,11 @@
                     //expresion regular-> ig -> no distingue entre mayus/minus y que busque en todo el texto(global)
                     :console.info(texto.replace(new RegExp(patron, "ig"), ""));//que lo reemplace con nada
         };
+        eliminarCaracteres();
+        eliminarCaracteres('#school');
+        eliminarCaracteres('', '#');
         eliminarCaracteres('xyzAdempiere', 'xyz');
+        eliminarCaracteres('#Carlos #fernando #mariano #pedro', '#');
     </script>
 </body>
 </html>
