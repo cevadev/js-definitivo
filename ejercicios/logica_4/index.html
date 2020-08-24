@@ -29,11 +29,28 @@
                 ? console.info(`El numero ${numero} no es primo`)
                 : console.info(`El numero ${numero} si es primo`);
         }
-        numeroPrimo();
+        /* numeroPrimo();
         numeroPrimo('5');
         numeroPrimo(-5);
         numeroPrimo(5);
         numeroPrimo(8);
+        numeroPrimo(13); */
+
+        //=================== Ejercicio 13 ===========//
+        const numeroParImpar = (numero = undefined) => {
+            if (numero === undefined) return console.warn(`No ingresó un numero`);
+            if (typeof numero != "number") return console.error(`El valor ${numero} no es un número`);
+
+            return (numero % 2 === 0)
+                ? console.info(`El numero ${numero} es un numero par`)
+                : console.info(`El numero ${numero} no es un numero par`);
+        }
+        /* numeroParImpar();
+        numeroParImpar('8');
+        numeroParImpar(9);
+        numeroParImpar(8); */
+
+        
     </script>
 </body>
 </html>
