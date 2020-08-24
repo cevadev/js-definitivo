@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //=============== Ejercicio 15 =========================//
+        const convertBinaryToDecimal = (numero=undefined, base=undefined)=>{
+            if (numero === undefined) return console.warn(`No ingresó un número a convertir`);
+            if (typeof numero != "number") return console.error(`El valor ${numero} no es un número`);
+            if (base === undefined) return console.warn(`No ingresó una base a convertir`);
+            if (typeof base != "number") return console.error(`El valor ${base} no es un número`);
+
+            //si base === 2 -> convertir de base binaria a base decimal
+            if(base === 2)
+            {
+                return console.info(`${numero} en base ${base} = ${parseInt(numero, base)} en base 10`);
+            }else if(base === 10){
+                return console.info(`${numero} en base ${base} = ${(numero.toString(base))} en base 2`);
+            }
+            else{
+                return console.error('El tipo de base a convertir no es válido');
+            }
+        }
+
+        /* convertBinaryToDecimal();
+        convertBinaryToDecimal('3');
+        convertBinaryToDecimal(100);
+        convertBinaryToDecimal(100, '2');
+        convertBinaryToDecimal(100, 2);
+        convertBinaryToDecimal(4, 10); */
+
+        //=============== Exjercicio 16 =========================//
+        //si no se pasa descuento, significa que no se quiere aplicar descuento, por ello asignamos por defecto 0
+        const aplicarDescuento = (monto=undefined, descuento=0) =>{
+            if (monto === undefined) return console.warn(`No ingresó un monto`);
+            if (typeof monto != "number") return console.error(`El valor ${monto} no es un número`);
+            if (monto === 0) return console.error('El mnoto no puede ser 0');
+            if (Math.sign(monto) === -1) return console.error(`El monto no puede se negativo`);
+            if (typeof descuento != "number") return console.error(`El valor ${descuento} no es un número`);
+            if (descuento === 0) return console.error('El descuento no puede ser 0');
+            if (Math.sign(descuento) === -1) return console.error(`El descuento no puede se negativo`);
+            return console.info(`${monto} - ${descuento}%= ${monto - ((monto - descuento) / 100)}`);
+        }
+        /* aplicarDescuento();
+        aplicarDescuento('5');
+        aplicarDescuento(200, 0);
+        aplicarDescuento(-1000);
+        aplicarDescuento(1000, '20');
+        aplicarDescuento(1000, -10);
+        aplicarDescuento(1000, 0);
+        aplicarDescuento(1000, 20); */
+
+        //======================= Ejercicio 17 =============================//
+        const calcularAnios = (fecha = undefined)=>{
+            if (fecha === undefined) return console.warn(`No ingresó una fecha`);
+            //en el caso que fecha provista no sea una instancia de Date
+            if(!(fecha instanceof Date)) return console.error('El valor ingresado no es una fecha válida');
+            
+            let fechaHoy = new Date().getTime();
+            //obtenemos en milisegundos el numero de años de diferencia entre la fecha actual y la fecha proporcionada
+            let hoyMenosFechaNacimieno = fechaHoy - fecha.getTime(); 
+
+            //convertimos la variable hoyMenosFechaNacimieno que esta enn milisegundos
+            // 1000 milisegundos / 60 = segundos / 60 = minutos / 24 = horas / 365 = dias
+            //JS expresa el tiempo en milisegundos: 1000 ms = 1 seg /  1000 * 60ms = 1 min / 
+            // 1000ms * 60 * 60 = num de horas / 1000ms * 60 * 60 * 24 = numero dias 
+            // 1000ms * 60 * 60 * 24 * 365 = numero de dias desde la fecha 1/1/1970 hasta hoy.
+            // 1000ms * 60 * 60 * 24 * 365 * 10 = numero de decadas
+            // 1000ms * 60 * 60 * 52 = numero de semans
+            let aniosEnMs = 1000 * 60 * 60 * 24 * 365; //obtenemos los milisegundo que transcurren en un año
+
+            //conversion a años humanos: hoyMenosFechaNacimieno / aniosEnMs
+            //aplicamos un redondeo a un numero inmediato
+            let aniosHumanos = Math.floor(hoyMenosFechaNacimieno / aniosEnMs);
+
+            //si el usuario provee un fecha en el futuro, aniosHumanos sera negativo
+            //Math.sign()si retorna -1 el numero provisto es negativo / retorna 1 el numero es positivo / retorna 0 si el numero es 0
+            return (Math.sign(aniosHumanos) === -1)
+                ? console.info(`Faltan ${Math.abs(aniosHumanos)} años para el ${fecha.getFullYear()}`)
+                : (Math.sign(aniosHumanos) === 1)
+                    ? console.info(`Han pasado ${aniosHumanos} años, desde ${fecha.getFullYear()}`)
+                    : console.info('No hay diferencia estamos en el año actual'); //si aniosHumanos === 0
+        }
+
+        calcularAnios();
+        calcularAnios({});
+        calcularAnios(false);
+        calcularAnios(new Date());
+        calcularAnios(new Date(1940, 7,20));
+        calcularAnios(new Date(2084, 8, 10));
+    </script>
+</body>
+</html>
