@@ -36,10 +36,75 @@
                 consonantes: consonantes
             });
         }
-        contarLetras();
+        /* contarLetras();
         contarLetras(3);
         contarLetras('Hola mundo');
-        contarLetras('Ñoño');
+        contarLetras('Ñoño'); */
+
+        //=================== Ejercicio 19 ========================//
+        const validarNombre = (nombre='')=>{
+            if(!nombre) return console.warn("No ingresaste un nombre");
+            if(typeof nombre !== 'string') return console.error(`El valor de ${nombre} ingresada no es una cadena de texto`);
+
+            //La expresion regular debe validar letras y espacios en blanco
+            //^ -> indica que no puede haber nada antes de la expresion
+            //$ -> indica que no puede haber nada despues de el expresion
+            //[] -> agrupamos lo que va a evaluar
+            //+ -> permite evaluar la expresion por cada caracter que tiene la cadena de texto.
+            //\s -> hace que la expresion regular contemple espacios en blanco.
+            //g -> global en toda el nombre
+            let expReg = /^[A-Za-zÑñÁÉÍÓÚáéíóúü\s]+$/g.test(nombre);
+
+            return (expReg)
+                ? console.info(`${nombre} es un nombre válido`)
+                : console.warn(`${nombre} no es un nombre válido`);
+        }
+        /* validarNombre();
+        validarNombre(3);
+        validarNombre('Carlos Eduardo');
+        validarNombre('Sergio Agüero');
+        validarNombre("Juan8"); */
+
+        //============== Ejercicio 20 =============================//
+        const validarEmail = (email='')=>{
+            if(!email) return console.warn("No ingresaste un email");
+            if(typeof email !== 'string') return console.error(`El valor de ${email} ingresada no es una cadena de texto`);
+
+            //validamos email con dominios de 2 a 15 caracteres
+            let expReg = /[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})/i.test(email);
+
+            return (expReg)
+                ? console.info(`${email} es un nombre válido`)
+                : console.warn(`${email} no es un nombre válido`);
+        }
+        /* validarEmail();
+        validarEmail(34);
+        validarEmail('ceva_19@gmail.com');
+        validarEmail('barcvilla@gmail.com'); */
+
+        //============ Ejercicio fusion entre el ejercicio 19 y 20 ===========//
+        const validarPatron = (cadena='', patron=undefined)=>{
+            if(!cadena) return console.warn("No ingresaste un cadena de texto a evaluar");
+            if(typeof cadena !== 'string') return console.error(`El valor de ${cadena} ingresada no es una cadena de texto`);
+            if(patron === undefined) return console.warn("No ingresaste un patron de texto a evaluar");
+            //si lo que pasamos en patron no es una instancia de un objeto RegExp entonces error
+            if(!(patron instanceof RegExp)) return console.error(`El valor de ${patron} ingresada no es una expresion regular`);
+
+            //validamos email con dominios de 2 a 15 caracteres
+            let expReg = patron.test(cadena);
+
+            return (expReg)
+                ? console.info(`${cadena} cumple con el patron ingresado`)
+                : console.warn(`${cadena} no cumple con el patron ingresado`);
+        }
+        validarPatron('Carlos');
+        validarPatron();
+        validarPatron('Carlos Eduardo', /^[A-Za-zÑñÁÉÍÓÚáéíóúü\s]+$/g);
+        validarPatron('Jose', true);
+        //2da forma de pasar una expresion regular
+        validarPatron('barcvilla@gmail', new RegExp('/[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})','i'));
+        validarPatron('barcvilla@gmail.com', new RegExp("[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})", "i"));
+        validarPatron('barcvilla_19@gmail.com', new RegExp("[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})", "i"));
     </script>
 </body>
 </html>
