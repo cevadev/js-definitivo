@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        class Pelicula{
+            //pasamos el objeto des-estructurado
+            constructor({ id, titulo, director, estreno, pais, generos, calificacion}){
+                this.id = id;
+                this.titulo = titulo;
+                this.director = director;
+                this.estreno = estreno;
+                this.pais = pais;
+                this.generos = generos;
+                this.calificacion = calificacion;
+
+                this.validarIMDB(id);
+            }
+
+            //Validaciones: Las propiedades a validar son: titulo, director
+            validarCadena(propiedad, valor){
+                //validamos si el valor de la propiedad está vacio
+                if(!valor) return console.warn(`La propiedad ${propiedad} "${valor}" está vacio`);
+
+                //validamos que el valor sea de tipo string
+                if(typeof valor !== 'string') return console.error(`La propiedad ${propiedad} "${valor}" no es una cadena de texto`);
+
+                //si todo esta correcto retornamos un true;
+                return true;
+            }
+            validarIMDB(id){
+                if(this.validarCadena("IMDB id", id)){
+                    //si pasa la validacion de las cadenas, si no cumple la expresion regular retornamos un error
+                    //^ no debe haber nada antes
+                    //$ no debe haber nada despues
+                    //([a-z]){2} los 2 primeros caracteres que sean validos a-z. Se usan los corchetes para indicar que 
+                    //la expresion se debe agrupar
+                    if(!(/^([a-z]){2}([0-9]){7}$/.test(id))){
+                        return console.error(`IMDB id "${id}" no es válido, debe tener 9 caracteres, los 2 primeros letras minúsculas, los 7 restantes números`);
+                    }
+                }
+            }
+        }
+
+        const peli = new Pelicula({
+            id: 'Hola',
+        });
+    </script>
+</body>
+</html>
