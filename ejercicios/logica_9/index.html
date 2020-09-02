@@ -18,7 +18,24 @@
                 this.generos = generos;
                 this.calificacion = calificacion;
 
+                //llamamos a los metodos para la validacion
                 this.validarIMDB(id);
+                this.validarTitulo(titulo);
+                this.validarDirector(director);
+                this.validarAnioEstreno(estreno);
+                this.validarPais(pais);
+                this.validarGeneros(generos);
+                this.validarCalificacion(calificacion);
+            }
+
+            static get listaGeneros(){
+                return ["Action", "Adult", "Adventure", "Animation", "Biography", "Comedy", "Crime", "Documentary",
+                    "Drama", "Family", "Fantasy", "Film Noir", "Game - Show", "History", "Horror", "Musical", "Music", "Mystery", "News", "Reality - TV",
+                    "Romance", "Sci - Fi", "Short", "Sport", "Talk" - "Show", "Thriller", "War", "Western"];
+            }
+
+            static generosAceptados(){
+                return console.info(`Los géneros aceptados son: ${Pelicula.listaGeneros.join(", ")}`);
             }
 
             //Validaciones: Las propiedades a validar son: titulo, director
@@ -32,6 +49,32 @@
                 //si todo esta correcto retornamos un true;
                 return true;
             }
+
+            validarLongitudCadena(propiedad, valor, longitud){
+                if(valor.length > longitud) return console.error(`La propiedad ${propiedad} "${valor}" supera el numero de 
+                   caracteres permitidos ${longitud}`);
+                
+                return true;
+            }
+
+            validarNumero(propiedad, valor){
+                if(!valor) return console.warn(`La propiedad ${propiedad} "${valor}" está vacio`);
+                if (typeof valor !== 'number') return console.error(`La propiedad ${propiedad} "${valor}" no es un número`);
+                return true;
+            }
+
+            validarArreglo(propiedad, valor){
+                if(!valor) return console.warn(`La propiedad ${propiedad} "${valor}" está vacio`);
+                if(!(valor instanceof Array)) return console.error(`La propiedad ${propiedad} "${valor}" no tiene datos`);
+                if(valor.length === 0) return console.error(`La propiedad ${propiedad} "${valor}" no tiene datos`);
+
+                for (let cadena of valor) {
+                    if(typeof cadena !== "string") return console.error(`El valor "${valor}" ingresado, no es una cadena de texto`);
+                }
+
+                return true;
+            }
+
             validarIMDB(id){
                 if(this.validarCadena("IMDB id", id)){
                     //si pasa la validacion de las cadenas, si no cumple la expresion regular retornamos un error
@@ -44,11 +87,106 @@
                     }
                 }
             }
+
+            validarTitulo(titulo) {
+                if (this.validarCadena("Titulo", titulo)) {
+                    this.validarLongitudCadena("Titulo", titulo, 100);
+                }
+
+            }
+
+            validarDirector(director) {
+                if (this.validarCadena("Director", director)) {
+                    this.validarLongitudCadena("Director", director, 50);
+                }
+            }
+
+            //funcion que valida si se le pasó un numero de 4 digitos
+            validarAnioEstreno(estreno){
+                if(this.validarNumero("Año de estreno", estreno)){
+                    if (!(/^([0-9]){4}$/.test(estreno))){
+                        return console.error(`Año de estreno "${estreno}" no es válido debe ser número de 4 dígitos`);
+                    }
+                }
+            }
+
+            validarPais(pais){
+                this.validarArreglo("País", pais);
+            }
+
+            validarGeneros(generos){
+                if(this.validarArreglo("Géneros", generos)){
+                    //validamos que el o los generos ingresados correspondan a la lista de generos permitidos
+                    for (let genero of generos) {
+                        //console.log(genero, Pelicula.listaGeneros.includes(genero));
+                        //si un genero no esta en la lista de generos permitidos, retornamos error
+                        if(!Pelicula.listaGeneros.includes(genero)){
+                            console.error(`Género(s) incorrecto(s) ${generos.join(", ")}`);
+                            Pelicula.generosAceptados();
+                        }
+                    }
+                }
+            }
+
+            validarCalificacion(calificacion){
+                if(this.validarNumero("Calificación",calificacion)){
+                    return (calificacion < 0 || calificacion > 10)
+                        ? console.error("La calificación tiene que ser en un rango entre 0 y 10")
+                        : this.calificacion = calificacion.toFixed(1); // reducimos 1 decimal la calificacion
+                }
+            }
+
+            fichaTecnica(){
+                console.info(`Ficha técnica:\nTítulo: "${this.titulo}\nDirector:"${this.director}"\nAño:"${this.estreno}"\nPaís:"${this.pais.join("-")}"\nGéneros:"${this.generos.join(", ")}"\nCalificación:"${this.calificacion}"\nIMDB id:"${this.id}"`);
+            }
         }
 
-        const peli = new Pelicula({
-            id: 'Hola',
+        const misPelis = [
+            {
+                id: 'tt0758758',
+                titulo: 'Into the wild',
+                director: 'Sean Peen',
+                estreno: 2007,
+                pais: ['USA'],
+                generos: ["Adventure", "Biography", "Drama"],
+                calificacion: 8.1
+            },
+
+            {
+                id: 'tt0479143',
+                titulo: 'Rocky Balboa',
+                director: 'Sylvester Stallone',
+                estreno: 2007,
+                pais: ['USA'],
+                generos: ["Action", "Drama", "Sport"],
+                calificacion: 7.1
+            },
+
+            {
+                id: 'tt0468569',
+                titulo: 'The Dark Knight',
+                director: 'Christopher Nolan',
+                estreno: 2008,
+                pais: ['USA', 'UK'],
+                generos: ['Action', 'Crime', 'Drama'],
+                calificacion: 9.0
+            }
+        ];
+
+        misPelis.forEach(item => new Pelicula(item).fichaTecnica());
+
+        //Pelicula.generosAceptados();
+        /* const peli = new Pelicula({
+            id: 'tt1234567',
+            titulo: 'The world war Z',
+            director: 'Pepito Perez',
+            estreno: 1999,
+            pais: ['Perú'],
+            generos: ['Drama'],
+            calificacion: 7.789
         });
+
+        peli.fichaTecnica(); */
     </script>
 </body>
 </html>
