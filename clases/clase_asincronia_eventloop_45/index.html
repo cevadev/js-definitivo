@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asincronia - Event loop</title>
+</head>
+<body>
+    <script>
+        //============= ejemplo de codigo sincrono bloqueante ============//
+        /*en este tipo de codigo cada operación se realiza una vez bloqueando el flujo
+          del hilo principal, este hilo principal queda bloqueado hasta que venga una
+          respuesta luego pasa a la siguiente operación y asi sucesivamente hasta ejecutar
+          todo el codigo*/
+        
+        /*funcion anonima autoejecutable*/
+        (()=>{
+
+        })();
+
+        //============= ejemplo de codigo asincrono bloqueante ========//
+        (() => {
+
+        })();
+    </script>
+</body>
+</html>
