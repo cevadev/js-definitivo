@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 47: Promise</title>
+</head>
+<body>
+    <script>
+        function cuadradoPromise(value){
+            //validamos si el valor es invalido lanzamos error ejecutando el metodo reject() de la promise
+            if(typeof value !== "number") return Promise.reject(`Error: el valor ingresado ${value} no es un número`);
+            return new Promise((resolve, reject)=>{
+                setTimeout(()=>{
+                    resolve({
+                        value: value,
+                        result: value * value
+                    });
+                });
+            })
+        }
+
+        cuadradoPromise(0)
+            .then(obj=>{
+                console.info('Inicio de la promesa');
+                console.info(`El valor ${obj.value} -> ${obj.result}`);
+                return cuadradoPromise(1);
+            })
+            .then(obj =>{
+                console.info(`El valor ${obj.value} -> ${obj.result}`);
+                return cuadradoPromise(2);
+            })
+            .then(obj =>{
+                console.info(`El valor ${obj.value} -> ${obj.result}`);
+                return cuadradoPromise(3)
+            })
+             .then(obj => {
+                console.info(`El valor ${obj.value} -> ${obj.result}`);
+                return cuadradoPromise(4);
+            })
+             .then(obj => {
+                console.info(`El valor ${obj.value} -> ${obj.result}`);
+                return cuadradoPromise(5);
+            })
+             .then(obj => {
+                console.info(`El valor ${obj.value} -> ${obj.result}`);
+                console.info('fin de la promesa');
+            })
+            .catch(err =>{
+                console.error(err);
+            });
+    </script>
+</body>
+</html>
