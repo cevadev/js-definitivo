@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Maps</title>
+  </head>
+  <body>
+    <script>
+      let mapa = new Map();
+      mapa.set("nombre", "Carlos");
+      mapa.set("apellido", "Villanueva");
+      mapa.set("edad", 38);
+
+      //reescribimos los datos del map
+      mapa.set("nombre", "Eduardo");
+      mapa.set("apellido", "Villanueva");
+      mapa.set("edad", 28);
+
+      console.info(mapa);
+      console.info(`# elementos: ${mapa.size}`);
+
+      //preguntamos por la existencia una key determinada
+      console.info(`Existe la key nombre: ${mapa.has("nombre")}`);
+      console.info(`Existe la key correo: ${mapa.has("correo")}`);
+
+      //Recuperamos valores de un Map
+      console.info(`Su nombre es: ${mapa.get("nombre")}`);
+
+      //eliminamos una llave del mapa
+      mapa.delete("edad");
+      console.info(mapa);
+
+      //iteramos un mapa
+      for ([key, value] of mapa) {
+        console.info(`Key: ${key} => Value: ${value}`);
+      }
+
+      //Map con distintos tipos de key/value
+      mapa.set(5, "cinco");
+      mapa.set(true, "true");
+      mapa.set({}, {});
+      console.info(mapa);
+
+      //otra forma de declarar un map
+      const session = new Map([
+        ["user", "ceva"],
+        ["password", "rpgile400"],
+        ["database", "ventas"],
+        ["port", "3360"],
+        ["server", "localhost"],
+        ["url", "http://localhost:3360/ventas"],
+      ]);
+
+      for ([key, value] of session) {
+        console.info(`Key: ${key} => Value: ${value}`);
+      }
+
+      //destructuracion de un map
+      const sessionKeys = [...session.keys()];
+      const sessionValues = [...session.values()];
+      console.info(sessionKeys);
+      console.info(sessionValues);
+    </script>
+  </body>
+</html>
