@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        /*
+        * WeakSet y WeakMap: son estructuras de datos que solo pueden almacenar referencias débiles, es decir, 
+        * las llaves deben ser de tipo objeto.
+        * Sobre estos tipos de datos no podemos iterar (foreach, for of, for in) sobre los key y values
+        * No podemo eliminar todos los elementos
+        */
+        let valor1 = {"valor1": 1};
+        let valor2 = {"valor2": 2};
+        let valor3 = {"valor3": 3};
+
+        const weakSet = new WeakSet();//no se le pueden pasar valores en el constructor, solo por medio del metodo add
+        weakSet.add(valor1);
+        weakSet.add(valor2);
+        weakSet.add(valor3);
+
+        //imprimir sus valores
+        console.info(weakSet);
+
+        //preguntar si un weakSet tiene una referencia a un objeto
+        console.info(weakSet.has(valor3));
+
+        let llave1 = {};
+        let llave2 = {};
+        let llave3 = {};
+
+        const weakMap = new WeakMap();
+        weakMap.set(llave1, 1);
+        weakMap.set(llave2, 2);
+        weakMap.set(llave3, 3);
+
+        //obtenemos los valores de las llaves
+        console.info(weakMap.get(llave1));
+        console.info(weakMap.get(llave2));
+
+    </script>
+</body>
+</html>
