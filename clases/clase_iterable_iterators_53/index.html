@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Clase 47: Promise</title>
+    </head>
+    <body>
+        <script>
+            //iterable significa que los elementos pueden ser recorridos de un objeto
+            //iterator es un apuntador o mecanismo que recorre los elementos de un objeto
+            //podriamos utilizar un objeto set y si repetimos valores seran quitados ya set solo acepta valores unicos
+            //const iterable = new Set(1,2,3,3,4,5,6,7,7,8,8,9);
+
+            //podriamos utilizar una cadena de texto como "hola mundo"
+            //const iterable = "Hola mundo";
+
+            //podriamos utilizar un objeto tipo map(key/valye)
+            const iterable = new Map([["nombre", "Juan"], ["edad", 20]]);
+
+            //const iterable = [1,2,3,4,5];
+            //accediendo a al iterator de nuestro objeto iterable
+            const iterator = iterable[Symbol.iterator]();
+            console.info(iterable);
+            console.info(iterator); //Array iterator
+
+            //metodo next del iterator
+            //print -> {value: 1, done: false} done quiere decir que aun no se terminaronde recorrer los elementos
+            //console.info(iterator.next());
+
+            //recorriendo los elementos de un objeto iterable
+            //la variable next recibe el objeto {value, done} que retorna la propiedad next() del iterator
+            let next = iterator.next();
+            while(!next.done){
+                //mientras haya elementos por recorrer imprimimos solos el valor
+                console.info(next.value);
+                //asiganmos a next el siguiente valor del iterator
+                next = iterator.next();
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /**Los generators es una funcion que nos permite trabajar de una forma sencilla con la interface de los iterators
+        en un elemento iterable. Los generator llevan a lado de la palabra function un asterisco
+        Los generators nos permiten volver iterable el codigo de una function
+         */
+        function* iterable(){
+            //el cursor del iterator se detiene en el primer yield y retorna el primer mensaje "hola"
+            yield "hola";
+            //se ejecuta next() del iterator e imprime en consola
+            console.info("Hola consola");
+            //se ejecuta next() y se detienen en el segundo yield y retorna el mensaje "hola 2"
+            yield "hola 2";
+            console.info("seguimos con mas instrucciones de nuestro código");
+            yield "hola 3";
+            yield "hola 4";
+        }
+
+        let iterator = iterable();//automaticamente accedemos al iterator de la funcion por ser un generator
+        //console.info(iterator.next());//se ubica en el primer yield e imprime el mensaje "hola"
+        //console.info(iterator.next());//imprime el log "hola consola", se ubica en el 2do yield y retorna "hola 2"
+
+        //for of -> por cada yield en el iterator recorremos la funcion
+        for(let y of iterator){
+            console.info(y);
+        }
+
+        //recolectamos todos los yield de una function en un arreglo para futuras operaciones
+        //los valores obtenidos por cada ejecucion del iterable son pasados a un array
+        const arreglo = [...iterable()];
+        console.info(arreglo); //imprime: ["hola", "hola 2", "hola 3", "hola 4"]
+
+        //ejemplo 3
+        function cuadrado(value){
+            setTimeout(()=>{
+                console.info(
+                    {
+                        valor: value,
+                        resultado: value * value
+                    }
+                );
+            }, Math.random() * 1000);
+        }
+
+        function* generator(){
+            console.info("Inicia generator");
+            yield cuadrado(0);
+            yield cuadrado(1);
+            yield cuadrado(2);
+            yield cuadrado(3);
+            yield cuadrado(4);
+            yield cuadrado(5);
+            console.info("Termina generator");
+        }
+
+        let gen = generator();
+        for(let y of gen){
+            console.info(y);
+        }
+    </script>
+</body>
+</html>
