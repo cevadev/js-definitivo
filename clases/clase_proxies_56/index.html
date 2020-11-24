@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proxies</title>
+</head>
+<body>
+    <script>
+        /*
+        * Javascript nos permite crear un objeto basado en un objeto inicial del cual se realiza una copia y con el nuevo
+        * objeto creado podremos realizar algunas operaciones como validaciones dentro de la copia o proxy creada
+        * todo proxy tiene un handler u objeto administrador.
+        */
+        const persona = {
+            nombre: "",
+            apellido: "",
+            edad: 0
+        }
+
+        //objeto handler que requiere todo proxy
+        const handlerPersona = {
+            /**
+            * metodo set que debe implementar todo handler en el cual podemos definir una serie de validaciones
+            * recibe los parametros: objt -> objeto como tal / props -> las propiedades a validar / value -> de las props
+            */
+            set(obj, props, values){
+                //validamos las propiedades del objeto. Object.keys() retorna una lista con las llaves o propiedades
+                //indexOf(props) buscalos que las props se encuentren dentro de la definicion de nuestro objeto si el
+                // indexOf(pros) retorna un -1 es porque no se encontro dicha propiedad en la lista de props del obj original
+                if(Object.keys(obj).indexOf(props) === -1){
+                    return console.error(`La propiedad ${props} no existe en el objeto persona`);
+                }
+
+                /*Validamos que el dato introducido en nombre o apellido no contiene unicamente caracteres válidos
+                * si es true quiere decir que se ingreso algun caracter inválido y la funcion retorna error
+                */
+                if((props === "nombre" || props === "apellido") && !(/^[A-Za-zÑñÁÉÍÓÚáéíóúü\s]+$/g.test(values))){
+                    return console.error(`La propiedad ${props} = ${values} solo acepta letras y espacios en blanco`);
+                }
+
+                obj[props] = values;
+            }
+        }
+
+        //creamos nuestro objeto Proxy
+        const pedro = new Proxy(persona, handlerPersona);
+        pedro.nombre = "Pedr8o Alonzo";
+        pedro.apellido = "Ramirez";
+        pedro.edad = 35;
+        /* pedro.twitter = "@pedro.ra"; */ //adicionamos una propiedad al proxy que no esta definido en el objeto persona
+        console.info(pedro); //el objeto proxy pedro mostrara la propiedad twitter
+
+        //tambien se mosntrara la propiedad twitter porque el proxy pedro esta vincula con persona, vemos que proxy no es
+        //una simple copia sino que se vincula con el objeto base o copia
+        console.info(persona); 
+    </script>
+</body>
+</html>
