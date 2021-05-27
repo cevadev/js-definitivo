@@ -7,21 +7,32 @@
 </head>
 <body>
     <script>
-        let contador = 10;
+        let contador = 0;
         while (contador < 10) {
-            console.log('while' + contador);
+            console.log('while ' + contador);
             contador++;
         }
 
         do
         {
-            console.log('do while' + contador);
+            console.log('do while ' + contador);
             contador++
         }
         while(contador < 10);
 
-        //foreach
+        //for simple
+        for(let i = 0; i < 10; i++){
+            console.info('for simple ' + i);
+        }
+        
         let numeros = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
+
+        //for with array
+        for(let i = 0; i < numeros.length; i++){
+            console.info('for with array ' + numeros[i]);
+        }
+
+        //foreach
         numeros.forEach(function(elemento){
             elemento += 2;
             console.log(elemento);
@@ -34,17 +45,18 @@
             edad: 35
         }
 
-        for(let p in persona)
+        //for in nos permite iterar las propiedades de un arreglo
+        for(const p in persona)
         {
             console.log(p); //imprime las propiedades nombre, apellido, edad
         }
 
-        for(let propiedad in persona)
+        for(const propiedad in persona)
         {
             console.log(`Propiedad: ${propiedad}, Valor: ${persona[propiedad]}`)
         }
 
-        //for of -> 
+        //for of -> nos permite recorrer todos los elementos de un objeto iterable en JS
         for (let numero of numeros) {
             numero += 3;
             console.log(numero);
