@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Objeto this</title>
+</head>
+<body>
+    <script>
+        // Dentro de los navegadores el objeto this hace referencia al objeto global window
+
+        // Probando el contexto Global y otro contexto
+
+        // Funcion dentro del Contexto Global
+        this.nombre = "Contexto a nivel Global";
+        function printContext(){
+            console.info(this.nombre); // this representa el contexto global
+        }
+        printContext();
+
+        // Creando un contexto de tipo objeto
+        const locaObj = {
+            nombre: "Contexto a nivel de objeto",
+            printLocalCtx: function(){
+                console.info(this.nombre);
+            }
+        }
+
+        locaObj.printLocalCtx();
+
+        ///
+        const localObj2 = {
+            nombre: "Contexto de LocalObj2",
+            // llamamos a la funcion printContext() que esta declarada dentor del contexto global
+            // el obj this dentro de printContext() llama al contexto de localObj2 por ello imprime Contexto de LocalObj2
+            imprimir: printContext
+        }
+        localObj2.imprimir();
+
+        // 
+        const localObj3 = {
+            nombre: "Contexto de LocalObj3",
+            // las arrow function no manejan su propo scope por los que mantiene el scope del objeto creado en este caso this
+            // representa al objeto global por ello this.nombre no imprime Contexto de LocalObjt3 sino Contexto a nivel global
+            imprimir: ()=>{
+                console.info(this.nombre);
+            }
+        }
+        localObj3.imprimir();
+
+        // ejemplo poo
+        // funcion constructora
+        function Persona(nombre){
+            this.nombre = nombre;
+            return ()=> {
+                console.info(this.nombre);
+            }
+
+
+            // definimos un closure: retornamos una funcion dentro de otra funcion
+            // las funciones en JS crean su propio scope interno
+            // return function(){
+                // internamente esta funcion anonima no posee una propiedad nombre por lo que va al scope global y busca
+                // la propiedad nombre, en el scope global si existe la propiedad nombre y recupera su valor
+                // esto se puede resolver utilizado arrow function ya que este tipo de funciones no crea un scope interno
+                //console.info(this.nombre);
+            //}
+        }
+        const persona = new Persona("Alberto");
+        persona();
+
+    </script>
+</html>

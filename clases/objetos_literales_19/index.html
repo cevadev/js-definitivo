@@ -1,34 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Javascript - Objetos Literales</title>
-</head>
-<body>
+  </head>
+  <body>
     <script>
-        let nombre = 'Chato';
-        let edad = 7;
-        const perro = {
-            nombre: nombre,
-            edad: edad,
-            ladrar: function(){
-                console.log('guauu, guauu');
-            }
-        };
+      let nombre = "Chato";
+      let edad = 7;
+      const perro = {
+        nombre: nombre,
+        edad: edad,
+        ladrar: function () {
+          console.log("guauu, guauu");
+        },
+      };
 
-        //creacion de un objeto literal
-        const dog = {
-            nombre,
-            edad,
-            raza: 'Callejero',
-            ladrar(){
-                console.log('guauu, guauu, guau');
-            }
-        }
+      //creacion de un objeto literal
+      const dog = {
+        // como la propiedad tiene el mismo nombre que la variable y su valor solo declaramos la variable
+        nombre,
+        edad,
+        raza: "Callejero",
+        ladrar() {
+          console.log("guauu, guauu, guau");
+        },
+      };
 
-        console.log(dog); 
-        dog.ladrar();
+      console.log(dog);
+      dog.ladrar();
     </script>
-</body>
+  </body>
 </html>

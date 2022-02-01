@@ -1,36 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Javascript - Parametros Rest / Operador Spread</title>
-</head>
-<body>
+  </head>
+  <body>
     <script>
-        // funcion sumar con 2 variables y 1 tipo rest
-        function sumar(a, b, ...c){
-            let resultado = a + b;
-            //todo lo que viene en c lo tratamos como un array
-            c.forEach(function(item){
-                //hacemos una sumatoria de los parametros rest en c con la variable resultado
-                resultado += item;
-            });
+      // funcion sumar con 2 variables y 1 tipo rest
+      // params tipo rest nos permiten agregar parametros infinitos a una funcion y variable
+      function sumar(a, b, ...c) {
+        let resultado = a + b;
+        //todo lo que viene en c lo tratamos como un array
+        // ejecutamos una funcion por cada elemento que viene en c
+        c.forEach(function (item) {
+          //hacemos una sumatoria de los parametros rest en c con la variable resultado
+          resultado += item;
+        });
 
-            return resultado;
-        }
-        console.log(sumar(1,2));
-        console.log(sumar(1, 2, 3));
-        console.log(sumar(1, 2, 3, 4));
-        console.log(sumar(1, 2, 3, 4, 5));
+        return resultado;
+      }
+      console.log(sumar(1, 2));
+      console.log(sumar(1, 2, 3));
+      console.log(sumar(1, 2, 3, 4));
+      console.log(sumar(1, 2, 3, 4, 5));
 
-        //====== Operador de propagacion ==========
-        const array1 = [1,2,3,4,5];
-        const array2 = [6,7,8,9,0];
+      //====== Operador de propagacion ==========
+      const array1 = [1, 2, 3, 4, 5];
+      const array2 = [6, 7, 8, 9, 0];
 
-        //mezclamos los elementos de ambos array en un tercer array
-        const array3 = [...array1, ...array2]
-        console.log(array3);
-
+      // mezclamos los elementos de ambos array en un tercer array
+      const array3 = [...array1, ...array2];
+      console.log(array3);
     </script>
-</body>
+  </body>
 </html>

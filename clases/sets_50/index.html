@@ -1,50 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sets</title>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Estructura de datos Sets</title>
+  </head>
+  <body>
     <script>
-        //Declaracion
-        const data = new Set([1,2,3,3,5,4,true,false,{},{},'hola','Hola']);
-        console.log(data); //imprime la lista omitiendo los valores repetidos
-        console.info(data.size); //obtenemos el tamaño del set
+      // La estructura set es similar a un array pero solo acepta datos unicos
+      const data = new Set([
+        1,
+        2,
+        3,
+        3,
+        5,
+        4,
+        true,
+        false,
+        {},
+        {},
+        "hola",
+        "Hola",
+      ]);
+      console.log(data); //imprime la lista omitiendo los valores repetidos
+      console.info(data.size); //obtenemos el tamaño del set
 
-        const numeros = new Set();
-        numeros.add(1);
-        numeros.add(2);
-        numeros.add(3);
-        numeros.add(1);
-        numeros.add(true);
-        numeros.add(false);
-        numeros.add(true);
-        console.info(numeros);
+      const numeros = new Set();
+      numeros.add(1);
+      numeros.add(2);
+      numeros.add(3);
+      numeros.add(1);
+      numeros.add(true);
+      numeros.add(false);
+      numeros.add(true);
+      console.info(numeros);
 
-        //eliminando un elemento
-        console.info('Eliminado un elemento de set');
-        numeros.delete(2);
-        console.info(numeros);
+      //eliminando un elemento
+      console.info("Eliminado un elemento de set");
+      numeros.delete(2);
+      console.info(numeros);
 
-        //preguntamos si un valor determinado existe dentro del set
-        console.info('Existe el valor true');
-        console.info(numeros.has(true));
+      //preguntamos si un valor determinado existe dentro del set
+      console.info("Existe el valor true");
+      console.info(numeros.has(true));
 
-        //recorremos el set
-        console.info('Recorriendo el set');
-        for(item of numeros){
-            console.info(item);
-        }
+      //recorremos el set
+      console.info("Recorriendo el set");
+      for (item of numeros) {
+        console.info(item);
+      }
 
-        data.forEach(item =>{
-            console.info(item);
-        })
+      data.forEach((item) => {
+        console.info(item);
+      });
 
-        //accediendo al indice
-        let arreglo = Array.from(data);
-        //obtenemos el valor de la posicion 0
-        console.info(arreglo[0]);
+      // Para acceder a un elemento del set primero debemo convertirlo en un Array
+      let arreglo = Array.from(data);
+      //obtenemos el valor de la posicion 0
+      console.info(arreglo[0]);
     </script>
-</body>
+  </body>
 </html>

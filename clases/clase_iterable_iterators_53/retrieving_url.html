@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recuperando URL separadamente</title>
+  </head>
+  <body>
+    <script>
+      const srcArr = [
+        "https://eloux.com/async_js/examples/1.json",
+        "https://eloux.com/async_js/examples/2.json",
+        "https://eloux.com/async_js/examples/3.json",
+      ];
+      // pasamos una funcion a la propiedad (creada con Symbol) del array asyncIterator
+      srcArr[Symbol.asyncIterator] = function () {
+        // definimos nuestra iterador personalizado
+        // i lleva un registro del indice del array
+        let i = 0;
+        return {
+          // retornamos un objeto con la funcion async next() que retorna una promesa cada vez que es llamada
+          async next() {
+            // validamos si se ha llegado al final de array. Si es true no se continua con la iteracion
+            if (i === srcArr.length) {
+              return {
+                done: true,
+              };
+            }
+            const url = srcArr[i++];
+            const response = await fetch(url);
+            // validamos el status de respuesta, si no es true se produjo un error recuperando la info de la url
+            if (!response.ok) {
+              throw new Error("Unable to retrieve URL " + url);
+            }
+            return {
+              value: await response.json(),
+              done: false,
+            };
+          },
+        };
+      };
+      const iterator = srcArr[Symbol.asyncIterator]();
+
+      iterator.next().then((result) => {
+        console.info(result.value.firstName);
+      });
+
+      iterator.next().then((result) => {
+        console.info(result.value.firstName);
+      });
+
+      iterator.next().then((result) => {
+        console.info(result.value.firstName);
+      });
+    </script>
+  </body>
+</html>

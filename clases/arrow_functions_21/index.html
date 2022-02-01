@@ -1,70 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Javascript - Arrow functions</title>
-</head>
-<body>
+  </head>
+  <body>
     <script>
-        //una simple funcion expresada
-        const saludo = function(){
-            console.log('Hola a todos');
-        }
-        saludo();
+      // una simple funcion declarada
+      function greeting() {
+        console.info("Hello world");
+      }
+      greeting();
 
-        //expresando la misma funcion pero con arrow function. cuando la funcion tiene 1 sola linea se puede omitir los {}
-        //si la arrow function solo recibe param no es necesaro colocar los ()
-        //las arrow function tienen un return implicito
-        const saludar = lenguaje => console.log(`Hello world ${lenguaje}`);
-        saludar('Javascript');
+      //una simple funcion expresada
+      const saludo = function () {
+        console.log("Hola a todos");
+      };
+      saludo();
 
-        const suma = (a, b) => a + b;
-        console.log(`La suma es: ${suma(5,5)}`);
+      //expresando la misma funcion pero con arrow function. cuando la funcion tiene 1 sola linea se puede omitir los {}
+      //si la arrow function solo recibe param no es necesaro colocar los ()
+      //las arrow function tienen un return implicito
+      const saludar = (lenguaje) => console.log(`Hello world ${lenguaje}`);
+      saludar("Javascript");
 
-        //arrow function de varias lineas
-        const varias = ()=>{
-            console.log('varios 1');
-            console.log('varios 2');
-            console.log('varios 3');
-        };
+      // arrow function suma - en una sola linea, mas expresiva
+      const suma = (a, b) => a + b;
+      console.log(`La suma es: ${suma(5, 5)}`);
 
-        varias();
-        
-        ///
-        const nums = [1,2,3,4,5];
-        nums.forEach((el, index)=>{
-            console.log(`El elemento ${el} esta en la posicion: ${index}`);
-        })
+      //arrow function de varias lineas
+      const varias = () => {
+        console.log("varios 1");
+        console.log("varios 2");
+        console.log("varios 3");
+      };
 
-        nums.forEach((item)=>{
-            item += 2;
-            console.log(item);
-        });
+      varias();
 
-        //arrow functions para capturar el objeto this
-        function Perro()
-        {
-            console.log(this); //la funcion esta en el contexto global de todo el documento, por ello this es window.
-        }
+      // array function expresivas en una sola linea de codigo
+      const nums = [1, 2, 3, 4, 5];
+      nums.forEach((elemento, index) =>
+        console.log(`El elemento ${elemento} esta en la posicion: ${index}`)
+      );
 
-        const dog = {
-            name: 'Chato',
-            ladrar: function(){
-                console.log(this); //en este contexto this es el objeto dog
-            },
-            //otra forma de definir una funcion dentro de un objeto literal
-            dormir(){
-                console.log(this);
-            },
-            piss: ()=> console.log(this) //con esta arrow fnction this es global y ya no el objeto por lo que escribir
-            //this.name da un error ya que this no es igual al contexto del objeto sino global y la propiedad name no
-            //la podrá encontrar
-        };
-        dog.ladrar();
-        dog.dormir();
-        dog.piss();
+      nums.forEach((item) => {
+        item += 2;
+        console.log(item);
+      });
 
+      //arrow functions para capturar el objeto this del contexto en el que se encuentren
+      function Perro() {
+        console.log(this); //la funcion esta en el contexto global de todo el documento, por ello this es window.
+      }
+
+      const dog = {
+        name: "Chato",
+        ladrar: function () {
+          console.log(this); //en este contexto this es el objeto dog
+        },
+        //otra forma de definir una funcion dentro de un objeto literal
+        dormir() {
+          console.log(this);
+        },
+        piss: () => console.log(this), //con esta arrow fnction this es global y ya no el objeto por lo que escribir
+        //this.name da un error ya que this no es igual al contexto del objeto sino global y la propiedad name no
+        //la podrá encontrar
+      };
+      dog.ladrar();
+      dog.dormir();
+      dog.piss();
     </script>
-</body>
+  </body>
 </html>

@@ -1,58 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Asincronia - Event loop</title>
-</head>
-<body>
+  </head>
+  <body>
     <script>
-        //============= ejemplo de codigo sincrono bloqueante ============//
-        /*en este tipo de codigo cada operación se realiza una vez bloqueando el flujo
+      //============= ejemplo de codigo sincrono bloqueante ============//
+      /*en este tipo de codigo cada operación se realiza una vez bloqueando el flujo
           del hilo principal, este hilo principal queda bloqueado hasta que venga una
           respuesta luego pasa a la siguiente operación y asi sucesivamente hasta ejecutar
           todo el codigo*/
-        
-        /*funcion anonima autoejecutable*/
-        //============= Ejemplo de código síncrono bloqueante ==========//
-        (()=>{
-            console.log("Código síncrono");
-            console.log("Inicio");
 
-            function dos(){
-                console.log("Dos");
-            }
+      /*funcion anonima autoejecutable*/
+      //============= Ejemplo de código síncrono bloqueante ==========//
+      // Bloqueamos el flujo del hilo principal del event loop de JS
+      (() => {
+        // 1era ejecucion
+        console.log("Código síncrono");
+        console.log("Inicio");
 
-            function uno(){
-                console.log("Uno");
-                dos();
-                console.log("Tres");
-            }
-            uno();
-            console.log("Fin");
-        })();
+        function dos() {
+          // 5ta ejecucion
+          console.log("Dos");
+        }
 
-        //============= ejemplo de codigo asincrono bloqueante ========//
-        (() => {
-            console.log("Código asíncrono");
-            console.log("Inicio");
+        function uno() {
+          // 3era ejecucion
+          console.log("Uno");
+          // 4to llamado a la funcion dos
+          dos();
+          // 6ta ejecucion
+          console.log("Tres");
+        }
+        // 2do llamado a la funcion uno
+        uno();
+        // se libera el hilo y se hace la 7ma ejecucion
+        console.log("Fin");
+      })();
 
-            function dos(){
-                setTimeout(function(){
-                    console.log("Dos");
-                }, 1000);
-            }
+      //============= ejemplo de codigo asincrono No bloqueante ========//
+      (() => {
+        // 1era ejecucion
+        console.log("Código asíncrono");
+        console.log("Inicio");
 
-            function uno(){
-                setTimeout(function(){
-                    console.log("Uno");
-                }, 0);
-                dos();
-                console.log("Tres");
-            }
-            uno();
-            console.log("Fin");
-        })();
+        function dos() {
+          // 5 - se pasa a la pila de tareas la funcion con timeout
+          setTimeout(function () {
+            console.log("Dos");
+          }, 1000);
+        }
+
+        function uno() {
+          // 3 - se pasa a la pila de tareas la funcon con timeout
+          setTimeout(function () {
+            console.log("Uno");
+          }, 0);
+          // 4 - se llama a la funcion dos()
+          // 9 - se ejecuta la funcion dos
+          dos();
+          // 6 - se ejecuta esta linea
+          console.log("Tres");
+        }
+        // 2da llamado a la funcion uno()
+        // 8 - se ejecuta la funcion uno
+        uno();
+        // 7 - se ejecuta esta linea
+        console.log("Fin");
+      })();
     </script>
-</body>
+  </body>
 </html>

@@ -1,38 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Asincronía</title>
-</head>
-<body>
+  </head>
+  <body>
     <script>
-        /* console.info("inicio...");
+      // ======= setTimeout ======//
+      // setTimeout recibe una funcion (calback) y un tiempo expresado en milisegundos
+      /* console.info("inicio...");
         setTimeout(()=>{
             console.info("Ejecutando un setTimeout()");
         }, 3000); */
 
-        /* setInterval(()=>{
+      /* setInterval(()=>{
             console.info("Ejecutando setInterval(), esto se ejecuta indefinidamente, cada cierto intervalo de tiempo");
         }, 1000); */
 
-        //===========================================//
-        /* let temporizador = setTimeout(()=>{
+      //============Terminando el setTimeout=====================//
+      /* let temporizador = setTimeout(()=>{
             console.info(new Date().toLocaleTimeString());
         }, 1000);
 
         clearTimeout(temporizador);
         console.info("Despues del clearTimeout()"); */
-        //===========================================//
-        /* let tmp = setInterval(() => {
+
+      //=============setInterval===================//
+      // en base a un intervalo de tiempo ejecutamos varias acciones
+      /* let tmp = setInterval(() => {
                 console.info(new Date().toLocaleTimeString());
             }, 1000);
 
+            // terminando el setInterval
             clearInterval(tmp);
             console.info("Despues del setInterval()"); */
 
-        //==============================================//
-        
+      //==============================================//
     </script>
-</body>
+  </body>
 </html>

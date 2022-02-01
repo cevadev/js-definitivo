@@ -1,102 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
+  </head>
+  <body>
     <script>
-        //========= Ejercicio 24 ==========================//
-        const orderArreglo = (arr = undefined)=>{
-            if (arr === undefined) return console.warn('No ingresó un arreglo de números');
-            if (!(arr instanceof Array)) return console.error('El valor ingresado no es un arreglo');
-            if (arr.length === 0) return console.error('El arreglo esta vacio');
+      //========= Ejercicio 24 ==========================//
+      const orderArreglo = (arr = undefined) => {
+        if (arr === undefined)
+          return console.warn("No ingresó un arreglo de números");
+        if (!(arr instanceof Array))
+          return console.error("El valor ingresado no es un arreglo");
+        if (arr.length === 0) return console.error("El arreglo esta vacio");
 
-            //evaluamos que cada elemento del array sea un numero
-            for (let num of arr) {
-                if (typeof num !== 'number') return console.error(`El valor de ${num} ingresado no es un número`);
-            }
-
-            return console.info({
-                arreglo: arr,
-                asc: arr.map(elemento => elemento).sort(), //creamos un nuevo array con map y ordenamos los elementos
-                dsc: arr.map(elemento => elemento).sort().reverse()
-            });
+        //evaluamos que cada elemento del array sea un numero
+        for (let num of arr) {
+          if (typeof num !== "number")
+            return console.error(
+              `El valor de ${num} ingresado no es un número`
+            );
         }
-        /* orderArreglo();
+
+        return console.info({
+          arreglo: arr,
+          asc: arr.map((elemento) => elemento).sort(), //creamos un nuevo array con map y ordenamos los elementos
+          dsc: arr
+            .map((elemento) => elemento)
+            .sort()
+            .reverse(),
+        });
+      };
+      /* orderArreglo();
         orderArreglo(true);
         orderArreglo([]);
         orderArreglo({});
         orderArreglo([1,2,8,5, true]);
         orderArreglo([5,1,8,3,47,2,1,6,9,2,1,4,85,75,2,3,5,56,4]); */
 
-        //=================== Ejercicio 25 ====================//
-        const quitarDuplicados = (arr = undefined)=>{
-            if (arr === undefined) return console.warn('No ingresó un arreglo de números');
-            if (!(arr instanceof Array)) return console.error('El valor ingresado no es un arreglo');
-            if (arr.length === 0) return console.error('El arreglo esta vacio');
-            if (arr.length === 1) return console.error('El arreglo esta vacio');
+      //=================== Ejercicio 25 ====================//
+      const quitarDuplicados = (arr = undefined) => {
+        if (arr === undefined)
+          return console.warn("No ingresó un arreglo de números");
+        if (!(arr instanceof Array))
+          return console.error("El valor ingresado no es un arreglo");
+        if (arr.length === 0) return console.error("El arreglo esta vacio");
+        if (arr.length === 1) return console.error("El arreglo esta vacio");
 
-            console.info({
-                original: arr,
-                /*elemento -> representa el elemento del array
-                * index -> posicion del elemento
-                * self -> hacemos referencia al mismo arreglo
-                * self.indexOf() -> comparamos el valor contra la posicion que estamos evaluando
-                * Por ejemplo: si tenemos el arreglo ['x', 10, 'x, true, 5']
-                * Filter lo que hace es crear un nuevo array y cada elemento del nuevo array se comprar con el array original
-                * si se cumple la condicion del filter entonces el elemento se adiciona al nuevo array.
-                * evalua: x === a la posicion 0 del nuevo array -< respuesta no
-                * x === a la posicion 1 del array que es 10, respuesta no
-                * x === a la posicion 2 del array que es x, respues si, entonces x pasa al nuevo array generado por filter
-                * y asi, toma un elemento del array original y lo evalua con todos los demas elementos restantes
-                * los que cumplen con la expresion, pasan al nuevo array.
-                */
-                sinDuplicados: arr.filter((elemento, index, self)=> self.indexOf(elemento) === index)
-            });
-        };
-        /* quitarDuplicados();
+        console.info({
+          original: arr,
+          /*elemento -> representa el elemento del array
+           * index -> posicion del elemento
+           * self -> hacemos referencia al mismo arreglo
+           * self.indexOf() -> comparamos el valor contra la posicion que estamos evaluando
+           * Por ejemplo: si tenemos el arreglo ['x', 10, 'x, true, 5']
+           * Filter lo que hace es crear un nuevo array y cada elemento del nuevo array se comprar con el array original
+           * si se cumple la condicion del filter entonces el elemento se adiciona al nuevo array.
+           * evalua: x === a la posicion 0 del nuevo array -< respuesta no
+           * x === a la posicion 1 del array que es 10, respuesta no
+           * x === a la posicion 2 del array que es x, respues si, entonces x pasa al nuevo array generado por filter
+           * y asi, toma un elemento del array original y lo evalua con todos los demas elementos restantes
+           * los que cumplen con la expresion, pasan al nuevo array.
+           */
+          sinDuplicados: arr.filter(
+            (elemento, index, self) => self.indexOf(elemento) === index
+          ),
+
+          // Tambien podemos resolver este ejecicio empleando con la estructura de datos set
+          // Set retorna una lista de elementos no duplicados
+          // sinDuplicados: [...new Set(arr)]
+        });
+      };
+      /* quitarDuplicados();
         quitarDuplicados(true);
         quitarDuplicados({});
         quitarDuplicados([]);
         quitarDuplicados([1, true, 'AB', 1, 5, 'g', 'AB', 'f',2, 1, 'g', false, true]); */
 
-        //================ Ejercicio 26 ===============//
-        const promedio = (arr = undefined)=>{
-            if (arr === undefined) return console.warn('No ingresó un arreglo de números');
-            if (!(arr instanceof Array)) return console.error('El valor ingresado no es un arreglo');
-            if (arr.length === 0) return console.error('El arreglo esta vacio');
+      //================ Ejercicio 26 ===============//
+      const promedio = (arr = undefined) => {
+        if (arr === undefined)
+          return console.warn("No ingresó un arreglo de números");
+        if (!(arr instanceof Array))
+          return console.error("El valor ingresado no es un arreglo");
+        if (arr.length === 0) return console.error("El arreglo esta vacio");
 
-            //evaluamos que cada elemento del array sea un numero
-            for (let num of arr) {
-                if (typeof num !== 'number') return console.error(`El valor de ${num} ingresado no es un número`);
-            }
-
-            return console.info(
-                //reduce genera un arreglo basado en el arrego original
-                //total -> acumulador que almacena el valor previo
-                arr.reduce((total, elemento, posicion, arr)=>{
-                    total += elemento;
-                    //validamos s llego al final del array
-                    if(posicion === arr.length - 1){
-                        //termino de recorrer el array
-                        return `El promero de ${arr.join(' + ')} es ${total /arr.length} `;
-                    }
-                    else{
-                        //no llego al final del array. le pasamos el valor de total para que acumule y haga
-                        //la sumatoria
-                        return total;
-                    }
-                })
+        //evaluamos que cada elemento del array sea un numero
+        for (let num of arr) {
+          if (typeof num !== "number")
+            return console.error(
+              `El valor de ${num} ingresado no es un número`
             );
         }
-        promedio();
-        promedio(false);
-        promedio({});
-        promedio([]);
-        promedio([2,3,5, 'a']);
-        promedio([2,8,6,3,7,58]);
+
+        return console.info(
+          //reduce genera un arreglo basado en el arrego original
+          //total -> acumulador que almacena el valor previo
+          arr.reduce((total, elemento, posicion, arr) => {
+            total += elemento;
+            //validamos s llego al final del array
+            if (posicion === arr.length - 1) {
+              //termino de recorrer el array
+              return `El promero de ${arr.join(" + ")} es ${
+                total / arr.length
+              } `;
+            } else {
+              //no llego al final del array. le pasamos el valor de total para que acumule y haga
+              //la sumatoria
+              return total;
+            }
+          })
+        );
+      };
+      promedio();
+      promedio(false);
+      promedio({});
+      promedio([]);
+      promedio([2, 3, 5, "a"]);
+      promedio([2, 8, 6, 3, 7, 58]);
     </script>
-</body>
+  </body>
 </html>

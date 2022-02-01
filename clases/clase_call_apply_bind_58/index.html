@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Call, Apply, Bind</title>
+  </head>
+  <body>
+    <script>
+      // Estos metofos call apply bind nos permiten conservar la referencia a un scope en particular
+      // para poder invocarlo en algún codigo.
+
+      // call - apply
+      //sabemos en el scope global this es igual al objeto window
+      console.info(this);
+      // adjuntamos una propiedad lugar al contexto global
+      this.lugar = "Contexto a nivel global";
+
+      function saludar(saludo, aquien) {
+        console.info(`${saludo} ${aquien} desde el ${this.lugar}`);
+      }
+      saludar(); // imprime: Contexto global
+
+      const obj = {
+        lugar: "Contexto a nivel objeto",
+      };
+
+      // llamamos a la funcion saludar(que tiene un contexto global) pero con call llamanos un nuevo contexto o nuevo this
+      // del objeto obj y se imprimira la propiedad lugar de este objeto obj
+      saludar.call(obj, "Hola", "Carlos");
+      // se consigue el mismo resultado con el metodo apply
+      saludar.apply(obj, ["Hola", "Pedro"]);
+
+      const persona = {
+        nombre: "Antonio",
+        saludar: function () {
+          console.info(`Hola ${this.nombre}`);
+        },
+      };
+      persona.saludar();
+
+      // propiedad en el contexto global
+      this.nombre = "Cosme Fulanito Gobal";
+
+      const persona2 = {
+        // imprime Hola undefined ya que no posee una propiedad nombre. Con bind podemos hacer que se enlace el contexto
+        saludar: persona.saludar.bind(this),
+      };
+
+      persona2.saludar();
+    </script>
+  </body>
+</html>

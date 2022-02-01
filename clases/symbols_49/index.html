@@ -1,29 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nuevos tipos de datos</title>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nuevos tipos de datos primitivo Symbol</title>
+  </head>
+  <body>
     <script>
-        const NOMBRE = Symbol();
-        const persona = {
-            [NOMBRE]: 'Carlos'
-        }
-        console.info(persona);
+      // Los Symbols nos permiten crear identificadores únicos de referencia.
+      const NOMBRE = Symbol();
+      const persona = {
+        // los symbols se pueden utilizar para declarar propiedades privadas de los objetos.
+        [NOMBRE]: "Carlos",
+      };
+      console.info(persona);
 
-        //creamos una propiedad llamada NOMBRE
-        persona.NOMBRE = 'Carlos Eduardo';
-        console.info(persona);
+      //creamos una propiedad llamada NOMBRE
+      persona.NOMBRE = "Carlos Eduardo";
+      console.info(persona);
 
-        //accedemos al valor de la propiedad de tipo Symbol
-        console.info(persona[NOMBRE]);
-        //accedemos al valor de la propiedad NOMBRE
-        console.info(persona.NOMBRE);
+      //accedemos al valor de la propiedad de tipo Symbol
+      console.info(persona[NOMBRE]);
+      //accedemos al valor de la propiedad NOMBRE
+      console.info(persona.NOMBRE);
 
-        //Propiedades que hacen referencia a un Symbol
-        
+      //Propiedades que hacen referencia a un Symbol
     </script>
-</body>
+  </body>
 </html>

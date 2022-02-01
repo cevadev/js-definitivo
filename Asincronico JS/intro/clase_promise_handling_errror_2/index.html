@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Promise handling error</title>
+  </head>
+  <body>
+    <script>
+      // sample 1 using catch
+      const promiseHandlingCatch = Promise.reject("an error has ocurred...");
+      promiseHandlingCatch.catch((error) => {
+        console.info(error);
+      });
+
+      // sample 2 - cuando encadenamos promesas y un error ocurre, se salta el metodo then()
+      const promiseSkipThen = Promise.reject("error");
+      promiseSkipThen
+        .then((result) => {
+          console.info("allright");
+        })
+        .then((result) => {
+          console.info("todo va bien...");
+        })
+        .catch((error) => {
+          console.error("an error happened...");
+        });
+
+      // sample 3 - el controlador de rechazo del metodo then() no puede manejar lo errores que ocurren dentro del
+      // controlador de cumplimiento. Para capturar el error dentro del metodo then debemos agregar el metodo catch
+      const promise = Promise.resolve(10);
+      promise
+        .then((result) => {
+          throw new Error();
+        })
+        .catch((error) => {
+          console.error("an error ocurred in the resolve handler");
+        });
+    </script>
+  </body>
+</html>

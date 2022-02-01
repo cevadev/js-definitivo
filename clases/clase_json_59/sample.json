@@ -1,0 +1,11 @@
+{
+  "cadena": "Carlos",
+  "numero": "35",
+  "booleano": "true",
+  "arreglo": ["correr", "programar", "cocinar"],
+  "objeto": {
+    "twitter": "@harpazo",
+    "email": "ceva_19@otmail.com"
+  },
+  "nulo": null
+}

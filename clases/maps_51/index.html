@@ -31,7 +31,7 @@
       mapa.delete("edad");
       console.info(mapa);
 
-      //iteramos un mapa
+      //iteramos un mapa empleando la desestructuracion
       for ([key, value] of mapa) {
         console.info(`Key: ${key} => Value: ${value}`);
       }
@@ -57,8 +57,8 @@
       }
 
       //destructuracion de un map
-      const sessionKeys = [...session.keys()];
-      const sessionValues = [...session.values()];
+      const sessionKeys = [...session.keys()]; // generamos un array con las llaves
+      const sessionValues = [...session.values()]; // generamos un array con los valores
       console.info(sessionKeys);
       console.info(sessionValues);
     </script>

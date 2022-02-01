@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Propiedades dinámicas</title>
+  </head>
+  <body>
+    <script>
+      // en ocasiones podemos tener la necesidad de utilizar propiedades dinamica o al vuelo en un objeto
+      let aleatorio = Math.round(Math.random() * 100 + 5);
+      const objUsuarios = {
+        propiedadEjemplo: "valor",
+        // creamos dentro del objeto una propiedad dinámica
+        [`id_${aleatorio}`]: "Valor aleatorio",
+      };
+      console.info(objUsuarios);
+
+      const usuarios = ["Fernando", "Pedro", "Angel", "Angel", "Johana"];
+
+      // por cada usuario del array usuarios se va a generar al objeto usuario una propiedad id_"y la posicion en el array"
+      // Para crear un propiedad luego que un objeto ya a sido definido es con el uso de []
+      // creamos dinamicamente la propiedad id_ seguido del indice del elemento y esta propiedad va almacenar el nom del user
+      usuarios.forEach(
+        (usuario, index) => (objUsuarios[`id_${index}`] = usuario)
+      );
+      console.info(objUsuarios);
+    </script>
+  </body>
+</html>

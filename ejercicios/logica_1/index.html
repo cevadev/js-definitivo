@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Logica 1</title>
-</head>
-<body>
+  </head>
+  <body>
     <script>
-        //=============== ejercicio 1 ================//
-        // 1. Version Funcion declarada
-        // si no le pasamos valor va a ser igual a string vacio
-        /* function contarTexto(cadena = ""){
+      //=============== ejercicio 1 ================//
+      // 1. Version Funcion declarada
+      // si no le pasamos valor va a ser igual a string vacio
+      /* function contarTexto(cadena = ""){
             if(!cadena){
                 console.warn('No ingresaste ningun texto');
             }
@@ -19,52 +19,64 @@
             }
         } */
 
-        // 2. Version Funcion expresada
-        const contarTexto = (cadena="") => (!cadena) ? console.warn('No ingresó un texto') : console.info(`El texto ${cadena} tiene ${cadena.length} caracteres`);
-        //contarTexto('Hi');
+      // 2. Version Funcion expresada
+      const contarTexto = (cadena = "") =>
+        !cadena
+          ? console.warn("No ingresó un texto")
+          : console.info(
+              `El texto ${cadena} tiene ${cadena.length} caracteres`
+            );
+      //contarTexto('Hi');
 
-        //=============== Ejercicio 2 ===============//
-        const recortarTexto = (cadena="", longitud=undefined)=> 
-            (!cadena) 
-                ? console.warn('No ingresó un texto')
-                : (longitud === undefined)
-                    ? console.warn('Usted no inresó la longitud de la nueva cadena')
-                    : console.info(`Su nueva cadena es: ${cadena.slice(0, longitud)}`);
-        /* recortarTexto('Javascript rocks', 10);
+      //=============== Ejercicio 2 ===============//
+      const recortarTexto = (cadena = "", longitud = undefined) =>
+        !cadena
+          ? console.warn("No ingresó un texto")
+          : longitud === undefined
+          ? console.warn("Usted no inresó la longitud de la nueva cadena")
+          : // empezamos a contar desde posicion 0 hasta el valor de longitud
+            console.info(`Su nueva cadena es: ${cadena.slice(0, longitud)}`);
+      /* recortarTexto('Javascript rocks', 10);
         recortarTexto();
         recortarTexto('Hola hola');
         recortarTexto('', 4); */
 
-
-        //============ Ejercicio 3 ======================//
-        const cadenaAArray = (cadena='', separador=undefined)=>
-            (!cadena)
-                ? console.warn('No ingresó un texto')
-                : (separador === undefined)
-                    ? console.warn('No ingresó el caracter separador')
-                    : console.info(cadena.split(separador));
-        /* cadenaAArray('Hello/world/Javascript', '/');
+      //============ Ejercicio 3 ======================//
+      const cadenaAArray = (cadena = "", separador = undefined) =>
+        !cadena
+          ? console.warn("No ingresó un texto")
+          : separador === undefined
+          ? console.warn("No ingresó el caracter separador")
+          : console.info(cadena.split(separador));
+      /* cadenaAArray('Hello/world/Javascript', '/');
         cadenaAArray('ene,feb,mar,abr,may,jun,jul,ago,sept,cot,nov,dec',',')
         cadenaAArray(); */
 
-        //============ Ejercicio 4 =====================//
-        const repetirTexto = (texto='', veces=undefined)=>{
-            if(!texto) return console.warn('No ingresó un texto'); //terminamos la ejecucion
-            if(veces === undefined) return console.warn('No ingresó el numero de veces a repetir el texto');
-            if(veces === 0) return console.error('El nunero de veces a repetir no puede se cero');
+      //============ Ejercicio 4 =====================//
+      const repetirTexto = (texto = "", veces = undefined) => {
+        // if sin else para hacer las valiaciones
+        if (!texto) return console.warn("No ingresó un texto"); //terminamos la ejecucion
+        if (veces === undefined)
+          return console.warn(
+            "No ingresó el numero de veces a repetir el texto"
+          );
+        if (veces === 0)
+          return console.error("El nunero de veces a repetir no puede se cero");
 
-            //validamos si envia un numero negativo
-            if(Math.sign(veces) === -1) return console.error('El numero de veces a repetir no puede ser negativo');
+        //validamos si envia un numero negativo
+        if (Math.sign(veces) === -1)
+          return console.error(
+            "El numero de veces a repetir no puede ser negativo"
+          );
 
-            for(let i = 1; i <= veces; i++)
-            {
-                console.info(`${i}. ${texto}`);
-            }
-        };
-        repetirTexto('brooo', 3);
-        repetirTexto('Hola', -9);
-        repetirTexto('', 8);
-        repetirTexto();
+        for (let i = 1; i <= veces; i++) {
+          console.info(`${i}. ${texto}`);
+        }
+      };
+      repetirTexto("brooo", 3);
+      repetirTexto("Hola", -9);
+      repetirTexto("", 8);
+      repetirTexto();
     </script>
-</body>
+  </body>
 </html>

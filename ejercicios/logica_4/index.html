@@ -1,76 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
+  </head>
+  <body>
     <script>
-        //============ Ejercicio 12 ================//
-        const numeroPrimo = (numero = undefined) => {
-            if (numero === undefined) return console.warn(`No ingresó un numero`);
-            if (numero === 0) return console.error('El número no puede ser 0');
-            if(numero === 1) return console.warn('El numero no puede ser 1');
-            if (typeof numero != "number") return console.error(`El valor ${numero} no es un número`);
-            if (Math.sign(numero) === -1) return console.error(`El numero no puede se negativo`);
+      //============ Ejercicio 12 ================//
+      const numeroPrimo = (numero = undefined) => {
+        if (numero === undefined) return console.warn(`No ingresó un numero`);
+        if (numero === 0) return console.error("El número no puede ser 0");
+        if (numero === 1) return console.warn("El numero no puede ser 1");
+        if (typeof numero != "number")
+          return console.error(`El valor ${numero} no es un número`);
+        if (Math.sign(numero) === -1)
+          return console.error(`El numero no puede se negativo`);
 
-            //flag que evalua si el numero es divisible, por algun valor desde 2 hasta < numero, si eso ocurre
-            //el numero no es primo
-            let divisible = false; 
-            for(let i = 2; i < numero; i++){
-                //si elnumero es divisible, residuo 0, entonces finalizamos el for ya que no es primo
-                if(numero % i === 0){
-                    divisible = true;
-                    break;
-                }
-            }
-            return (divisible)
-                ? console.info(`El numero ${numero} no es primo`)
-                : console.info(`El numero ${numero} si es primo`);
+        //flag que evalua si el numero es divisible, por algun valor desde 2 hasta < numero, si eso ocurre
+        //el numero no es primo
+        let divisible = false;
+        for (let i = 2; i < numero; i++) {
+          //si elnumero es divisible, residuo 0, entonces finalizamos el for ya que no es primo
+          if (numero % i === 0) {
+            divisible = true;
+            break;
+          }
         }
-        /* numeroPrimo();
+        return divisible
+          ? console.info(`El numero ${numero} no es primo`)
+          : console.info(`El numero ${numero} si es primo`);
+      };
+      /* numeroPrimo();
         numeroPrimo('5');
         numeroPrimo(-5);
         numeroPrimo(5);
         numeroPrimo(8);
         numeroPrimo(13); */
 
-        //=================== Ejercicio 13 ===========//
-        const numeroParImpar = (numero = undefined) => {
-            if (numero === undefined) return console.warn(`No ingresó un numero`);
-            if (typeof numero != "number") return console.error(`El valor ${numero} no es un número`);
+      //=================== Ejercicio 13 ===========//
+      const numeroParImpar = (numero = undefined) => {
+        if (numero === undefined) return console.warn(`No ingresó un numero`);
+        if (typeof numero != "number")
+          return console.error(`El valor ${numero} no es un número`);
 
-            return (numero % 2 === 0)
-                ? console.info(`El numero ${numero} es un numero par`)
-                : console.info(`El numero ${numero} no es un numero par`);
-        }
-        /* numeroParImpar();
+        return numero % 2 === 0
+          ? console.info(`El numero ${numero} es un numero par`)
+          : console.info(`El numero ${numero} no es un numero par`);
+      };
+      /* numeroParImpar();
         numeroParImpar('8');
         numeroParImpar(9);
         numeroParImpar(8); */
 
-        //=================== Ejercicio 14 ====================//
-        const convertiGrados = (grados = undefined, unidad=undefined)=>{
-            if (grados === undefined) return console.warn(`No ingresó grados a convertir`);
-            if (typeof grados != "number") return console.error(`El valor ${grados} no es un número`);
-            if (unidad === undefined) return console.warn(`No ingresó el tipo de grados a convertir`);
-            if (typeof unidad != "string") return console.error(`El valor ${unidad} no es un texto`);
-            //expresion regular que garantiza que solo se permite 1 caracter y valores F o C para la unidad
-            if (unidad.length !== 1 || !/(C|F)/.test(unidad)) return console.warn(`El valor de la unidad ${unidad} no se reconoce`);
-            //if(unidad.length !== 1 || unidad !== 'F' && unidad !== 'C') return console.warn(`el valor de la unidad ${unidad} no se reconoce`);
-            
-            if(unidad === 'C'){
-                return console.info(`${grados}°C = ${Math.round((grados * 9/5) + 32)}°F`);
-            } else if(unidad === 'F'){
-                return console.info(`${grados}°F = ${Math.round((grados - 32) * 5/9)}°C`);
-            }
-            else{
-                console.warn('El tipo de grados a convertir no es válido');
-            }
+      //=================== Ejercicio 14 ====================//
+      const convertiGrados = (grados = undefined, unidad = undefined) => {
+        if (grados === undefined)
+          return console.warn(`No ingresó grados a convertir`);
+        if (typeof grados !== "number")
+          return console.error(`El valor ${grados} no es un número`);
+        if (unidad === undefined)
+          return console.warn(`No ingresó el tipo de grados a convertir`);
+        if (typeof unidad !== "string")
+          return console.error(`El valor ${unidad} no es un texto`);
+        //expresion regular que garantiza que solo se permite 1 caracter y valores F o C para la unidad
+        if (unidad.length !== 1 || !/(C|F)/.test(unidad))
+          return console.warn(`El valor de la unidad ${unidad} no se reconoce`);
+        //if(unidad.length !== 1 || unidad !== 'F' && unidad !== 'C') return console.warn(`el valor de la unidad ${unidad} no se reconoce`);
+
+        if (unidad === "C") {
+          return console.info(
+            `${grados}°C = ${Math.round((grados * 9) / 5 + 32)}°F`
+          );
+        } else if (unidad === "F") {
+          return console.info(
+            `${grados}°F = ${Math.round(((grados - 32) * 5) / 9)}°C`
+          );
+        } else {
+          console.warn("El tipo de grados a convertir no es válido");
         }
-        convertiGrados(0, 'C');
-        convertiGrados(32, 'F');
+      };
+      convertiGrados(0, "C");
+      convertiGrados(32, "F");
     </script>
-</body>
+  </body>
 </html>

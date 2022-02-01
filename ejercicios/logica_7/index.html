@@ -1,32 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
+  </head>
+  <body>
     <script>
-        //================ Ejercicios 21 =================//
-        //debemos validar que el usuario ingresa un arreglo para ello utilizamos instanceof
-        const devolverCuadrado = (arr = undefined)=>{
-            if(arr === undefined) return console.warn('No ingresó un arreglo de números');
-            if(!(arr instanceof Array)) return console.error('El valor ingresado no es un arreglo');
-            if(arr.length === 0) return console.error('El arreglo esta vacio');
+      //================ Ejercicios 21 =================//
+      //debemos validar que el usuario ingresa un arreglo para ello utilizamos instanceof
+      const devolverCuadrado = (arr = undefined) => {
+        if (arr === undefined)
+          return console.warn("No ingresó un arreglo de números");
+        if (!(arr instanceof Array))
+          return console.error("El valor ingresado no es un arreglo");
+        if (arr.length === 0) return console.error("El arreglo esta vacio");
 
-            //evaluamos que cada elemento del array sea un numero
-            for (let num of arr) {
-                if(typeof num !== 'number') return console.error(`El valor de ${num} ingresado no es un número`);
-            }
-
-            //map nos permite a partir de un array crear un nuevo array haciendo alguna operacion con sus elementos
-            const newArr = arr.map((el) =>{
-                return el* el;
-            });
-
-            return console.info(`Arreglo original ${arr}, \nArreglo elevado al cuadrado ${newArr}`);
+        //evaluamos que cada elemento del array sea un numero
+        for (let num of arr) {
+          if (typeof num !== "number")
+            return console.error(
+              `El valor de ${num} ingresado no es un número`
+            );
         }
-        /* devolverCuadrado();
+
+        //map nos permite a partir de un array crear un nuevo array haciendo alguna operacion con sus elementos
+        const newArr = arr.map((elemento) => {
+          return elemento * elemento;
+        });
+
+        return console.info(
+          `Arreglo original ${arr}, \nArreglo elevado al cuadrado ${newArr}`
+        );
+      };
+      /* devolverCuadrado();
         devolverCuadrado(true);
         devolverCuadrado({});
         devolverCuadrado([]);
@@ -34,51 +41,65 @@
         devolverCuadrado([1, 2, 'C']);
         devolverCuadrado([1, 2, 5]); */
 
-        //==================== Ejercicio 22 ========================//
-        const arrayMinMax = (arr = undefined)=>{
-            if (arr === undefined) return console.warn('No ingresó un arreglo de números');
-            if (!(arr instanceof Array)) return console.error('El valor ingresado no es un arreglo');
-            if (arr.length === 0) return console.error('El arreglo esta vacio');
+      //==================== Ejercicio 22 ========================//
+      const arrayMinMax = (arr = undefined) => {
+        if (arr === undefined)
+          return console.warn("No ingresó un arreglo de números");
+        if (!(arr instanceof Array))
+          return console.error("El valor ingresado no es un arreglo");
+        if (arr.length === 0) return console.error("El arreglo esta vacio");
 
-            //evaluamos que cada elemento del array sea un numero
-            for (let num of arr) {
-                if (typeof num !== 'number') return console.error(`El valor de ${num} ingresado no es un número`);
-            }
-
-            //Las funciones max y min requieren recibir un spread parameter: ...[1,2,5]
-            return console.info(`Arreglo original ${arr}\nValor mayor: ${Math.max(...arr)}\nValor menor: ${Math.min(...arr)}`);
+        //evaluamos que cada elemento del array sea un numero
+        for (let num of arr) {
+          if (typeof num !== "number")
+            return console.error(
+              `El valor de ${num} ingresado no es un número`
+            );
         }
-        /* arrayMinMax();
+
+        //Las funciones max y min requieren recibir un spread parameter: ...[1,2,5]
+        return console.info(
+          `Arreglo original ${arr}\nValor mayor: ${Math.max(
+            ...arr
+          )}\nValor menor: ${Math.min(...arr)}`
+        );
+      };
+      /* arrayMinMax();
         arrayMinMax(true);
         arrayMinMax({});
         arrayMinMax([]);
         arrayMinMax([1, 2, false]);
         arrayMinMax([1, 4, 5, 99, 60]); */
 
-        //================== Ejercicio 23 ==============================//
-        const arrParImpar = (arr = undefined)=>{
-            if (arr === undefined) return console.warn('No ingresó un arreglo de números');
-            if (!(arr instanceof Array)) return console.error('El valor ingresado no es un arreglo');
-            if (arr.length === 0) return console.error('El arreglo esta vacio');
+      //================== Ejercicio 23 ==============================//
+      const arrParImpar = (arr = undefined) => {
+        if (arr === undefined)
+          return console.warn("No ingresó un arreglo de números");
+        if (!(arr instanceof Array))
+          return console.error("El valor ingresado no es un arreglo");
+        if (arr.length === 0) return console.error("El arreglo esta vacio");
 
-            //evaluamos que cada elemento del array sea un numero
-            for (let num of arr) {
-                if (typeof num !== 'number') return console.error(`El valor de ${num} ingresado no es un número`);
-            }
-
-            //creamos el objeto con dos propiedades pares e impares
-            return console.info({
-                pares: arr.filter(elemento => elemento % 2 === 0),
-                impares: arr.filter(elemento => elemento % 2 !== 0)
-            })
+        //evaluamos que cada elemento del array sea un numero
+        for (let num of arr) {
+          if (typeof num !== "number")
+            return console.error(
+              `El valor de ${num} ingresado no es un número`
+            );
         }
-        arrParImpar();
-        arrParImpar(false);
-        arrParImpar({});
-        arrParImpar([]);
-        arrParImpar([1, 5, true]);
-        arrParImpar([1, 2, 5, 6, 3, 8, 4, 2, 5, 9, 8, 7, 4]);
-        arrParImpar([1,5,9,7,5,3]);
+
+        //creamos el objeto con dos propiedades pares e impares
+        return console.info({
+          pares: arr.filter((elemento) => elemento % 2 === 0),
+          impares: arr.filter((elemento) => elemento % 2 !== 0),
+        });
+      };
+      arrParImpar();
+      arrParImpar(false);
+      arrParImpar({});
+      arrParImpar([]);
+      arrParImpar([1, 5, true]);
+      arrParImpar([1, 2, 5, 6, 3, 8, 4, 2, 5, 9, 8, 7, 4]);
+      arrParImpar([1, 5, 9, 7, 5, 3]);
     </script>
-</body>
+  </body>
 </html>

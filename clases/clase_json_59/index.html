@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Json</title>
+  </head>
+  <body>
+    <script>
+      const json = {
+        cadena: "Carlos",
+        numero: "35",
+        booleano: "true",
+        arreglo: ["correr", "programar", "cocinar"],
+        objeto: {
+          twitter: "@harpazo",
+          email: "ceva_19@otmail.com",
+        },
+        nulo: null,
+      };
+      console.info(json);
+
+      // los metodos de JSON
+      //parse() analiza una notacion json y lo convierte a un tipo de dato que javascript reconozca
+      // Formato de objetos válidos en JS
+      console.info(JSON.parse("{}"));
+      console.info(JSON.parse("[1,2,3]"));
+      console.info(JSON.parse("true"));
+      console.info(JSON.parse("false"));
+      console.info(JSON.parse("19"));
+      console.info(JSON.parse("null"));
+
+      // convertimos una cadena en formato valido JSO hacia un objeto valido JS
+      console.info(
+        JSON.parse(
+          '{"cadena": "Carlos","numero": "35","booleano": "true","arreglo": ["correr", "programar", "cocinar"],"objeto": {"twitter": "@harpazo","email": "ceva_19@otmail.com"},"nulo": null}'
+        )
+      );
+
+      // el metodo Stringify converte un objeto valido de JS en una cadena de texto de JSON
+      console.info(JSON.stringify("{}"));
+      console.info(JSON.stringify("[1,2,3]"));
+      console.info(JSON.stringify("true"));
+      console.info(JSON.stringify("false"));
+      console.info(JSON.stringify("19"));
+      console.info(JSON.stringify("null"));
+      console.info(JSON.stringify({ x: 2, y: 3 }));
+    </script>
+  </body>
+</html>
