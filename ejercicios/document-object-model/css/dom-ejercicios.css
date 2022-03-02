@@ -1,0 +1,194 @@
+/*** Inicio reseteo de los styles por defecto *****/
+:root {
+  --main-font: sans-serif;
+  --font-size: 16px;
+  --main-color: #f7df1e;
+  --second-color: #222;
+  --main-modal-color: rgba(247, 222, 30, 0.85);
+  --second-modal-color: rgba(34, 34, 34, 0.85);
+  --container-width: 1200px;
+}
+
+/*reseteo basico a los styles por defecto a la etqueta html*/
+html {
+  box-sizing: border-box; /*tamaño de la caja*/
+  font-family: var(--main-font);
+  font-size: var(--font-size);
+  scroll-behavior: smooth;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+  /*todo lo que se desborde en horizontal se oculte y no aparezca la barra horizontal*/
+  overflow-x: hidden;
+}
+
+/*adaptamos las imagenes a la maxima anchura de su contenedor*/
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/********* FIN DE RESETEO **************/
+
+.header {
+  /*cuando el header llegue a margin-top 0 se comportara como fijo*/
+  position: sticky;
+  top: 0;
+  /*padding a los 4 lados*/
+  padding: 1rem;
+  background-color: var(--main-color);
+  color: var(--second-color);
+}
+
+.header h1 {
+  margin: 0;
+  text-align: center;
+}
+
+/********* Menu de Hamburguesa ********/
+/* Cada una de las secciones, aunque no posean contenido van a ocupar el ancho de la pantalla*/
+.section {
+  padding: 2rem;
+  padding-top: 4rem;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  max-width: var(--container-width);
+  /*aunque el contenido del section sea pequeño oupará el tamaño del view port*/
+  min-height: 100vh;
+  text-align: center;
+}
+
+.panel {
+  position: fixed;
+  z-index: 998;
+  width: 100%;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--second-modal-color);
+  opacity: 0;
+  visibility: hidden;
+  transition: transform 0.3s ease, opacity 0.5s ease;
+  /*para que el menu aparezca desde arriba* para ello: x = 0 / y = -100 */
+  /*transform: translate(0, -100%); /*con '100% enviamos arriba al menu*/
+
+  /*el menu aparece dese abajo*/
+  /*transform: translate(0, 100%);*/
+
+  /*transform: translate(100%, 0); aparece desde la derecha*/
+  /*transform: translate(-100%, 0); aparece desde la izquierda*/
+}
+
+/*Clase que se agregará o qitará al panel. Cuando el elemento aside tenga la clase panel.isactive
+  hacemos que el menu regrese al tranlate original (0,0)*/
+.panel.is-active {
+  opacity: 1;
+  visibility: visible;
+  /*transform: translate(0, 0);*/
+}
+
+/* Posicionamos el menu hamburguesa de manera fija a 1 viewport height inferior y 1 viewport a la derecha
+* por lo que boton se ubicará en la parte inferior derecha.
+*/
+.panel-btn {
+  position: fixed;
+  /*con este alto index hacemos que cualquier contenido en la página aparezca detrás del boton*/
+  z-index: 999;
+  bottom: 1vh;
+  right: 1vw;
+  width: 4rem;
+  height: 4rem;
+  /*hacemos redondo el button*/
+  border-radius: 50%;
+  padding: 0;
+  /*usamos flexbox*/
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--main-color);
+}
+
+.menu {
+  width: inherit;
+  display: flex;
+  flex-direction: column;
+  /*justify-content trabaja sobre la columna Y*/
+  justify-content: space-evenly;
+  /*Alig-items trabaja sobre la columna X   */
+  align-items: center;
+  text-align: center;
+}
+
+.menu a {
+  padding: 2rem;
+  width: inherit;
+  /*los convertimos elementos de bloque*/
+  display: block;
+  font-size: 1.5rem;
+  text-decoration: none;
+  color: var(--main-color);
+  /*transición que se aplica cuando se hace hover*/
+  transition: all 0.3s ease;
+}
+
+.menu a:hover {
+  font-weight: bold;
+  color: var(--second-color);
+  background-color: var(--main-modal-color);
+}
+
+/***** FIN MENU HAMBURGUESA *****/
+
+/***** SECCION 2: EVENTOS DEL TECLADO *****/
+.stage {
+  display: flex;
+  /*minima altura a la mitad del viewport*/
+  min-height: 50vh;
+  background-color: var(--second-color);
+}
+
+.ball {
+  margin: auto;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  background-color: var(--main-color);
+}
+
+/* ***** ScrollTopButton ***** */
+.scroll-top-btn {
+  position: fixed;
+  z-index: 999;
+  bottom: 1vh;
+  right: calc(4.25rem + 1vw);
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  font-size: 2rem;
+  font-weight: bold;
+  background-color: var(--main-color);
+  color: var(--second-color);
+  cursor: pointer;
+  outline: 0;
+  border: 0;
+  transition: all 0.3s ease-out;
+}
+
+.scroll-top-btn:hover {
+  background-color: var(--second-color);
+  color: var(--main-color);
+}
+
+.hidden {
+  visibility: hidden;
+  opacity: 0;
+}

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DOM - Atributos - Data-Atributes</title>
+    <style>
+      /*definimos variables en el root*/
+      :root {
+        --yellow-color: #f7df1e;
+        --dark-color: #222;
+      }
+      .card {
+        display: inline-block;
+        background-color: var(--dark-color);
+        color: var(--yellow-color);
+      }
+
+      .card figcaption {
+        padding: 1rem;
+      }
+
+      .rotate-45 {
+        transform: rotate(45deg);
+      }
+
+      .rotate-135 {
+        transform: rotate(135deg);
+      }
+
+      .opacity {
+        opacity: 0.8;
+      }
+
+      .sepia {
+        filter: sepia(1);
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Libros de la Biblia</h1>
+    </header>
+    <main>
+      <h2>Libros del Antiguo Testamento</h2>
+      <ul>
+        <li>Génesis</li>
+        <li>Éxodo</li>
+        <li>Levítico</li>
+        <li>Números</li>
+        <li>Deuteronomio</li>
+      </ul>
+      <br />
+      <hr />
+      <br />
+      <p id="que-es">
+        El Antiguo Testamento (AT) es la primera parte de la Biblia cristiana.
+        La segunda parte de la Biblia cristiana es el Nuevo Testamento.
+      </p>
+      <nav id="menu">
+        <li><a href="#">Génesis Capítulo 1</a></li>
+        <li><a href="#">Génesis Capítulo 2</a></li>
+        <li><a href="#">Génesis Capítulo 3</a></li>
+        <li><a href="#">Génesis Capítulo 4</a></li>
+        <li><a href="#">Génesis Capítulo 5</a></li>
+      </nav>
+      <br />
+      <input type="text" name="nombre" placeholder="Nombre" />
+      <a
+        class="link-dom"
+        href="index.html"
+        style="background-color: #f7df1e; color: #222"
+        data-id="1"
+        data-description="Document Object Model"
+        >DOM</a
+      >
+      <section class="cards">
+        <figure class="card">
+          <img src="https://placeimg.com/200/200/tech" alt="Tech" />
+          <figcaption>Tech</figcaption>
+        </figure>
+        <figure class="card">
+          <img src="https://placeimg.com/200/200/animals" alt="Animals" />
+          <figcaption>Animals</figcaption>
+        </figure>
+        <figure class="card">
+          <img src="https://placeimg.com/200/200/people" alt="People" />
+          <figcaption>People</figcaption>
+        </figure>
+        <figure class="card">
+          <img src="https://placeimg.com/200/200/arch" alt="Arch" />
+          <figcaption>Arch</figcaption>
+        </figure>
+        <figure class="card">
+          <img src="https://placeimg.com/200/200/nature" alt="Nature" />
+          <figcaption>Nature</figcaption>
+        </figure>
+      </section>
+    </main>
+    <script src="./dom.js"></script>
+  </body>
+</html>
