@@ -3,6 +3,8 @@ import hamburgerMenu from "./dom/menu_hamburguesa.js";
 import { digitalClock, alarm } from "./dom/reloj.js";
 import { moveBall, shortcuts } from "./dom/teclado.js";
 import countDown from "./dom/cuenta_regresiva.js";
+import scrollTopBtn from "./dom/boton_scroll.js";
+import darkTheme from "./dom/tema_oscuro.js";
 
 const doc = document;
 
@@ -19,7 +21,9 @@ doc.addEventListener("DOMContentLoaded", (e) => {
     "#iniciar-alarma",
     "#desactivar-alarma"
   );
-  countDown("countdown", "Febrero 28, 2022", "Feliz Cumpleaños a mi");
+  countDown("countdown", "Febrero 28, 2023", "Feliz Cumpleaños a mi");
+  scrollTopBtn(".scroll-top-btn");
+  darkTheme(".dark-theme-btn", "dark-mode");
 });
 
 /**
