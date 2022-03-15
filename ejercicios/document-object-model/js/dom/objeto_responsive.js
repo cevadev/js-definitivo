@@ -21,7 +21,7 @@ export default function responsiveMedia(
       doc.getElementById(idElement).innerHTML = mobileContent;
     }
 
-    console.info("MQ", breakpoint, e.matches);
+    // console.info("MQ", breakpoint, e.matches);
   };
 
   // cuando se produce y cambio en el tamaño de la pantalla ejecutamos la mediaquery

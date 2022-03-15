@@ -18,7 +18,7 @@ export function moveBall(e, ball, stage) {
   const limitBall = $ball.getBoundingClientRect();
   // el escenario al estar fijo, sus valores de posicion no cambian
   const limitStage = $stage.getBoundingClientRect();
-  console.info(limitBall, limitStage);
+  // console.info(limitBall, limitStage);
 
   /**
    * Para identificar los movimientos de la pelota debemos identificar los keycode de las teclas

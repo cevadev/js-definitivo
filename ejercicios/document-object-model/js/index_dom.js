@@ -6,10 +6,13 @@ import countDown from "./dom/cuenta_regresiva.js";
 import scrollTopBtn from "./dom/boton_scroll.js";
 import darkTheme from "./dom/tema_oscuro.js";
 import responsiveMedia from "./dom/objeto_responsive.js";
+import responsiveTester from "./dom/prueba_responisve.js";
+import userDeviceInfo from "./dom/detección_dispositivos.js";
+import networkStatus from "./dom/deteccion_red.js";
 
 const doc = document;
 
-// evento DOMContentLoaded que hace la carga del documento
+// evento DOMContentLoaded que se detecta a la carga del documento
 doc.addEventListener("DOMContentLoaded", (e) => {
   // el selector es un botton con la clase panel-btn y el elemento a mover es el aside con la clase panel
   // .menu a -> hace referencia a cualquier elemento del selector .menu de tipo a (link)
@@ -36,6 +39,8 @@ doc.addEventListener("DOMContentLoaded", (e) => {
     `<a href="https://goo.gl/maps/emy7e9F97FjzSCRp6" target="_blank" rel="noopener">Ver Link</a>`,
     `<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1881.3307701474162!2d-99.16875904127807!3d19.42702449999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d1ff35f5bd1563%3A0x6c366f0e2de02ff7!2sEl%20%C3%81ngel%20de%20la%20Independencia!5e0!3m2!1ses!2sar!4v1646344011460!5m2!1ses!2sar" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>`
   );
+  responsiveTester("responsive-tester");
+  userDeviceInfo("user-device");
 });
 
 /**
@@ -52,3 +57,4 @@ doc.addEventListener("keydown", (e) => {
 
 // invocamos fuera el darkTheme() para que puede escucha el evento DOMContentLoaded
 darkTheme(".dark-theme-btn", "dark-mode");
+networkStatus();
