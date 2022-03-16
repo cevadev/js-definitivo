@@ -9,6 +9,8 @@ import responsiveMedia from "./dom/objeto_responsive.js";
 import responsiveTester from "./dom/prueba_responisve.js";
 import userDeviceInfo from "./dom/detección_dispositivos.js";
 import networkStatus from "./dom/deteccion_red.js";
+import webcam from "./dom/deteccion_webcam.js";
+import geoLocation from "./dom/geolocalizacion.js";
 
 const doc = document;
 
@@ -41,6 +43,8 @@ doc.addEventListener("DOMContentLoaded", (e) => {
   );
   responsiveTester("responsive-tester");
   userDeviceInfo("user-device");
+  webcam("webcam");
+  geoLocation("geolocation");
 });
 
 /**

@@ -66,6 +66,7 @@ img {
   text-align: center;
 }
 
+/* Manejamos el menu de opciones */
 .panel {
   position: fixed;
   z-index: 998;
@@ -74,6 +75,9 @@ img {
   bottom: 0;
   left: 0;
   right: 0;
+  /* cuando las opciones del menu superan la pantalla, adaptamos automaticamente al tamaño del contenido
+     si el contenido de desborda aparece una barra de scroll vertical*/
+  overflow-y: auto;
   background-color: var(--second-modal-color);
   opacity: 0;
   visibility: hidden;
