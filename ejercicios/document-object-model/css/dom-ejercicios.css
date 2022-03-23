@@ -243,3 +243,36 @@ img {
 .offline {
   background-color: #b71c1c;
 }
+
+/* ***** Search Filter ***** */
+/*aplicamos al elemento article class="cards"*/
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+/*estilos para cada tarjeta*/
+.card {
+  background-color: var(--second-color);
+  color: var(--main-color);
+  transition: all 0.3s ease-out;
+}
+
+/*estilos para la imagen dentro de la tarjeta*/
+.card-img {
+  width: 100%;
+  height: auto;
+}
+
+/*estilos para el caption de cada tarjeta*/
+.card figcaption {
+  padding: 1rem;
+}
+
+/*cuando la busqueda con coincide con los elementos disponibles*/
+.filter {
+  /*display: none;*/
+  visibility: hidden;
+  opacity: 0;
+  order: 1;
+}

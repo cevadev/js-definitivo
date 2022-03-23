@@ -11,6 +11,7 @@ import userDeviceInfo from "./dom/detección_dispositivos.js";
 import networkStatus from "./dom/deteccion_red.js";
 import webcam from "./dom/deteccion_webcam.js";
 import geoLocation from "./dom/geolocalizacion.js";
+import searchFilters from "./dom/filtro_busquedas.js";
 
 const doc = document;
 
@@ -45,6 +46,9 @@ doc.addEventListener("DOMContentLoaded", (e) => {
   userDeviceInfo("user-device");
   webcam("webcam");
   geoLocation("geolocation");
+  // .card-filter -> hace referencia al elemento input donde se escribe el texto a buscar
+  // .card -> selector que contiene a cada tarjeta
+  searchFilters(".card-filter", ".card");
 });
 
 /**
