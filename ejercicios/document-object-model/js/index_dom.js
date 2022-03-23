@@ -12,6 +12,7 @@ import networkStatus from "./dom/deteccion_red.js";
 import webcam from "./dom/deteccion_webcam.js";
 import geoLocation from "./dom/geolocalizacion.js";
 import searchFilters from "./dom/filtro_busquedas.js";
+import drawn from "./dom/sorteo.js";
 
 const doc = document;
 
@@ -49,6 +50,8 @@ doc.addEventListener("DOMContentLoaded", (e) => {
   // .card-filter -> hace referencia al elemento input donde se escribe el texto a buscar
   // .card -> selector que contiene a cada tarjeta
   searchFilters(".card-filter", ".card");
+  // iteramos sobre la lista de todos los elementos li con clase player
+  drawn("#winner-btn", ".player");
 });
 
 /**
