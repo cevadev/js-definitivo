@@ -276,3 +276,37 @@ img {
   opacity: 0;
   order: 1;
 }
+
+/* ***** Responsive Slider ***** */
+.slider {
+  position: relative;
+  width: 80%;
+  margin: 1rem auto;
+  text-align: center;
+}
+
+/*contenedor de las slides*/
+.slider-slides {
+  position: relative;
+  height: 400px;
+}
+
+/* styles para cada una d las slides*/
+.slider-slide {
+  /*se posiciona con respecto respecto al primero elemento padre que encuentra en el dom que sea relativo
+    si no encuentra ningun elemento con posicionamiento relativo, se posiciona con respecto al body*/
+  position: absolute;
+  top: 0;
+  left: 0;
+  /*altura y ancho 100% segun el tamaño del contenedor padre*/
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transform: opacity 1s ease;
+}
+
+.slider-slide.active {
+  opacity: 1;
+  visibility: visible;
+}
