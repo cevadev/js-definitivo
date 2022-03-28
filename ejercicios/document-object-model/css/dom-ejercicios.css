@@ -40,6 +40,7 @@ img {
 .header {
   /*cuando el header llegue a margin-top 0 se comportara como fijo*/
   position: sticky;
+  z-index: 997;
   top: 0;
   /*padding a los 4 lados*/
   padding: 1rem;
@@ -280,6 +281,7 @@ img {
 /* ***** Responsive Slider ***** */
 .slider {
   position: relative;
+  border: thin solid black;
   width: 80%;
   margin: 1rem auto;
   text-align: center;
@@ -306,7 +308,42 @@ img {
   transform: opacity 1s ease;
 }
 
+/* hacemos que la imagen herede la altura de su padre */
+.slider-slide img {
+  height: inherit;
+  width: inherit;
+  object-fit: cover;
+  object-position: 50% 0%;
+}
+
+/* hacemos visible el primer slide con la clase .active */
 .slider-slide.active {
   opacity: 1;
   visibility: visible;
+}
+
+.slider-btns {
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  display: flex;
+  justify-content: space-between;
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.slider a {
+  display: block;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  border: thin solid #000;
+  text-decoration: none;
+  background-color: #fff;
+  color: #000;
+  transition: all 0.3s ease;
+}
+
+.slider a:hover {
+  color: #4d4d4d;
 }
