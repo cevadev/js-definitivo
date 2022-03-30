@@ -14,6 +14,7 @@ import geoLocation from "./dom/geolocalizacion.js";
 import searchFilters from "./dom/filtro_busquedas.js";
 import drawn from "./dom/sorteo.js";
 import slider from "./dom/carrusel.js";
+import scrollSpy from "./dom/scroll_spy.js";
 
 const doc = document;
 
@@ -54,6 +55,7 @@ doc.addEventListener("DOMContentLoaded", (e) => {
   // iteramos sobre la lista de todos los elementos li con clase player
   drawn("#winner-btn", ".player");
   slider();
+  scrollSpy();
 });
 
 /**
