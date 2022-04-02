@@ -15,6 +15,8 @@ import searchFilters from "./dom/filtro_busquedas.js";
 import drawn from "./dom/sorteo.js";
 import slider from "./dom/carrusel.js";
 import scrollSpy from "./dom/scroll_spy.js";
+import smartVideo from "./dom/video_inteligente.js";
+import contactFormValidation from "./dom/validaciones_formulario.js";
 
 const doc = document;
 
@@ -56,6 +58,8 @@ doc.addEventListener("DOMContentLoaded", (e) => {
   drawn("#winner-btn", ".player");
   slider();
   scrollSpy();
+  smartVideo();
+  contactFormValidation();
 });
 
 /**
