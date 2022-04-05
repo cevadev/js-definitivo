@@ -42,6 +42,7 @@
         <a href="#section12" data-scroll-spy>Responsibe Slider</a>
         <a href="#section13" data-scroll-spy>Video inteligente</a>
         <a href="#section14" data-scroll-spy>Validaciones de formularios</a>
+        <a href="#section15" data-scroll-spy>Narrador</a>
       </nav>
     </aside>
     <main>
@@ -191,7 +192,7 @@
       <section id="section14" class="section" data-scroll-spy>
         <h2>Validaciones de formularios</h2>
         <!--selector para detectarlo en la programacion-->
-        <form class="contact-form">
+        <form action="https://formsubmit.co/barcvilla@gmail.com" method="POST" target="_blank" class="contact-form">
           <legend>Envíanos tus comentarios</legend>
           <input type="text" name="name" placeholder="Escribe tu nombre" title="Nombre solo acepta letras y
            espacios en blanco" required pattern="^[A-Za-zÑñÁÉÍÓÚáéíóúü\s]+$" />
@@ -202,12 +203,23 @@
            data-pattern="^.{1,255}$" title="Tu comentario no puede superar los 255 caracteres"></textarea>
           <input type="submit" value="Enviar" />
           <!--clase none para que al momento del cargar el formulario no se muestren-->
-          <div class="contact-form.loader none">
+          <div class="contact-form-loader none">
             <img src="assets/three-dots.svg" alt="cargando" />
           </div>
           <div class="contact-form-response none">
             <p>Los datos han sido enviados</p>
           </div>
+        </form>
+      </section>
+      <section id="section15" class="section" data-scroll-spy="">
+        <h2>Narrador</h2>
+        <form class="speech-form">
+          <select id="speech-select">
+            <option value="">--- Elige una voz ---</option>
+          </select>
+          <br /><br/>
+          <textarea id="speech-text" cols="50" rows="5" placeholder="Ingresa texto para leerlo"></textarea>
+          <button id="speech-btn">Leer texto</button>
         </form>
       </section>
     </main>

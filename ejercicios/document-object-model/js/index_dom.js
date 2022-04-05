@@ -17,6 +17,7 @@ import slider from "./dom/carrusel.js";
 import scrollSpy from "./dom/scroll_spy.js";
 import smartVideo from "./dom/video_inteligente.js";
 import contactFormValidation from "./dom/validaciones_formulario.js";
+import speechReader from "./dom/narrador.js";
 
 const doc = document;
 
@@ -74,6 +75,7 @@ doc.addEventListener("keydown", (e) => {
   moveBall(e, ".ball", ".stage");
 });
 
-// invocamos fuera el darkTheme() para que puede escucha el evento DOMContentLoaded
+// invocamos fuera el darkTheme(), nextwoekStatus() y speechReader() para que puede escucha el evento DOMContentLoaded
 darkTheme(".dark-theme-btn", "dark-mode");
 networkStatus();
+speechReader();

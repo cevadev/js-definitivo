@@ -47,4 +47,30 @@ export default function contactFormValidation() {
       }
     }
   });
+
+  // interceptamos el evento submit que procesa el formulario
+  doc.addEventListener("submit", (e) => {
+    // prevenimos la accion automatica de submit
+    // e.preventDefault();
+    alert("Enviando fomulario");
+
+    // almacenamos la referencia del loader y el div de respuesta en el DOM
+    const $loader = doc.querySelector(".contact-form-loader");
+    const $response = doc.querySelector(".contact-form-response");
+
+    // quitamos la clase none
+    $loader.classList.remove("none");
+
+    // simulamos la respuesta del servidor con setTimeout, despues de 3 seg envia una respuesta
+    setTimeout(() => {
+      $loader.classList.add("none");
+      $response.classList.remove("none");
+      // limpiamos el form
+      $form.reset();
+
+      setTimeout(() => {
+        $response.classList.add("none");
+      }, 3000);
+    }, 3000);
+  });
 }
