@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>CRUD API Rest Ajax</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="main.js"></script>
+  </head>
+  <body>
+    <h1>Creating Api Rest with Ajax: Using Api Fetch</h1>
+    <section class="crud">
+      <article>
+        <h2 class="crud-title">Agregar Santo</h2>
+        <form action="crud-form">
+          <input type="text" name="nombre" placeholder="nombre" required />
+          <br />
+          <input
+            type="text"
+            name="constelacion"
+            placeholder="constelación"
+            required
+          />
+          <br />
+          <input type="submit" value="Enviar" />
+          <input type="hidden" name="action" />
+        </form>
+      </article>
+      <article>
+        <h2>Ver Santos</h2>
+        <table class="crud-table">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Constelación</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </article>
+    </section>
+    <!--insertamos informacion el dom usando template-->
+    <template id="crud-template">
+      <tr>
+        <!--agregamos class para identificar y manipular los elementos del template-->
+        <td class="name"></td>
+        <td class="constellation"></td>
+        <td>
+          <button class="edit">Editar</button>
+          <button class="delete">Eliminar</button>
+        </td>
+      </tr>
+    </template>
+    <script>
+      const doc = document;
+      const $title = doc.querySelector(".crud-title");
+      const $form = doc.querySelector(".crud-form");
+      const $table = doc.querySelector(".crud-table");
+      // en un template lo que me interesa es su contenido y no el selector por eso indicamos .content
+      const $template = doc.getElementById("crud-template").content;
+      // como no es ideal hacer constates inserciones al DOM, creamos un fragment y alli hacemos las inserciones
+      // que vienen del api y luego el fragment lo insertamos en el DOM
+      $fragment = doc.createDocumentFragment();
+    </script>
+  </body>
+</html>
