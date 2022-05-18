@@ -5,10 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>CRUD API Rest Ajax</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-    <script src="main.js"></script>
   </head>
   <body>
+    <!--Para correr nuestro json server y que lea el archivo db.json-->
+    <!--json-server -w -p 5555 db.json -->
     <h1>Creating Api Rest with Ajax: Using XmlHttpRequest</h1>
     <section class="crud">
       <article>
@@ -24,7 +24,7 @@
           />
           <br />
           <input type="submit" value="Enviar" />
-          <input type="hidden" name="action" />
+          <input type="hidden" name="id" />
         </form>
       </article>
       <article>
@@ -63,6 +63,59 @@
       // como no es ideal hacer constates inserciones al DOM, creamos un fragment y alli hacemos las inserciones
       // que vienen del api y luego el fragment lo insertamos en el DOM
       $fragment = doc.createDocumentFragment();
+
+      // funcion expresada ajax que recibe un objeto options con una funcion ajax generica para las operaciones del crud
+      const ajax = (options) => {
+        // aplicamos la destructuracion del objeto optios
+        /*
+          ulr string-> url a la que solicitamos el acceso
+          method string-> metodo de envio
+          success function-> codigo retornado que indica el exito o no del llamado
+          error function
+          data object-> si la peticio requiere datos como en el caso de PUT, DELETE, POST
+          */
+        let { url, method, success, error, data } = options;
+        const xhr = new XMLHttpRequest();
+
+        xhr.addEventListener("readystatechange", (e) => {
+          // reaccionamos cuando se produce un cambio
+          if (xhr.readyState !== 4) return;
+          // se ejecuta esta funcion cuando readyState es 4
+          if (xhr.status >= 200 && xhr.status < 300) {
+            // la respuesta de la api que viene en formato json lo convertimos en objeto javascript
+            let json = JSON.parse(xhr.responseText);
+            // ejecutamos la funcion success del objeto options
+            success(json);
+          } else {
+            let message = xhr.statusText || "Ocurrio un error";
+            error(`Error ${xhr.status}: ${message}`);
+          }
+        });
+
+        // si no se especifica un metodo en particular aplicamos el metodo GET
+        xhr.open(method || "GET", url);
+        // especificamos en la cabecera el tipo de dato javascript a enviar
+        xhr.setRequestHeader("Content-type", "application/json; charset=utf-8");
+        // convertimos el objeto javascript (data) a cadena de texto
+        xhr.send(JSON.stringify(data));
+      };
+
+      const getAll = () => {
+        ajax({
+          method: "GET",
+          url: "http://localhost:5555/santos",
+          success: (res) => {
+            console.info(res);
+          },
+          error: (err) => {
+            console.error(err);
+          },
+          data: null,
+        });
+      };
+
+      // a la carga del DOM imprimos todos los datos del archivo db.json
+      doc.addEventListener("DOMContentLoaded", getAll);
     </script>
   </body>
 </html>
