@@ -13,7 +13,7 @@
     <section class="crud">
       <article>
         <h2 class="crud-title">Agregar Santo</h2>
-        <form action="crud-form">
+        <form class="crud-form">
           <input type="text" name="nombre" placeholder="nombre" required />
           <br />
           <input
@@ -65,6 +65,7 @@
       $fragment = doc.createDocumentFragment();
 
       // funcion expresada ajax que recibe un objeto options con una funcion ajax generica para las operaciones del crud
+      // abstraccion de una funcion ajax de peticion (GET, POST, PUT, DELETE, PATCH) a una api
       const ajax = (options) => {
         // aplicamos la destructuracion del objeto optios
         /*
@@ -88,11 +89,12 @@
             success(json);
           } else {
             let message = xhr.statusText || "Ocurrio un error";
+            // lamamos a la funcion error()
             error(`Error ${xhr.status}: ${message}`);
           }
         });
 
-        // si no se especifica un metodo en particular aplicamos el metodo GET
+        // si no se especifica un metodo REST en particular aplicamos el metodo GET por defecto
         xhr.open(method || "GET", url);
         // especificamos en la cabecera el tipo de dato javascript a enviar
         xhr.setRequestHeader("Content-type", "application/json; charset=utf-8");
@@ -100,22 +102,142 @@
         xhr.send(JSON.stringify(data));
       };
 
+      // funcion expresada getAll-> Obtenemos todos lo santos
       const getAll = () => {
+        // llamamos a nuestra funcion ajax generica
         ajax({
           method: "GET",
           url: "http://localhost:5555/santos",
           success: (res) => {
+            // res es el objeto de respuesta que contiene la información
             console.info(res);
+            // por cada elemento dentro de la respuesta lo pintamos dentro del template
+            res.forEach((el) => {
+              // buscamos el selector con la clase name e insertamos en su contenido el nombre del santo
+              $template.querySelector(".name").textContent = el.nombre;
+              $template.querySelector(".constellation").textContent =
+                el.constelacion;
+
+              // Cuando hacemos click en editar la informacion de santo debe pasar a las cajas de texto
+              // creamos un data attribute llamado id, name, constellation en el boton edit
+              // para almacenar id, name, constellation
+              $template.querySelector(".edit").dataset.id = el.id;
+              $template.querySelector(".edit").dataset.name = el.nombre;
+              $template.querySelector(".edit").dataset.constellation =
+                el.constelacion;
+
+              // para eliminar un registro de la tabla basta con saber su id
+              $template.querySelector(".delete").dataset.id = el.id;
+
+              // clonamos el node del template para que se quede en memoria
+              let $clone = doc.importNode($template, true); // true-> clonamos el nodo conservando su contenido y no vacio
+              // insertamo el nodo clonado al fragmento
+              $fragment.appendChild($clone);
+            });
+            // una vez terminado el procesamiento de la respuesta, insertamos el fragmento
+            // en el tbody de la tabla
+            $table.querySelector("tbody").appendChild($fragment);
           },
           error: (err) => {
+            // implementamos el codigo para la funcion error que es parte del objeto options que se pasa a la funcion ajax
             console.error(err);
+            // insertamos un mensaje debajo de la tabla es decir afuera  (afterend)
+            $table.insertAdjacentHTML("afterend", `<p><b>${err}</b></p>`);
           },
           data: null,
         });
       };
 
-      // a la carga del DOM imprimos todos los datos del archivo db.json
+      // a la carga del DOM imprimos todos los santos
       doc.addEventListener("DOMContentLoaded", getAll);
+
+      // La creacion y edicion de un registro a nivel de eventos dichas operaciones deben ejecutarse al momento
+      // de enviar el formulario.
+      // le asignamos el evento submit al documento
+      doc.addEventListener("submit", (e) => {
+        // preguntamos si el evento lo origina el formulario
+        if (e.target === $form) {
+          // detenemos el procesamiento por defecto del fomulario ya que el procesamiento lo hacemos con ajax
+          e.preventDefault();
+          // identificamos el tipo de peticion que el formulario va a realizar pudiendo ser POST para agregar
+          // PATCH para actualizacion parcial PUT para reemplazo total
+          // para hacer esta identificacion usaremos el elemento input con name id.
+          // Cuando el input name="id" sea vacio hacemos un operacion POST (crear)
+          // cuando el input name="id" tenga contenido hacemos una operacion PUT (editar)
+          // validamos si no hay (false) contenido (valor) del input id
+          if (!e.target.id.value) {
+            // hacemos peticion POST (create)
+            // llamamos a nuestra funcion ajax
+            ajax({
+              method: "POST",
+              url: "http://localhost:5555/santos",
+              // si la operacion es exitosa, hacemos una recarga de la pagina y ver el nuevo registro
+              success: (res) => location.reload(),
+              // en caso de error
+              error: (err) => {
+                // insertamos un mensaje debajo de la tabla es decir afuera  (afterend)
+                $form.insertAdjacentHTML("afterend", `<p><b>${err}</b></p>`);
+              },
+              data: {
+                // enviamos la data del santo a agregar. Los datos los obtenemos de los inputs del formulario
+                // lo atributos nombre y constelacion se basa en la estructura del archivo db.json
+                nombre: e.target.nombre.value,
+                constelacion: e.target.constelacion.value,
+              },
+            });
+          }
+          // si hay contenido en el input
+          else {
+            // hacemos una peticion PUT (update)
+            ajax({
+              method: "PUT",
+              url: `http://localhost:5555/santos/${e.target.id.value}`,
+              success: (res) => location.reload(),
+              error: (err) => {
+                $form.insertAdjacentHTML("afterend", `<p><b>${err}</b></p>`);
+              },
+              data: {
+                nombre: e.target.nombre.value,
+                constelacion: e.target.constelacion.value,
+              },
+            });
+          }
+        }
+      });
+
+      // cuando presione el boton editar la informacion del santo seleccionado se va al formulario
+      // para ello debemos programar los botones editar y eliminar en el evento click
+      // y agregar el evento click al document
+      doc.addEventListener("click", (e) => {
+        // buscamos el selector de boton editar (edit)
+        if (e.target.matches(".edit")) {
+          // console.info("hiciste click en el boton editar");
+          // Cada boton editar tiene 2 data attribute (nombre y constelacion) cuando se da clik en editar
+          // el contenido de estos data attribute pasan los inputs del formulario para su modificacion
+
+          // cambiamos el titulo del formulario
+          $title.textContent = "Editar Santo";
+          // accedemos al valor del data attribute del boton editar para pasarlos al input del formulario
+          $form.nombre.value = e.target.dataset.name;
+          $form.constelacion.value = e.target.dataset.constellation;
+          $form.id.value = e.target.dataset.id;
+        }
+        if (e.target.matches(".delete")) {
+          let isDeleted = confirm(
+            `¿Estás seguro de querer eliminar el id ${e.target.dataset.id}?`
+          );
+          if (isDeleted) {
+            // si se confirma la eliminacion, llamamos a la funcion ajax para hacer el delete
+            ajax({
+              method: "DELETE",
+              url: `http://localhost:5555/santos/${e.target.dataset.id}`,
+              success: (res) => location.reload(),
+              error: (err) => confirm(err),
+            });
+          }
+          // console.info("hiciste click en el boton eliminar");
+        }
+      });
     </script>
   </body>
 </html>
