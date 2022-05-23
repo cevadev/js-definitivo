@@ -98,7 +98,7 @@
         xhr.open(method || "GET", url);
         // especificamos en la cabecera el tipo de dato javascript a enviar
         xhr.setRequestHeader("Content-type", "application/json; charset=utf-8");
-        // convertimos el objeto javascript (data) a cadena de texto
+        // convertimos el objeto javascript (data) a cadena de texto JSON
         xhr.send(JSON.stringify(data));
       };
 

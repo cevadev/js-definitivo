@@ -5,15 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>CRUD API Rest Ajax</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-    <script src="main.js"></script>
   </head>
   <body>
     <h1>Creating Api Rest with Ajax: Using Api Fetch</h1>
     <section class="crud">
       <article>
         <h2 class="crud-title">Agregar Santo</h2>
-        <form action="crud-form">
+        <form class="crud-form">
           <input type="text" name="nombre" placeholder="nombre" required />
           <br />
           <input
@@ -63,6 +61,200 @@
       // como no es ideal hacer constates inserciones al DOM, creamos un fragment y alli hacemos las inserciones
       // que vienen del api y luego el fragment lo insertamos en el DOM
       $fragment = doc.createDocumentFragment();
+
+      const getAll = async () => {
+        try {
+          let res = await fetch("http://localhost:5555/santos"); // cuando no especificamos el metodo por defecto es GET
+          let json = await res.json();
+
+          // validamos si la propiedad ok del res no es true lanzamos un objeto error
+          if (!res.ok) {
+            throw {
+              status: res.status,
+              statusText: res.statusText,
+            };
+          }
+
+          // si no ocurre un error, pintamos los datos que vienen de la api en el document
+          json.forEach((el) => {
+            // agregamos los data attribute a los botones editar y eliminar por cada elemento
+            $template.querySelector(".edit").dataset.id = el.id;
+            $template.querySelector(".edit").dataset.name = el.nombre;
+            $template.querySelector(".edit").dataset.constellation =
+              el.constelacion;
+            $template.querySelector(".delete").dataset.id = el.id;
+
+            // colocamos los datos del api (nombre y constelacion)
+            $template.querySelector(".name").textContent = el.nombre;
+            $template.querySelector(".constellation").textContent =
+              el.constelacion;
+
+            // importamos el nodo del template copiado su estructura y contenido
+            let $clone = doc.importNode($template, true);
+            // le pasamos al fragment el nodo clonado
+            $fragment.appendChild($clone);
+          });
+
+          // ahora dentro de tbody del table colocamos el fragment
+          $table.querySelector("tbody").appendChild($fragment);
+        } catch (error) {
+          // capturamos el error lanzado
+          let messajeError = error.statusText || "Ocurrio un error";
+          // insertamos el mensaje de error luego de la tabla
+          $table.insertAdjacentHTML(
+            "afterend",
+            `<p><b>Error ${error.status}: ${error.statusText}</b></p>`
+          );
+        }
+      };
+
+      // definimos los listeners que escucharan los eventos
+      doc.addEventListener("DOMContentLoaded", getAll); // llamamos a la funcion getAll a la carga del documento
+
+      // Peticiones REST: POST, PUT, DELETE
+      doc.addEventListener("submit", async (e) => {
+        // ejecutamos el codigo cuando el evento provenga del formulario
+        if (e.target === $form) {
+          // desactivamos el auto procesamiento del documento
+          e.preventDefault();
+
+          // si el input con id tiene valor significa que haremos una edicion (PUT) si no tiene valor hare una add (POST)
+          // validamos si no hay contenido en el input con name id
+          if (!e.target.id.value) {
+            // Create - POST
+            try {
+              // opciones de la peticion fetch
+              let options = {
+                method: "POST",
+                // establecemos la cabecera de la peticion POST con fetch
+                headers: {
+                  "Content-type": "application/json;charset=utf-8",
+                },
+                // enviamos los datos del objeto javascript convertido a un tipo texto json en cadena
+                body: JSON.stringify({
+                  nombre: e.target.nombre.value,
+                  constelacion: e.target.constelacion.value,
+                }),
+              };
+
+              let res = await fetch("http://localhost:5555/santos", options);
+              let json = await res.json();
+
+              // validamos cualquier error
+              if (!res.ok) {
+                throw {
+                  status: res.status,
+                  statusText: res.statusText,
+                };
+              }
+
+              // actualizamos la pagina
+              location.reload();
+            } catch (error) {
+              let message = error.statusText || "Ocurrio un error";
+              $form.insertAdjacentHTML(
+                "afterend",
+                `<p><b>${error.status}: ${error.statusText}</b></p>`
+              );
+            }
+          } else {
+            // Update - PUT
+            try {
+              // opciones de la peticion fetch
+              let options = {
+                method: "PUT",
+                // establecemos la cabecera de la peticion POST con fetch
+                headers: {
+                  "Content-type": "application/json;charset=utf-8",
+                },
+                // enviamos los datos del objeto javascript convertido a un tipo texto json en cadena
+                body: JSON.stringify({
+                  nombre: e.target.nombre.value,
+                  constelacion: e.target.constelacion.value,
+                }),
+              };
+
+              let res = await fetch(
+                `http://localhost:5555/santos/${e.target.id.value}`,
+                options
+              );
+              let json = await res.json();
+
+              // validamos cualquier error
+              if (!res.ok) {
+                throw {
+                  status: res.status,
+                  statusText: res.statusText,
+                };
+              }
+
+              // actualizamos la pagina
+              location.reload();
+            } catch (error) {
+              let message = error.statusText || "Ocurrio un error";
+              $form.insertAdjacentHTML(
+                "afterend",
+                `<p><b>${error.status}: ${error.statusText}</b></p>`
+              );
+            }
+          }
+        }
+      });
+
+      // asignamos un listener al documento para que detecte el evento click
+      doc.addEventListener("click", async (e) => {
+        // buscamos el selector de boton editar (edit)
+        if (e.target.matches(".edit")) {
+          // console.info("hiciste click en el boton editar");
+          // Cada boton editar tiene 2 data attribute (nombre y constelacion) cuando se da clik en editar
+          // el contenido de estos data attribute pasan los inputs del formulario para su modificacion
+
+          // cambiamos el titulo del formulario
+          $title.textContent = "Editar Santo";
+          // accedemos al valor del data attribute del boton editar para pasarlos al input del formulario
+          $form.nombre.value = e.target.dataset.name;
+          $form.constelacion.value = e.target.dataset.constellation;
+          $form.id.value = e.target.dataset.id;
+        }
+        if (e.target.matches(".delete")) {
+          let isDeleted = confirm(
+            `¿Estás seguro de querer eliminar el id ${e.target.dataset.id}?`
+          );
+          if (isDeleted) {
+            try {
+              // opciones de la peticion fetch
+              let options = {
+                method: "DELETE",
+                // establecemos la cabecera de la peticion POST con fetch
+                headers: {
+                  "Content-type": "application/json;charset=utf-8",
+                },
+              };
+
+              let res = await fetch(
+                `http://localhost:5555/santos/${e.target.dataset.id}`,
+                options
+              );
+              let json = await res.json();
+
+              // validamos cualquier error
+              if (!res.ok) {
+                throw {
+                  status: res.status,
+                  statusText: res.statusText,
+                };
+              }
+
+              // actualizamos la pagina
+              location.reload();
+            } catch (error) {
+              let message = error.statusText || "Ocurrio un error";
+              alert(`Error ${err.status}: ${message}`);
+            }
+          }
+          // console.info("hiciste click en el boton eliminar");
+        }
+      });
     </script>
   </body>
 </html>

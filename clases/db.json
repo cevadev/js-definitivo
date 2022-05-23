@@ -6,9 +6,9 @@
       "constelacion": "Pegaso"
     },
     {
-      "id": 2,
       "nombre": "Shiryu",
-      "constelacion": "Dragón"
+      "constelacion": "Dragón",
+      "id": 2
     },
     {
       "id": 3,
@@ -19,11 +19,6 @@
       "id": 4,
       "nombre": "Shun",
       "constelacion": "Andrómeda"
-    },
-    {
-      "id": 5,
-      "nombre": "Ikki",
-      "constelacion": "Fenix"
     },
     {
       "nombre": "Mu",
