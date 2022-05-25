@@ -5,8 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>CRUD API Rest Ajax</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-    <script src="main.js"></script>
   </head>
   <body>
     <h1>Creating Api Rest with Ajax: Using Axios Framework</h1>
@@ -24,6 +22,7 @@
           />
           <br />
           <input type="submit" value="Enviar" />
+          <!--Si este input esta vacio hacemos una solicitud POST, i contiene un valor hacemos una solicitud PUT-->
           <input type="hidden" name="id" />
         </form>
       </article>
@@ -53,6 +52,7 @@
         </td>
       </tr>
     </template>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
       const doc = document;
       const $title = doc.querySelector(".crud-title");
@@ -63,6 +63,175 @@
       // como no es ideal hacer constates inserciones al DOM, creamos un fragment y alli hacemos las inserciones
       // que vienen del api y luego el fragment lo insertamos en el DOM
       $fragment = doc.createDocumentFragment();
+
+      const getAll = async () => {
+        try {
+          let res = await axios.get("http://localhost:5555/santos");
+          // axios ya retorna los datos en formato json los datos
+          let json = await res.data;
+          console.info(json);
+
+          // si no ocurre un error, pintamos los datos que vienen de la api en el document
+          json.forEach((el) => {
+            // agregamos los data attribute a los botones editar y eliminar por cada elemento
+            $template.querySelector(".edit").dataset.id = el.id;
+            $template.querySelector(".edit").dataset.name = el.nombre;
+            $template.querySelector(".edit").dataset.constellation =
+              el.constelacion;
+            $template.querySelector(".delete").dataset.id = el.id;
+
+            // colocamos los datos del api (nombre y constelacion)
+            $template.querySelector(".name").textContent = el.nombre;
+            $template.querySelector(".constellation").textContent =
+              el.constelacion;
+
+            // importamos el nodo del template copiado su estructura y contenido
+            let $clone = doc.importNode($template, true);
+            // le pasamos al fragment el nodo clonado
+            $fragment.appendChild($clone);
+          });
+
+          // ahora dentro de tbody del table colocamos el fragment
+          $table.querySelector("tbody").appendChild($fragment);
+        } catch (error) {
+          // si se produce un error en la peticion, axios nos manipula el error
+          let message = error.statusText || "Ocurrio un error";
+          // insertamos el error despues de la tabla
+          $table.insertAdjacentHTML(
+            "afterend",
+            `<p><b>Error: ${error.status}: ${message}</b></p>`
+          );
+        }
+      };
+
+      // Llamamos a la funcion getAll cuando se carga el documento y mostramos los datos
+      doc.addEventListener("DOMContentLoaded", getAll());
+
+      // manejamos el evento submit del formulario
+      doc.addEventListener("submit", async (e) => {
+        // validamos si el evento lo genero el formulario
+        if (e.target === $form) {
+          e.preventDefault();
+          // validamos el contenido del input id, si viene vacion hacemos la peticion POST (agregar un registro)
+          if (!e.target.id.value) {
+            // Create - POST
+            try {
+              // opciones de la peticion fetch
+              let options = {
+                method: "POST",
+                // establecemos la cabecera de la peticion POST con fetch
+                headers: {
+                  "Content-type": "application/json;charset=utf-8",
+                },
+                // enviamos los datos del objeto javascript convertido a un tipo texto json en cadena
+                // lo que para fetch es body en axios se llama data el parametro
+                data: JSON.stringify({
+                  nombre: e.target.nombre.value,
+                  constelacion: e.target.constelacion.value,
+                }),
+              };
+              // como el metodo ya lo indicamos arriba (POST) no es necesario escribir axios.post() solo axios
+              let res = await axios("http://localhost:5555/santos", options);
+              // la data que retorna axios viene automaticamente en formato json
+              let json = await res.data;
+              // refrescamos la pagina para ver el nuevo dato ingresado
+              location.reload();
+            } catch (error) {
+              // cuando se produce un error axios automaticamente lo envia al catch
+              let message = error.statusText || "Ocurrio un error";
+              $form.insertAdjacentHTML(
+                "afterend",
+                `<p><b>${error.status}: ${error.statusText}</b></p>`
+              );
+            }
+          } else {
+            // Update - PUT
+            try {
+              // opciones de la peticion fetch
+              let options = {
+                method: "PUT",
+                // establecemos la cabecera de la peticion POST con fetch
+                headers: {
+                  "Content-type": "application/json;charset=utf-8",
+                },
+                // enviamos los datos del objeto javascript convertido a un tipo texto json en cadena
+                // lo que para fetch es body en axios se llama data el parametro
+                data: JSON.stringify({
+                  nombre: e.target.nombre.value,
+                  constelacion: e.target.constelacion.value,
+                }),
+              };
+              // como el metodo ya lo indicamos arriba (POST) no es necesario escribir axios.post() solo axios
+              let res = await axios(
+                `http://localhost:5555/santos/${e.target.id.value}`,
+                options
+              );
+              // la data que retorna axios viene automaticamente en formato json
+              let json = await res.data;
+              // refrescamos la pagina para ver el nuevo dato ingresado
+              location.reload();
+            } catch (error) {
+              // cuando se produce un error axios automaticamente lo envia al catch
+              let message = error.statusText || "Ocurrio un error";
+              $form.insertAdjacentHTML(
+                "afterend",
+                `<p><b>${error.status}: ${error.statusText}</b></p>`
+              );
+            }
+          }
+        }
+      });
+
+      doc.addEventListener("click", async (e) => {
+        // validamos que el elemento con la clase .edit haya generado el evento click
+        if (e.target.matches(".edit")) {
+          // cambiamos el titulo del formulario
+          $title.textContent = "Editar Santo";
+          // accedemos al valor del data attribute del boton editar para pasarlos al input del formulario
+          $form.nombre.value = e.target.dataset.name;
+          $form.constelacion.value = e.target.dataset.constellation;
+          $form.id.value = e.target.dataset.id;
+        }
+
+        if (e.target.matches(".delete")) {
+          let isDeleted = confirm(
+            `¿Estás seguro de querer eliminar el id ${e.target.dataset.id}?`
+          );
+          if (isDeleted) {
+            try {
+              // opciones de la peticion fetch
+              let options = {
+                method: "DELETE",
+                // establecemos la cabecera de la peticion POST con fetch
+                headers: {
+                  "Content-type": "application/json;charset=utf-8",
+                },
+                // no es necesario enviar data,basta con el id del santo
+              };
+
+              let res = await fetch(
+                `http://localhost:5555/santos/${e.target.dataset.id}`,
+                options
+              );
+              let json = await res.data;
+
+              // validamos cualquier error
+              if (!res.ok) {
+                throw {
+                  status: res.status,
+                  statusText: res.statusText,
+                };
+              }
+
+              // actualizamos la pagina
+              location.reload();
+            } catch (error) {
+              let message = error.statusText || "Ocurrio un error";
+              alert(`Error ${err.status}: ${message}`);
+            }
+          }
+        }
+      });
     </script>
   </body>
 </html>
