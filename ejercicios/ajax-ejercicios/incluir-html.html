@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Incluir html con Ajax</title>
+    <style>
+      /* reseteo de los valores html */
+      html {
+        box-sizing: border-box;
+        font-family: sans-serif;
+        font-size: 16px;
+      }
+
+      /* a todos los elementos */
+      *,
+      *:before,
+      *:after {
+        /*el tamanio de las cajas inician desde el borde*/
+        box-sizing: inherit;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        /*direccion en columna, los elementos se ubican uno debajo del otro*/
+        flex-direction: column;
+      }
+
+      /*responsivo*/
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+
+      main {
+        /* el espacio sobrante lo utiliza el main, y el footer se va abajo*/
+        flex-grow: 1;
+      }
+
+      .container {
+        /*margenes laterales automaticos*/
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 992px;
+      }
+
+      .header {
+        padding: 0.5rem;
+        background-color: antiquewhite;
+      }
+
+      .header-content {
+        /*la direction por defecto de flex es en fila, por lo que colocamos en fila la imagen y el nav*/
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        width: 3rem;
+        height: auto;
+      }
+
+      .menu {
+        display: flex;
+        justify-content: space-between;
+        font-size: 115%;
+      }
+
+      /*estilos a los elementos del menu*/
+      .menu a {
+        color: chocolate;
+        padding: 0 1vw;
+        transition: all 0.3s ease-in-out;
+      }
+
+      .menu a:hover {
+        opacity: 0.75;
+      }
+    </style>
+    <script src="assets/include-html.js"></script>
+  </head>
+
+  <body>
+    <!--Reemplazamos el nodo del div e incluimos el contenido del archivo header.html 
+      especificando el data attribute data-include-->
+    <div data-include="assets/header.html"></div>
+
+    <!--aqui cargamos el contenido dinamico de las paginas-->
+    <!--solo puede exisitir 1 sola etiqueta main por documento html por ello no tiene sentido ponerle nombre de clase-->
+    <main class="container"></main>
+
+    <!--cargamos el footer-->
+    <div data-include="assets/footer.html"></div>
+    <script>
+      const doc = document;
+      // variable dnde se van a cargar el contenido de los archivo html
+      const $main = doc.querySelector("main");
+
+      // funcion que obtiene el contenido html de los archivos externo
+      const getHtml = (options) => {
+        // destructuramos el objeto options. No usamos el paramatro method y data ya que
+        // hacemos un get a ls archivos html
+        let { url, success, error } = options;
+
+        const xhr = new XMLHttpRequest();
+
+        xhr.addEventListener("readystatechange", (e) => {
+          if (xhr.readyState !== 4) return;
+
+          if (xhr.status >= 200 && xhr.status < 300) {
+            // obtenemos el codigo html de las paginas, responseText nos retorna codigo html por lo que no necesitamos
+            // hacer un parse
+            let html = xhr.responseText;
+            // le pasamos el contenido html a la funcion success
+            success(html);
+          } else {
+            // manipulamos errores
+            let message = xhr.statusText || "Ocurrió un error";
+            error(`Error ${xhr.status}: ${message}`);
+          }
+        });
+
+        // abrimos la peticion
+        xhr.open("GET", url);
+        // establecemos la cabecera
+        xhr.setRequestHeader("Content-type", "text/html; charset=utf-8");
+        xhr.send();
+      };
+
+      // la funcion getHtml() se tiene que ejcutar en dos momentos: al momento de cargar el navegador
+      // y al momento de dar clik en los enlaces
+      doc.addEventListener("DOMContentLoaded", (e) => {
+        getHtml({
+          // cuando carga el documento, tomamos el contenido del archivo home.html
+          url: "assets/home.html",
+          // caso exitoso
+          success: (html) => {
+            // colocamos el contenido html en el contenedor main
+            $main.innerHTML = html;
+          },
+          // caso error
+          error: (err) => {
+            $main.innerHTML = `<h1>${err}</h1>`;
+          },
+        });
+      });
+
+      // asignamos el evento click al document
+      doc.addEventListener("click", (e) => {
+        // preguntamos si el evento lo genero un link dentro de la clase menu
+        if (e.target.matches(".menu a")) {
+          // evitamos el corpontamiento por defecto de los enlaces que es ir la ruta en el href
+          e.preventDefault();
+          getHtml({
+            // extraemos el valor del href de los enlaces
+            url: e.target.href,
+            success: (html) => ($main.innerHTML = html),
+            error: (err) => {
+              $main.innerHTML = `<h1>${err}</h1>`;
+            },
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
