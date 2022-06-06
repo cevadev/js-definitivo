@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Uploader con Ajax</title>
+    <style>
+      /* reseteo de los valores html */
+      html {
+        box-sizing: border-box;
+        font-family: sans-serif;
+        font-size: 16px;
+      }
+
+      /* a todos los elementos */
+      *,
+      *:before,
+      *:after {
+        /*el tamanio de las cajas inician desde el borde*/
+        box-sizing: inherit;
+      }
+
+      main {
+        /*centramos el input file*/
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        min-height: 100vh;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <input type="file" id="files" name="files" multiple />
+    </main>
+    <script>
+      const doc = document;
+      const $main = doc.querySelector("main");
+      const $files = doc.getElementById("files");
+
+      // funcion con ajax que nos permite subir la carga de archivos
+      // esta funcion se ejecutara por cada archivo que reciba el input
+      const uploader = (file) => {
+        // console.info(file);
+
+        // codigo ajax
+        const xhr = new XMLHttpRequest();
+        // el objeto FormData -> aunque no tenemos un elemento llamado form, podemos crear un objeto formdata
+        // que simule el envio ya sea un GET o un POST
+        const formData = new FormData();
+        // append -> agrega al formData una variable de tipo formulario
+        // variable file representa el name que cada input posee
+        // segundo argumento a la funcion append() es pasarle cada uno de los archivos
+        formData.append("file", file);
+
+        // agreamos un lstener al objeto ajax xhr
+        xhr.addEventListener("readystatechange", (e) => {
+          if (xhr.readyState !== 4) return;
+          // procesamos peticiones correctas de tipo 200
+          if (xhr.status >= 200 || xhr.status < 300) {
+            // recibimos la respuesta del servidor y la parseamos al objeto javascript
+            let json = JSON.parse(xhr.responseText);
+          } else {
+            let message = xhr.statusText || "Ocurrio un error";
+            console.error(`Error ${xhr.status}: ${message}`);
+          }
+        });
+
+        // como se envia un formulario, abrimo la peticion por POST
+        // assets/uploader.php -> archivo que contiene la programacion del lado del servidor que subira el o los
+        // archivos al servidor
+        xhr.open("POST", "assets/uploader.php");
+        // como enviamos archivos binarios a traves del formulario debemos especificar un cabecera
+        // enc-type y multipart son parametros necesarios en el envio de forms con archivos bnarios
+        xhr.setRequestHeader("enc-type", "multipart/form-data");
+        xhr.send(formData);
+      };
+
+      // cada vez que se dispare el evento change del input, llamaremos a l funcion uploader()
+      // delegamos el evento change al document
+      doc.addEventListener("change", (e) => {
+        // peguntamos si el input file es quien origina el evento
+        if (e.target === $files) {
+          // print la propiedad files del input file
+          // console.info(e.target.files);
+
+          // obtenemos los archivos del elemento $files y convertimos los files en un objeto array iterable
+          const files = Array.from(e.target.files);
+          // iteramos cada elemento de array y le aplicamos la funcion uploader()
+          files.forEach((el) => uploader(el));
+        }
+      });
+    </script>
+  </body>
+</html>
