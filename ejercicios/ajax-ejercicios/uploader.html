@@ -30,11 +30,17 @@
         text-align: center;
         min-height: 100vh;
       }
+
+      progress {
+        margin-top: 1rem;
+      }
     </style>
   </head>
   <body>
     <main>
       <input type="file" id="files" name="files" multiple />
+      <!--agregamos una barra de progreso-->
+      <progress value="70" max="100"></progress>
     </main>
     <script>
       const doc = document;
