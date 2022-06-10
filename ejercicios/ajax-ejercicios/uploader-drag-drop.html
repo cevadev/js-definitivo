@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Uploader con Ajax</title>
+    <title>Uploader Drag & Drop con Ajax</title>
     <style>
       /* reseteo de los valores html */
       html {
@@ -38,18 +38,49 @@
       progress {
         margin-top: 1rem;
       }
+
+      .drop-zone {
+        margin-left: auto;
+        margin-right: auto;
+        border: thin dotted #000;
+        width: 80%;
+        height: 40vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+      }
+
+      .drop-zone.is-active {
+        border: thick dashed #000;
+        background-color: rgba(0, 128, 0, 0.5);
+        animation: pulse 1.5s infinite;
+        animation-timing-function: linear;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+
+        50% {
+          transform: scale(1.1);
+        }
+      }
     </style>
   </head>
   <body>
     <main>
-      <input type="file" id="files" name="files" multiple />
+      <article class="drop-zone">
+        <p>Drag me to server...</p>
+      </article>
       <!--agregamos una barra de progreso-->
       <!--<progress value="70" max="100"></progress>-->
     </main>
     <script>
       const doc = document;
       const $main = doc.querySelector("main");
-      const $files = doc.getElementById("files");
+      const $dropZone = doc.querySelector(".drop-zone");
 
       // funcion con ajax que nos permite subir la carga de archivos
       // esta funcion se ejecutara por cada archivo que reciba el input
@@ -126,25 +157,43 @@
           setTimeout((e) => {
             $main.removeChild($progress);
             $main.removeChild($span);
-            // reset el valor del input file
-            $files.value = "";
           }, 3000);
         });
       };
 
-      // cada vez que se dispare el evento change del input, llamaremos a l funcion uploader()
-      // delegamos el evento change al document
-      doc.addEventListener("change", (e) => {
-        // peguntamos si el input file es quien origina el evento
-        if (e.target === $files) {
-          // print la propiedad files del input file
-          // console.info(e.target.files);
+      /* API drag & drop */
+      // evento dragover -> el cursor debe estar sobre la zona dray&drop y tratando de arrastrar un archivo
+      $dropZone.addEventListener("dragover", (e) => {
+        // console.info(e);
+        // detenemos el comportamiento por defecto
+        // detenemos la propagacion para que el evento se quede en la dropzone
+        e.preventDefault();
+        e.stopPropagation();
 
-          // obtenemos los archivos del elemento $files y convertimos los files en un objeto array iterable
-          const files = Array.from(e.target.files);
-          // iteramos cada elemento de array y le aplicamos la funcion progressUpload()
-          files.forEach((el) => progressUpload(el));
-        }
+        // a la $dropZone le agregamos la clase .is-active para ver la animacion
+        e.target.classList.add("is-active");
+      });
+
+      // el evento dragleave -> similiar a mouseout, este evento se dispara cuando se sale de zona drag&drop
+      $dropZone.addEventListener("dragleave", (e) => {
+        // console.info(e);
+        e.preventDefault();
+        e.stopPropagation();
+        e.target.classList.remove("is-active");
+      });
+
+      // el event drop -> este evento se dispara cuando soltams el archivo
+      $dropZone.addEventListener("drop", (e) => {
+        // console.info(e);
+        e.preventDefault();
+        e.stopPropagation();
+
+        // obtenemos los archivos arrastrados a la dropZone. convertimos en objeto iterable los archivos
+        const files = Array.from(e.dataTransfer.files);
+        files.forEach((el) => progressUpload(el));
+
+        // cuando el usuario suelta el archivo, quitamos la animacion del dropzone
+        e.target.classList.remove("is-active");
       });
     </script>
   </body>
