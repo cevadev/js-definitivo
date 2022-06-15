@@ -226,9 +226,9 @@
 
         // interceptamos el evento submit que procesa el formulario
         doc.addEventListener("submit", (e) => {
-          // prevenimos la accion automatica de submit
-          // e.preventDefault();
-          alert("Enviando fomulario");
+          // prevenimos la accion automatica de submit. e representa el elemento qe lanza el evento
+          // en este caso el elemento es el form
+          e.preventDefault();
 
           // almacenamos la referencia del loader y el div de respuesta en el DOM
           const $loader = doc.querySelector(".contact-form-loader");
@@ -237,20 +237,41 @@
           // quitamos la clase none
           $loader.classList.remove("none");
 
-          // simulamos la respuesta del servidor con setTimeout, despues de 3 seg envia una respuesta
-          setTimeout(() => {
-            $loader.classList.add("none");
-            $response.classList.remove("none");
-            // limpiamos el form
-            $form.reset();
-
-            setTimeout(() => {
-              $response.classList.add("none");
-            }, 3000);
-          }, 3000);
+          // realizamos una peticion fetchm pasando url y un obejto
+          fetch("https://formsubmit.co/ajax/barcvilla@gmail.com", {
+            method: "POST",
+            /* el objeto FormData parsea el contenido de elemento/valor es decir, el input y el texto escrito
+               para que elparseo se realice todos los inputs debe tener su attributo name establecidos*/
+            body: new FormData(e.target),
+          })
+            // validamos si la respuesta es ok convertimos res en json
+            // si no es ok, rechazamos la res
+            .then((res) => (res.ok ? res.json() : Promise.reject(res)))
+            // procesamos nuestra respuesta con el objeto json
+            .then((json) => {
+              console.info(json);
+              $loader.classList.add("none");
+              $response.classList.remove("none");
+              $response.innerHTML = `<p>${json.message}</p>`;
+              $form.reset();
+            })
+            // procesamos si ocurre un error
+            .catch((err) => {
+              console.error(err);
+              let message = err.statusText || "Ocurrió un error fatal";
+              $response.innerHTML = `<p>Error ${err.status} : <b>${message}</b></p>`;
+            })
+            // luego de 3 segundos limpiamos los mensajes
+            .finally(() => {
+              setTimeout(() => {
+                $response.classList.add("none");
+                $response.innerHTML = "";
+              }, 8000);
+            });
         });
       }
 
+      // enlazamos la funcion cuando se carga el documento
       doc.addEventListener("DOMContentLoaded", contactForm);
     </script>
   </body>
