@@ -1,3 +1,4 @@
+import stripeKeys from "./stripe-keys.js";
 import STRIPE_KEYS from "./stripe-keys.js";
 
 const doc = document;
@@ -18,6 +19,16 @@ const fetchOptions = {
 
 // variabes que almacenan la informacion de los productos y precios
 let products, prices;
+
+/**
+ * funcion para dar formato al precio del producto que nos retorna Stripe
+ * El precio viene en texto, cortamos los dos ultimos caracteres ponerle un punto (.)
+ */
+const moneyFormat = (num) => {
+  // conservamos desde la pocision cero del num y le quitamos las dos ultimas posiciones
+  // y luego agregamos los centavos
+  return `$${num.slice(0, -2)}.${num.slice(-2)}`;
+};
 
 // Como tenemos que hacer varias peticiones para tener la informacion requerida es mejor tratar
 // El metodo all() de las promise y en ella hacer la peticiones fetch
@@ -53,7 +64,7 @@ Promise.all([
       $template.querySelector("figcaption").innerHTML = `
         ${productData[0].name}
         <br/>
-        ${el.unit_amount_decimal} ${el.currency}
+        ${moneyFormat(el.unit_amount_decimal)} ${el.currency}
       `;
 
       // clonamos el node del template
@@ -72,6 +83,45 @@ Promise.all([
       error.statusText || "Ocurrio un error al conectarse con el API de Stripe";
     $tacos.innerHTML = `<p><b>Error ${error.status}</b>:${message}</p>`;
   });
+
+/**
+ * Programamos el click a cada tarjeta
+ */
+doc.addEventListener("click", (e) => {
+  // validamos cuando se hace click a los elemento internos de la clase .taco
+  if (e.target.matches(".taco *")) {
+    /**
+     * enviamos a Stripe el precio del producto que el usuario va a comprar.
+     * el elemento figure contiene un data attribute llamado data-price que contiene el id del price
+     * al hacer click ya sea en el img o el figCaption obtenemos el data-price del elemento padre figure
+     */
+    let price = e.target.parentElement.getAttribute("data-price");
+
+    // invocacion al objeto Stripe que viene del archivo js en el html
+    Stripe(stripeKeys.public)
+      .redirectToCheckout({
+        // definimos un objeto de configuracion
+        lineItems: [{ price: price, quantity: 1 }],
+        // en nuestro ejemplo aplicamos una subscripcion mensual el usuario nos invita un taco
+        mode: "subscription",
+        // cuando el checkout se realiza, Stripe no redirige a la pagina que le indiquemos de exito o de error
+        successUrl:
+          "http://127.0.0.1:5500/js-definitivo-mircha/ejercicios/ajax-ejercicios/assets/stripe-success.html",
+        cancelUrl:
+          "http://127.0.0.1:5500/js-definitivo-mircha/ejercicios/ajax-ejercicios/assets/stripe-error.html",
+      })
+      // procesamos la respuesta
+      .then((res) => {
+        // validams si se produjo un error
+        if (res.error) {
+          // imprimimos el error y lo colocamos en la variable tacos
+          $tacos.insertAdjacentHTML("afterend", res.error.message);
+        }
+
+        // cuando la respuesta es correcta debemos tener una pagina de transaccion exitosa a cual redirijimos
+      });
+  }
+});
 
 // Accedemos de la API de Stripe a nuestros productos
 // objeto con las credenciales de autenticacion en Stripe
