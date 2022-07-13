@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es>
+<head
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokémons</title>
+    <style>
+        .loader{
+            display: block;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Pokémons</h1>
+    <nav class="links"></nav>
+    <main class="grid-fluid"></main>
+    <script>
+        const doc = document;
+        $links = doc.querySelector(".links");
+        $main = doc.querySelector("main");
+
+        let pokeApi = "https://pokeapi.co/api/v2/pokemon/";
+
+        /**
+         * 1 era peticion a la url principal que nos arroja todos los pokémons de la API
+         * 2 da peticion con el id del pokémon obtenemos todos los datos del pokémon.
+         */
+        // 1 era peticion
+        async function getAllPokemons(url){
+            try {
+                // cuando se invoca la carga de pokemons mostrar un loader
+                $main.innerHTML = `<img class="loader" src="assets/three-dots.svg" alt="Cargando">`;
+                // esperamos la respuesta del api
+                let res = await fetch(url);
+                // convertimos la respuesta obtenida en formato json
+                let json = await res.json();
+                // usamos templates donde vamos a escribir todos los pokémons que recibimos
+                let $template = "", $prevLink = "", $nextLink = "";
+
+                // si se produce un error, lanzamos un objeto con informacion del error
+                if(!res.ok){
+                    throw {
+                        status: res.status,
+                        statusText: res.statusText
+                    }
+                }
+
+                // si no hay mensajes de error, trabajamos con el template
+                // usamos un for pra procesar el array resultante ya que tomaremos el valor de la propiedad url
+                // para hacer una llamada al endpoint con la infomacion del pokemon
+                for(let i = 0; i < json.results.length; i++){
+                    // Obtenemos la info de cada pokemon con el valor de la propiedad url
+                    try {
+                        let res = await fetch(json.results[i].url);
+                        // obtenemos la respuesta en formato json
+                        let pokemon = await res.json();
+                        
+                        // validamos que no se produzca un error, si es asi, enviamos un objeto al catch
+                        if(!res.ok){
+                            throw {
+                                status: res.status,
+                                statusText: res.statusText
+                            }
+                        }
+                        // si no hay error, por cada iteración, llenamos la variable $template y creamos una etiqueta figure
+                        $template += `
+                            <figure>
+                                <img src="${pokemon.sprites.front_default}" alt="${pokemon.name}" />
+                                <figcaption>${pokemon.name}</figcaption>
+                            </figure>
+                        `;  
+                    } catch (error) {
+                         // si se produjo un error, el catch recibe el objeto de error lanzado
+                        let message = error.statusText || "Ocurrió un error";
+                        $template += `
+                            <figure>
+                                <figcaption>Error ${error.status}:${message}</figcaption>
+                            </figure>
+                        `
+                    }
+                }
+                // insertamos la variable $template a la etiqueta main
+                $main.innerHTML = $template;
+            } catch (error) {
+                // si se produjo un error, el catch recibe el objeto de error lanzado
+                let message = error.statusText || "Ocurrió un error";
+                $main.innerHTML = `<p>Error ${error.status}:${message}</p>`
+            }
+        }
+
+        // indicamos donde se ejecutara la 1 era peticion: al momento de cargar el DOM
+        doc.addEventListener("DOMContentLoaded", (e)=> getAllPokemons(pokeApi));
+    </script>
+</body>
+</html>
