@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Select anidados</title>
+  </head>
+  <body>
+    <h1>Selects Anidados</h1>
+    <h2>México</h2>
+    <label for="select-primary">Estados</label>
+    <select name="primary" id="select-primary">
+      <option value="">Elige un estado</option>
+    </select>
+    <p></p>
+    <label for="select-secondary">Municipios</label>
+    <select name="secondary" id="select-secondary">
+      <option value="">Elige un Municipio</option>
+    </select>
+    <p></p>
+    <label for="select-third">Colonias</label>
+    <select name="hird" id="select-third">
+      <option value="">Elige una colonia</option>
+    </select>
+    <p></p>
+    <script>
+      const doc = document;
+      $selectPrimary = doc.getElementById("select-primary");
+      $selectSecondary = doc.getElementById("select-secondary");
+      $selectThird = doc.getElementById("select-third");
+
+      function loadStates() {
+        fetch(
+          "https://api.copomex.com/query/get_estados?token=842f123d-ca2d-4fa9-8034-479115cef188"
+        )
+          .then((res) => {
+            if (res.ok) {
+              return res.json();
+            } else {
+              return Promise.reject(res);
+            }
+          })
+          .then((json) => {
+            console.info(json);
+            let $options = `<option value="">Elige un estado</option>`;
+            // dentro de la respuesta hay viene un objeto response que tiene una propedad estado con los 32 estados
+            json.response.estado.forEach(
+              (element) =>
+                ($options += `<option value="${element}">${element}</option>`)
+            );
+            $selectPrimary.innerHTML = $options;
+          })
+          .catch((err) => {
+            console.error(err);
+            let menssage = err.statusText || "Ocurrió un error";
+            // en el nodo siguiente del $selectPrimary colocamos el mensaje de error
+            $selectPrimary.nextElementSibling.innerHtml = `Error ${err.status}:${menssage}`;
+          });
+      }
+
+      // funcion que carga los municipios del estado seleccionado
+      function loadStatesTowns(state) {
+        fetch(
+          `https://api.copomex.com/query/get_municipio_por_estado/${state}?token=842f123d-ca2d-4fa9-8034-479115cef188`
+        )
+          .then((res) => (res.ok ? res.json() : Promise.reject(res)))
+          .then((json) => {
+            console.info(json);
+            let $options = `<option value="">Elige un municipio</option>`;
+            // dentro de la respuesta hay viene un objeto response que tiene una propedad estado con los 32 estados
+            json.response.municipios.forEach(
+              (element) =>
+                ($options += `<option value="${element}">${element}</option>`)
+            );
+            $selectSecondary.innerHTML = $options;
+          })
+          .catch((err) => {
+            console.error(err);
+            let menssage = err.statusText || "Ocurrió un error";
+            // en el nodo siguiente del $selectPrimary colocamos el mensaje de error
+            $selectSecondary.nextElementSibling.innerHtml = `Error ${err.status}:${menssage}`;
+          });
+      }
+
+      function loadSuburbs(town) {
+        fetch(
+          `https://api.copomex.com/query/get_colonia_por_municipio/${town}?token=842f123d-ca2d-4fa9-8034-479115cef188`
+        )
+          .then((res) => (res.ok ? res.json() : Promise.reject(res)))
+          .then((json) => {
+            console.info(json);
+            let $options = `<option value="">Elige una colonia</option>`;
+            // dentro de la respuesta hay viene un objeto response que tiene una propedad estado con los 32 estados
+            json.response.colonia.forEach(
+              (element) =>
+                ($options += `<option value="${element}">${element}</option>`)
+            );
+            $selectThird.innerHTML = $options;
+          })
+          .catch((err) => {
+            console.error(err);
+            let menssage = err.statusText || "Ocurrió un error";
+            // en el nodo siguiente del $selectPrimary colocamos el mensaje de error
+            $selectThird.nextElementSibling.innerHtml = `Error ${err.status}:${menssage}`;
+          });
+      }
+
+      // la carga de los estados del país de México se debe realizar al momento de cargar la página
+      // cuando se ejecuta el evento DOMContentLoaded invocamos la funcion loadStates
+      doc.addEventListener("DOMContentLoaded", loadStates);
+
+      // la funcion loadStatesTowns esta asociada al evento change del select primary
+      $selectPrimary.addEventListener("change", (e) => {
+        loadStatesTowns(e.target.value);
+      });
+
+      $selectSecondary.addEventListener("change", (e) => {
+        loadSuburbs(e.target.value);
+      });
+    </script>
+  </body>
+</html>
