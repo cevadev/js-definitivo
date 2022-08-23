@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WordPress REST API</title>
+  </head>
+  <body>
+    <h1>WordPress REST-API</h1>
+    <script>
+      // accedemos a los ultimos post del sitio malvestida hecha en wordpress
+      fetch("https://malvestida.com/wp-json/wp/v2/posts")
+        .then((res) => {
+          if (res.ok) {
+            return res.json();
+          } else {
+            return Promise.reject(res);
+          }
+        })
+        .then((json) => {
+          console.info(json);
+        });
+    </script>
+  </body>
+</html>
