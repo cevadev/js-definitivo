@@ -5,12 +5,258 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>WordPress REST API</title>
+    <style>
+      /** reseteo del modelo de caja */
+      html {
+        box-sizing: border-box;
+        font-family: sans-serif;
+        font-size: 16px;
+      }
+
+      *,
+      *.after,
+      *.before {
+        box-sizing: inherit;
+      }
+
+      a {
+        color: #01579b;
+        transition: all 0.3s ease-out;
+      }
+
+      a:hover {
+        opacity: 0.75;
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+
+      h1 {
+        text-align: center;
+      }
+
+      hr {
+        border: thin solid #01579b;
+        margin: 3rem auto;
+        width: 80%;
+      }
+
+      .site {
+        margin: 1rem auto;
+        padding: 1rem;
+        max-width: 50%;
+        text-align: center;
+      }
+
+      .post {
+        margin: 1rem auto;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        max-width: 80%;
+        text-align: center;
+        background-color: #eceff1;
+      }
+
+      .post.author img {
+        border-radius: 50%;
+      }
+
+      .post.date {
+        margin: 1rem auto;
+        display: block;
+      }
+
+      .post-excerpt,
+      .post-categories,
+      .post-tags,
+      .post-content {
+        text-align: left;
+      }
+
+      .post-content summary {
+        font-size: 1.5rem;
+        font-weight: bold;
+      }
+
+      .post-content > article {
+        padding: 1rem;
+        background-color: #e3f2fd;
+      }
+
+      .post-content img {
+        display: block;
+        margin: auto;
+      }
+
+      .loader {
+        display: none;
+        margin: 2rem auto;
+      }
+    </style>
   </head>
   <body>
     <h1>WordPress REST-API</h1>
+    <article id="site" class="site"></article>
+    <section id="posts" class="posts"></section>
+    <img class="loader" src="./assets/three-dots.svg" alt="cargando" />
+    <template id="post-template">
+      <article class="post">
+        <img class="post-image" />
+        <aside>
+          <h2 class="post-title"></h2>
+          <figure class="post-author"></figure>
+          <small class="post-date"></small>
+          <a class="post-link" target="_blank">Ver publicación original</a>
+          <p class="post-excerpt"></p>
+          <div class="post-categories"></div>
+          <div class="post-tags"></div>
+          <details class="post-content">
+            <summary>Ver contenido de la publicación</summary>
+            <article></article>
+          </details>
+        </aside>
+      </article>
+    </template>
     <script>
+      // el parametro _embed en una url permite obtener un objeto embebido con informacio detalla del
+      // elemento que se quiere obtener.
+      const doc = document,
+        $site = doc.getElementById("site"),
+        $posts = doc.getElementById("posts"),
+        $loader = doc.querySelector(".loader"),
+        $template = doc.getElementById("post-template").content,
+        $fragment = doc.createDocumentFragment(),
+        DOMAIN = "https://luisjovel.com/",
+        SITE = `${DOMAIN}/wp-json`,
+        WP_NATIVE_API = `${SITE}/wp/v2`,
+        POSTS = `${WP_NATIVE_API}/posts?_embed`,
+        PAGES = `${WP_NATIVE_API}/pages`,
+        CATEGORIES = `${WP_NATIVE_API}/categories`;
+
+      function getSiteData() {
+        fetch(SITE)
+          .then((res) => {
+            if (res.ok) {
+              return res.json();
+            } else {
+              return Promise.reject(res);
+            }
+          })
+          .then((json) => {
+            // interactuamos con el dom
+            console.info(json);
+            $site.innerHTML = `
+              <h3>Sitio Web</h3>
+              <h2>
+                <a href="${json.url}" target="_blank">${json.name}</a>
+              </h2>
+              <p>${json.description}</p>
+              <p>${json.timezone_string}</p>
+            `;
+          })
+          .catch((err) => {
+            let message = err.statusText || "Ocurrió un error";
+            $site.innerHTML = `<p>Error ${err.status}: ${message}</p>`;
+          });
+      }
+
+      function getPosts() {
+        // antes de solicitar los post mostramos el loader
+        $loader.style.display = "block";
+        fetch(POSTS)
+          .then((res) => (res.ok ? res.json() : Promise.reject(res)))
+          .then((json) => {
+            // json es la respuesta del AP que contiene los articulos del blog
+            // cada post es un objeto. El objeto title posee la propiedad rendered que contiene el titulo del post
+            console.info(json);
+            // recorremos cada elemento del array con los post
+            json.forEach((element) => {
+              // variables para recorrer categorias y etiquetas de cada post
+              let categories = "";
+              let tags = "";
+              // [wp:termn][0] -> la posicion 0 hace referencia a las categorias
+              // por cada categoria la concatenamos a la variable categories
+              element._embedded["wp:term"][0].forEach((category) => {
+                return (categories += `<li>${category.name}</li>`);
+              });
+              element._embedded["wp:term"][1].forEach((tag) => {
+                return (tags += `<li>${tag.name}</li>`);
+              });
+
+              // _embedded["wp:featuredmedia"] invocarmos la propiedade del objeto _embedded con notacion [] porque
+              // la propiedad utiliza wp:featuredmedia utiliza como nombre :
+              $template.querySelector(".post-image").src =
+                element._embedded["wp:featuredmedia"][0].source_url;
+              $template.querySelector(".post-image").alt =
+                element.title.rendered;
+
+              // en el elemento html con clase post-title colocamos el title
+              $template.querySelector(".post-title").innerHTML =
+                element.title.rendered;
+
+              // author
+              $template.querySelector(".post-author").innerHTML = `
+                <img src="${element._embedded.author[0].avatar_urls["48"]}" alt="${element._embedded.author[0].name}" />
+                <figcaption>${element._embedded.author[0].name}</figcaption>
+              `;
+              // post date
+              $template.querySelector(".post-date").innerHTML = new Date(
+                element.date
+              ).toLocaleString();
+
+              // post original link
+              $template.querySelector(".post-link").href = element.link;
+              // post extracto
+              $template.querySelector(".post-excerpt").innerHTML =
+                element.excerpt.rendered.replace("[&hellip;]", "...");
+
+              // Post categories
+              $template.querySelector(".post-categories").innerHTML = `
+                <p>Categorías</p>
+                <ul>${categories}</ul>
+              `;
+
+              // Post tags
+              $template.querySelector(".post-tags").innerHTML = `
+                <p>Etiquetas</p>
+                <ul>${tags}</ul>
+              `;
+
+              // .post-content es la etiqueta summary con la linea .post-content > article
+              // decimos que buscamos al hijo directo del post-content
+              $template.querySelector(".post-content > article").innerHTML =
+                element.content.rendered;
+
+              // 1. clonamos cada elemento (node) del template, true -> permite respetar toda la estructura del template
+              let $clone = doc.importNode($template, true);
+              // 2. El node clonado, se lo agregamos al fragmento
+              $fragment.appendChild($clone);
+            });
+            // 3. agregamos el fragmento del dom al elemento del DOM $posts
+            $posts.appendChild($fragment);
+
+            // cuando se terminan de cargar los elementos, ocultamos el loader
+            $loader.style.display = "none";
+          })
+          .catch((err) => {
+            console.error(err);
+            let message = err.statusText || "Ocurrió un error";
+            $posts.innerHTML = `<p>Error ${err.status}: ${message}</p>`;
+            // si se produce un error, ocultamos el loader
+            $loader.style.display = "none";
+          });
+      }
+
+      // llamamos a las funciones a la carga de documento
+      doc.addEventListener("DOMContentLoaded", (e) => {
+        getSiteData();
+        getPosts();
+      });
+
       // accedemos a los ultimos post del sitio malvestida hecha en wordpress
-      fetch("https://malvestida.com/wp-json/wp/v2/posts")
+      /*fetch(POSTS)
         .then((res) => {
           if (res.ok) {
             return res.json();
@@ -20,7 +266,7 @@
         })
         .then((json) => {
           console.info(json);
-        });
+        });*/
     </script>
   </body>
 </html>
