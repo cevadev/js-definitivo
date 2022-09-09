@@ -123,6 +123,7 @@
       // el parametro _embed en una url permite obtener un objeto embebido con informacio detalla del
       // elemento que se quiere obtener.
       const doc = document,
+        w = window,
         $site = doc.getElementById("site"),
         $posts = doc.getElementById("posts"),
         $loader = doc.querySelector(".loader"),
@@ -134,6 +135,12 @@
         POSTS = `${WP_NATIVE_API}/posts?_embed`,
         PAGES = `${WP_NATIVE_API}/pages`,
         CATEGORIES = `${WP_NATIVE_API}/categories`;
+
+      // cargamos los posts de la primer pagina
+      let page = 1;
+
+      // cargamos los posts de 5 en 5
+      let perPage = 5;
 
       function getSiteData() {
         fetch(SITE)
@@ -165,7 +172,7 @@
       function getPosts() {
         // antes de solicitar los post mostramos el loader
         $loader.style.display = "block";
-        fetch(POSTS)
+        fetch(`${POSTS}&page=${page}&per_page=${perPage}`)
           .then((res) => (res.ok ? res.json() : Promise.reject(res)))
           .then((json) => {
             // json es la respuesta del AP que contiene los articulos del blog
@@ -187,8 +194,13 @@
 
               // _embedded["wp:featuredmedia"] invocarmos la propiedade del objeto _embedded con notacion [] porque
               // la propiedad utiliza wp:featuredmedia utiliza como nombre :
-              $template.querySelector(".post-image").src =
-                element._embedded["wp:featuredmedia"][0].source_url;
+              // si el objeto _embedded tiene la propiedad wp:featuredmedia recuperamos su imagen sino
+              // cargamos una imagen alternativa
+              $template.querySelector(".post-image").src = element._embedded[
+                "wp:featuredmedia"
+              ]
+                ? element._embedded["wp:featuredmedia"][0].source_url
+                : "";
               $template.querySelector(".post-image").alt =
                 element.title.rendered;
 
@@ -253,6 +265,28 @@
       doc.addEventListener("DOMContentLoaded", (e) => {
         getSiteData();
         getPosts();
+      });
+
+      // asignamos a la ventana el evento scrool para controlar el scroll vertical
+      // para realizar un scroll infinito, debemos detectar que llegamos al final de la pagina, compararlo
+      // con la posicion que lleva la barra de desplazamiento y en ese momento hacemos la peticion y cargar mas elementos
+      w.addEventListener("scroll", (e) => {
+        // destructuramos el elemento documentElement y accedemos a las propiedades scrollTop, clientHeight, scrollHeight
+        // scrollTop -> hace referencia a la distancia entre el margen top y la barra de desplazamiento vertical
+        // clientHeight -> indica la altura del viewport del navegador, es decir, la altura de la ventana visible, es decir,
+        //  desde donde termina la barra de marcadores hasta donde termina el navegador
+        // scrollHeight -> es el total de todo el scroll que puedo realizar en la pagina
+        const { scrollTop, clientHeight, scrollHeight } = doc.documentElement;
+        /*console.info(
+          `ST: ${scrollTop} CH: ${clientHeight} SH: ${scrollHeight}`
+        );*/
+
+        // validamos el momento para hacer mas peticiones y consguir el scroll infinito
+        if (scrollTop + clientHeight + 1 >= scrollHeight) {
+          // antes de invocar getPosts() incrementamos en 1 el valor de page, para indicar que carge pagina 2
+          page++;
+          getPosts();
+        }
       });
 
       // accedemos a los ultimos post del sitio malvestida hecha en wordpress
