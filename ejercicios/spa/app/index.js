@@ -3,3 +3,9 @@
  *  Manejo de la delegacion de eventos
  *
  */
+import { App } from "./App.js";
+
+const doc = document;
+
+// que se cargue el componente principal App cuando se cargue el documento en el DOM
+doc.addEventListener("DOMContentLoaded", App);
