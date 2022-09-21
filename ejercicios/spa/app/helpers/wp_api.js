@@ -3,7 +3,7 @@
  * documentacion: https://developer.wordpress.org/rest-api/
  */
 
-const NAME = "malvestida";
+const NAME = "css-tricks";
 const DOMAIN = `https://${NAME}.com`;
 // variable que hace referenia a la url de la wordpress api para obtener info del sito en particular
 const SITE = `${DOMAIN}/wp-json`;
@@ -13,6 +13,8 @@ const API_WP = `${SITE}/wp/v2`;
 const POSTS = `${API_WP}/posts?_embed`;
 // variable que apunta a la informacion de un post en particular
 const POST = `${API_WP}/posts`;
+// variable que apunta a las categorias del sitio
+const CATEGORIES = `${API_WP}/categories`;
 // consulta de busqueda
 const SEARCH = `${API_WP}/search?_embed&search=`;
 
@@ -23,5 +25,6 @@ export default {
   api_wp: API_WP,
   posts: POSTS,
   post: POST,
+  categories: CATEGORIES,
   search: SEARCH,
 };

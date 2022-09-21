@@ -3,11 +3,25 @@
  */
 
 import api from "./helpers/wp_api.js";
+import { ajax } from "./helpers/ajax.js";
 
 export function App() {
   document.getElementById(
     "root"
   ).innerHTML = `<h1>Bienvenidos a mi primer SPA con VanilaJS</h1>`;
 
-  console.info(api);
+  ajax({
+    // al ejecutar el endpoint de los posts de wordpress, recibimos los posts y se lo pasamos al callback cbSuccess
+    url: api.posts,
+    cbSuccess: (posts) => {
+      console.info(posts);
+    },
+  });
+
+  ajax({
+    url: api.categories,
+    cbSuccess: (categories) => {
+      console.info(categories);
+    },
+  });
 }
