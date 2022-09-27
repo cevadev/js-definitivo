@@ -32,3 +32,45 @@ img{
     max-width: 100%;
     height: auto;
 }
+
+.error{
+    padding: 1rem;
+    font-size: 150%;
+    font-weight: bold;
+    text-align: center;
+    color: #fff;
+    background-color: #dc3545;
+}
+
+.form-search{
+    margin: auto;
+    text-align: center;
+}
+
+.form-search input{
+    display: block;
+    margin: auto;
+    padding: 0.25rem;
+    font-size: 1rem;
+}
+
+.header{
+    padding: 0.5rem;
+    position: sticky;
+    top: 0;
+    text-align: center;
+    background-color: #fff;
+}
+
+/* aplicamos estilo a todos hijos en primer nivel que tiene la clase header. conseguimos un espaciado parejo
+   entre los elementos title, menu y search*/
+.header > *{
+    margin: 1rem auto;
+}
+
+.loader{
+    margin: 1rem auto;
+    display: block;
+    width: 4rem;
+    height: 4rem;
+}
