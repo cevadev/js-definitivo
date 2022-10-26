@@ -3,7 +3,7 @@
  * al no utilizar export default, cuando vayamos a importa esta funcion debemos usar la destructuracion
  * de la sgte manera import { ajax } from ...
  */
-export function ajax(props) {
+export async function ajax(props) {
   /**
    * destructuramos el objeto props.
    * Toda peticion ajax por lo menos necesta una url
@@ -15,8 +15,7 @@ export function ajax(props) {
    * una callback que llamamos cbSuccess
    */
   const { url, cbSuccess } = props;
-
-  fetch(url)
+  await fetch(url)
     .then((res) => {
       if (res.ok) {
         return res.json();
@@ -31,11 +30,12 @@ export function ajax(props) {
     // caso de error
     .catch((err) => {
       let message = err.statusText || "Ocurrio un error al acceder a la API";
-      document.getElementById("root").innerHTML = `
+      document.getElementById("main").innerHTML = `
                 <div class = "error">
                     <p>Error ${err.status}:${message}</p>
                 </div>
             `;
+      document.querySelector(".loader").style.display = "none";
       console.error(err);
     });
 }

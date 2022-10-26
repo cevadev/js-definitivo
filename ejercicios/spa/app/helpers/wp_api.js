@@ -3,7 +3,7 @@
  * documentacion: https://developer.wordpress.org/rest-api/
  */
 
-const NAME = "css-tricks";
+const NAME = "malvestida";
 const DOMAIN = `https://${NAME}.com`;
 // variable que hace referenia a la url de la wordpress api para obtener info del sito en particular
 const SITE = `${DOMAIN}/wp-json`;
