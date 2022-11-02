@@ -8,5 +8,5 @@ import { App } from "./App.js";
 // que se cargue el componente principal App cuando se cargue el documento en el DOM
 document.addEventListener("DOMContentLoaded", App);
 
-// escuchamos el evento que detecta un cambio en el hash (url)
+// escuchamos el evento que detecta un cambio en el hash (url) y volvemos a renderizar la app
 window.addEventListener("hashchange", App);
