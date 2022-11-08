@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interface de usuario basada en estado</title>
+  </head>
+  <body>
+    <h1>Interface de usuario basada en estado</h1>
+    <form id="todo-form">
+      <input type="text" id="todo-item" placeholder="Tarea por hacer" />
+      <input type="submit" value="Agregar" />
+    </form>
+    <h2>Lista de Tareas</h2>
+    <ul id="todo-list"></ul>
+    <script>
+      const doc = document;
+
+      // variable para manejar el estado de la app
+      const state = {
+        // el state es un objeto donde cada atributo del objeto es cada uno de los estado que vamos a controlar
+        todoList: [],
+      };
+
+      // Template -> mecanismo que me permite tener una interface basada en el estado
+      // la arrow funcion template interactua con la propiedad todoList del estado y por cada elemento que tenga
+      // va a generar una <li></li>
+      const template = () => {
+        if (state.todoList.length < 1) {
+          return `<p><em>Lista vacia</em></p>`;
+        }
+
+        // si todoList tiene mas de un elemento: renderizamos cada elemento del arreglo en un li html
+        let todos = state.todoList.map((item) => `<li>${item}</li>`).join("");
+        return todos;
+      };
+
+      // Render UI: pintamos la interface en base a los cambios del state
+      const render = () => {
+        const $list = doc.getElementById("todo-list");
+        if (!$list) return;
+        $list.innerHTML = template();
+      };
+
+      // cuando el DOM cargue ejecutamos render()
+      doc.addEventListener("DOMContentLoaded", render);
+
+      // reaccionamos al evento submit, cuando el objeto que lo origina seal el elemento con el id todo-form
+      doc.addEventListener("submit", (e) => {
+        if (!e.target.matches("#todo-form")) {
+          return false;
+        }
+
+        e.preventDefault();
+
+        const $item = doc.getElementById("todo-item");
+        if (!$item) return;
+
+        // actualizamos el state y la UI
+        state.todoList.push($item.value);
+        render();
+
+        // limpiar el input
+        $item.value = "";
+        $item.focus();
+      });
+    </script>
+  </body>
+</html>
