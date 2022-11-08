@@ -4,10 +4,10 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Interface de usuario basada en estado</title>
+    <title>Reactividad del estado</title>
   </head>
   <body>
-    <h1>Interface de usuario basada en estado</h1>
+    <h1>Reactividad del estado</h1>
     <form id="todo-form">
       <input type="text" id="todo-item" placeholder="Tarea por hacer" />
       <input type="submit" value="Agregar" />
@@ -32,11 +32,7 @@
         }
 
         // si todoList tiene mas de un elemento: renderizamos cada elemento del arreglo en un li html
-        let todos = state.todoList
-          .map((item) => {
-            return `<li>${item}</li>`;
-          })
-          .join("");
+        let todos = state.todoList.map((item) => `<li>${item}</li>`).join("");
         return todos;
       };
 
@@ -47,8 +43,27 @@
         $list.innerHTML = template();
       };
 
+      // Actualizacion del state de manera reactiva
+      const setState = (obj) => {
+        // recorremos las propiedades del objeto
+        for (let key in obj) {
+          // evaluamos que una propiedad exista dentro de un objeto
+          if (state.hasOwnProperty(key)) {
+            // actualizamos las propiedades del state que coincidan con la propiedades del obj
+            state[key] = obj[key];
+          }
+        }
+
+        render();
+      };
+
       // cuando el DOM cargue ejecutamos render()
       doc.addEventListener("DOMContentLoaded", render);
+
+      // estableciendo valor por defecto al state
+      setState({
+        todoList: ["Tarea 1", "Tarea 2", "Tarea 3"],
+      });
 
       // reaccionamos al evento submit, cuando el objeto que lo origina seal el elemento con el id todo-form
       doc.addEventListener("submit", (e) => {
@@ -61,7 +76,7 @@
         const $item = doc.getElementById("todo-item");
         if (!$item) return;
 
-        // actualizamos el state y la UI
+        // accedemos y actualizamos el state y la UI
         state.todoList.push($item.value);
         render();
 
