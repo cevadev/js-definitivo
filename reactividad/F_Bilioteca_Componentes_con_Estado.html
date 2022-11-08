@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Biblioteca de Componentes con estado</title>
+  </head>
+  <body>
+    <h1>Biblioteca de Componentes con estado</h1>
+    <form id="todo-form">
+      <input type="text" id="todo-item" placeholder="Tarea por hacer" />
+      <input type="submit" value="Agregar" />
+    </form>
+    <h2>Lista de Tareas</h2>
+    <ul id="todo-list"></ul>
+    <script src="./Component.js"></script>
+    <script>
+      const doc = document;
+
+      const app = new Component({
+        el: "#todo-list",
+        data: {
+          todoList: [],
+        },
+        template: function (props) {
+          if (props.todoList.length < 1) {
+            return `<p><em>Lista vacia</em></p>`;
+          }
+
+          // si todoList tiene mas de un elemento: renderizamos cada elemento del arreglo en un li html
+          let todos = props.todoList.map((item) => `<li>${item}</li>`).join("");
+          return todos;
+        },
+      });
+
+      // cuando el DOM cargue ejecutamos render()
+      doc.addEventListener("DOMContentLoaded", app.render);
+
+      // estableciendo valor por defecto al state
+      app.setState({
+        todoList: ["Tarea 1", "Tarea 2", "Tarea 3"],
+      });
+
+      // reaccionamos al evento submit, cuando el objeto que lo origina seal el elemento con el id todo-form
+      doc.addEventListener("submit", (e) => {
+        if (!e.target.matches("#todo-form")) {
+          return false;
+        }
+
+        e.preventDefault();
+
+        const $item = doc.getElementById("todo-item");
+        if (!$item) return;
+
+        // Actualizamos el state de manera reactiva
+        const lastState = app.getState(); // copia inmutable del state
+        // accedemos y actualizamos el state y la UI
+        lastState.todoList.push($item.value);
+        // actualizamos el state
+        app.setState({
+          todoList: lastState.todoList,
+        });
+
+        // limpiar el input
+        $item.value = "";
+        $item.focus();
+      });
+    </script>
+  </body>
+</html>

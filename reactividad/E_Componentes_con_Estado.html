@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Componente con estado local</title>
+  </head>
+  <body>
+    <h1>Componente con estado local</h1>
+    <form id="todo-form">
+      <input type="text" id="todo-item" placeholder="Tarea por hacer" />
+      <input type="submit" value="Agregar" />
+    </form>
+    <h2>Lista de Tareas</h2>
+    <ul id="todo-list"></ul>
+    <script>
+      const doc = document;
+
+      // variable para manejar el estado GLOBAL de la app
+      const state = {
+        // el state es un objeto donde cada atributo del objeto es cada uno de los estado que vamos a controlar
+        todoList: [],
+      };
+
+      // Template -> mecanismo que me permite tener una interface basada en el estado
+      // la arrow funcion template interactua con la propiedad todoList del estado y por cada elemento que tenga
+      // va a generar una <li></li>
+      const template = () => {
+        if (template.data.todoList.length < 1) {
+          return `<p><em>Lista vacia</em></p>`;
+        }
+
+        // si todoList tiene mas de un elemento: renderizamos cada elemento del arreglo en un li html
+        let todos = template.data.todoList
+          .map((item) => `<li>${item}</li>`)
+          .join("");
+        return todos;
+      };
+
+      // Agregar state al Template que genera el componente de UI (State local)
+      template.data = {
+        todoList: [],
+      };
+
+      // Render UI: pintamos la interface en base a los cambios del state
+      const render = () => {
+        const $list = doc.getElementById("todo-list");
+        if (!$list) return;
+        $list.innerHTML = template();
+      };
+
+      // Actualizacion del state de manera reactiva
+      const setState = (obj) => {
+        // recorremos las propiedades del objeto
+        for (let key in obj) {
+          // evaluamos que una propiedad exista dentro de un objeto
+          if (template.data.hasOwnProperty(key)) {
+            // actualizamos las propiedades del state que coincidan con la propiedades del obj
+            template.data[key] = obj[key];
+          }
+        }
+
+        render();
+      };
+
+      // obtenemos una copia inmutable del state
+      // JSON.stringify -> un objeto javascript lo convierte a una cadena de texto en formato texto
+      // JSON.parse -> un objeto json lo convierte a un objeto javascript
+      const getState = () => {
+        // convierto al objeto state en una cadena de texto json
+        // el objeto json lo convierto a un nuevo objeto js
+        return JSON.parse(JSON.stringify(template.data));
+      };
+
+      // cuando el DOM cargue ejecutamos render()
+      doc.addEventListener("DOMContentLoaded", render);
+
+      // estableciendo valor por defecto al state
+      setState({
+        todoList: ["Tarea 1", "Tarea 2", "Tarea 3"],
+      });
+
+      // reaccionamos al evento submit, cuando el objeto que lo origina seal el elemento con el id todo-form
+      doc.addEventListener("submit", (e) => {
+        if (!e.target.matches("#todo-form")) {
+          return false;
+        }
+
+        e.preventDefault();
+
+        const $item = doc.getElementById("todo-item");
+        if (!$item) return;
+
+        // Actualizamos el state de manera reactiva
+        const lastState = getState(); // copia inmutable del state
+        // accedemos y actualizamos el state y la UI
+        lastState.todoList.push($item.value);
+        // actualizamos el state
+        setState({
+          todoList: lastState.todoList,
+        });
+
+        // limpiar el input
+        $item.value = "";
+        $item.focus();
+      });
+    </script>
+  </body>
+</html>
