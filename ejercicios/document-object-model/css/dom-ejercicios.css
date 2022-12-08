@@ -399,6 +399,11 @@ img {
   color: #000;
 }
 
+.guess-form{
+  padding: 0.5rem;
+  margin: 1rem auto;
+}
+
 /* Validamos que los elementos del formulario (de clase .contact-form) tengan el atributo
      required, su contenido sea válido */
 .contact-form [required]:valid {
@@ -502,6 +507,4 @@ img {
     right: initial;
     left: calc(4.25rem + 1vw);
   }
-
-  
 }

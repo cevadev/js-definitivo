@@ -33,7 +33,9 @@
         <a href="#section3" data-scroll-spy>Cuenta regresiva</a>
         <a href="#section4" data-scroll-spy>Responsive con Javascript</a>
         <a href="#section5" data-scroll-spy>Responsive tester</a>
-        <a href="#section6" data-scroll-spy>Detección de dispositivos (User Agent)</a>
+        <a href="#section6" data-scroll-spy
+          >Detección de dispositivos (User Agent)</a
+        >
         <a href="#section7" data-scroll-spy>Detección de conexión de Red</a>
         <a href="#section8" data-scroll-spy>Detección de Cámara Web</a>
         <a href="#section9" data-scroll-spy>Geolocalización</a>
@@ -43,6 +45,7 @@
         <a href="#section13" data-scroll-spy>Video inteligente</a>
         <a href="#section14" data-scroll-spy>Validaciones de formularios</a>
         <a href="#section15" data-scroll-spy>Narrador</a>
+        <a href="#section16" data-scroll-spy>Guess the number</a>
       </nav>
     </aside>
     <main>
@@ -88,7 +91,7 @@
       <section id="section6" class="section" data-scroll-spy>
         <h2>
           Detección de dispositivos <br />
-          (&#147User Agent&#148)
+          (User Agent)
         </h2>
         <div id="user-device"></div>
       </section>
@@ -108,23 +111,23 @@
         <input type="search" placeholder="Buscar..." class="card-filter" />
         <article class="cards">
           <figure class="card">
-            <img src="https://placeimg.com/200/200/nature" alt="Nature">
+            <img src="https://placeimg.com/200/200/nature" alt="Nature" />
             <figcaption>Nature</figcaption>
           </figure>
           <figure class="card">
-            <img src="https://placeimg.com/200/200/any" alt="Any">
+            <img src="https://placeimg.com/200/200/any" alt="Any" />
             <figcaption>Any</figcaption>
           </figure>
           <figure class="card">
-            <img src="https://placeimg.com/200/200/tech" alt="Tech">
+            <img src="https://placeimg.com/200/200/tech" alt="Tech" />
             <figcaption>Tech</figcaption>
           </figure>
           <figure class="card">
-            <img src="https://placeimg.com/200/200/animals" alt="Animals">
+            <img src="https://placeimg.com/200/200/animals" alt="Animals" />
             <figcaption>Animals</figcaption>
           </figure>
           <figure class="card">
-            <img src="https://placeimg.com/200/200/people" alt="People">
+            <img src="https://placeimg.com/200/200/people" alt="People" />
             <figcaption>People</figcaption>
           </figure>
         </article>
@@ -154,53 +157,98 @@
             <!--contenedor de cada imagen-->
             <!--mostramos la primera slide, por ello tiene la clase active-->
             <div class="slider-slide active">
-              <img src="https://placeimg.com/200/200/animals" alt="Animals">
+              <img src="https://placeimg.com/200/200/animals" alt="Animals" />
             </div>
             <div class="slider-slide">
               <h4>Diapositiva 2</h4>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                Accusantium praesentium, fugiat reprehenderit cumque accusamus expedita 
-                asperiores natus vel atque rem quas voluptate sequi voluptatum culpa quae sunt vero ullam odio.
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Accusantium praesentium, fugiat reprehenderit cumque accusamus
+                expedita asperiores natus vel atque rem quas voluptate sequi
+                voluptatum culpa quae sunt vero ullam odio.
               </p>
             </div>
             <div class="slider-slide">
-              <img src="https://placeimg.com/200/200/nature" alt="Nature">
+              <img src="https://placeimg.com/200/200/nature" alt="Nature" />
             </div>
             <div class="slider-slide">
               <h4>Diapositiva 4</h4>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                Accusantium praesentium, fugiat reprehenderit cumque accusamus expedita 
-                asperiores natus vel atque rem quas voluptate sequi voluptatum culpa quae sunt vero ullam odio.
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Accusantium praesentium, fugiat reprehenderit cumque accusamus
+                expedita asperiores natus vel atque rem quas voluptate sequi
+                voluptatum culpa quae sunt vero ullam odio.
               </p>
             </div>
           </div>
           <div class="slider-btns">
-              <a href="#" class="prev">&laquo;</a>
-              <a href="#" class="next">&raquo;</a>
+            <a href="#" class="prev">&laquo;</a>
+            <a href="#" class="next">&raquo;</a>
           </div>
         </div>
       </section>
       <section id="section13" class="section" data-scroll-spy>
         <h2>Video inteligente</h2>
         <!--el data-attribute data-smart-video activara el intersection observer-->
-        <video src="assets/video.mp4" muted controls loop data-smart-video></video>
-        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-        <video src="assets/video.mp4" muted controls loop data-smart-video></video>
+        <video
+          src="assets/video.mp4"
+          muted
+          controls
+          loop
+          data-smart-video
+        ></video>
+        <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+        <video
+          src="assets/video.mp4"
+          muted
+          controls
+          loop
+          data-smart-video
+        ></video>
       </section>
       <section id="section14" class="section" data-scroll-spy>
         <h2>Validaciones de formularios</h2>
         <!--selector para detectarlo en la programacion-->
-        <form action="https://formsubmit.co/barcvilla@gmail.com" method="POST" target="_blank" class="contact-form">
+        <form
+          action="https://formsubmit.co/barcvilla@gmail.com"
+          method="POST"
+          target="_blank"
+          class="contact-form"
+        >
           <legend>Envíanos tus comentarios</legend>
-          <input type="text" name="name" placeholder="Escribe tu nombre" title="Nombre solo acepta letras y
-           espacios en blanco" required pattern="^[A-Za-zÑñÁÉÍÓÚáéíóúü\s]+$" />
-          <input type="email"name="email" placeholder="Escribe tu correo" title="Email incorrecto" required
-            pattern="^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$" />
-          <input type="text" name="subject" placeholder="Asunto a tratar" title="Asunto es requerido" required />
-          <textarea name="comments" cols="50" rows="5" placeholder="Escribe tus comentarios" required
-           data-pattern="^.{1,255}$" title="Tu comentario no puede superar los 255 caracteres"></textarea>
+          <input
+            type="text"
+            name="name"
+            placeholder="Escribe tu nombre"
+            title="Nombre solo acepta letras y
+           espacios en blanco"
+            required
+            pattern="^[A-Za-zÑñÁÉÍÓÚáéíóúü\s]+$"
+          />
+          <input
+            type="email"
+            name="email"
+            placeholder="Escribe tu correo"
+            title="Email incorrecto"
+            required
+            pattern="^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$"
+          />
+          <input
+            type="text"
+            name="subject"
+            placeholder="Asunto a tratar"
+            title="Asunto es requerido"
+            required
+          />
+          <textarea
+            name="comments"
+            cols="50"
+            rows="5"
+            placeholder="Escribe tus comentarios"
+            required
+            data-pattern="^.{1,255}$"
+            title="Tu comentario no puede superar los 255 caracteres"
+          ></textarea>
           <input type="submit" value="Enviar" />
           <!--clase none para que al momento del cargar el formulario no se muestren-->
           <div class="contact-form-loader none">
@@ -211,14 +259,19 @@
           </div>
         </form>
       </section>
-      <section id="section15" class="section" data-scroll-spy="">
+      <section id="section15" class="section" data-scroll-spy>
         <h2>Narrador</h2>
         <form class="speech-form">
           <select id="speech-select">
             <option value="">--- Elige una voz ---</option>
           </select>
-          <br /><br/>
-          <textarea id="speech-text" cols="50" rows="5" placeholder="Ingresa texto para leerlo"></textarea>
+          <br /><br />
+          <textarea
+            id="speech-text"
+            cols="50"
+            rows="5"
+            placeholder="Ingresa texto para leerlo"
+          ></textarea>
           <button id="speech-btn">Leer texto</button>
         </form>
       </section>
