@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Execution Context</title>
+  </head>
+  <body>
+    <script>
+      function printName() {
+        console.info("Carlos V");
+      }
+
+      function findName() {
+        printName();
+      }
+
+      function sayMyName() {
+        findName();
+      }
+
+      /**
+       * Cuando JS encuentra los parentesis crea un Execution Context, por cada funcion que llama se crea un
+       * execution context
+       * Global execution context -> el motor de JS crea un global execution context y luego agrega los
+       * otros execution context creados por cada llamada a una funcion.
+       * Siempre que se corre codigo en JS este codigo es parte de un execution context
+       *
+       * Los dos objetos disponibles en el Global Execution Context son
+       * Global Object window: al objeto window podemos agregar variables, funciones, objetos, etc
+       * this
+       *
+       * */
+      sayMyName();
+    </script>
+  </body>
+</html>
