@@ -32,6 +32,16 @@
       // mezclamos los elementos de ambos array en un tercer array
       const array3 = [...array1, ...array2];
       console.log(array3);
+
+      ///////////////////////////////////////////////////////////////////////////////////
+      function marry(...args) {
+        console.info("Arguments ", args);
+        console.info(Array.from(args));
+        return `${args[0]} is now married to ${args[1]}`;
+      }
+
+      const rpta = marry("Carlos", "Claudia");
+      console.info(rpta);
     </script>
   </body>
 </html>
