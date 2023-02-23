@@ -16,7 +16,6 @@ export default function hamburgerMenu(panelBtn, panel, menuLink) {
       // buscamos al elemento con la clase panel, ingresamos a su lista de clases y con toggle() intercambiamos
       // la clase ya sea agregando o quitando .is-active
       doc.querySelector(panel).classList.toggle("is-active");
-
       // hacemos que el icono del menu hamburguesa cambie
       doc.querySelector(panelBtn).classList.toggle("is-active");
     }
