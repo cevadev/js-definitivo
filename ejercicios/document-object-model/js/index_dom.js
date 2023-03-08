@@ -50,7 +50,7 @@ doc.addEventListener("DOMContentLoaded", (e) => {
   );
   responsiveTester("responsive-tester");
   userDeviceInfo("user-device");
-  webcam("webcam");
+  //webcam("webcam");
   geoLocation("geolocation");
   // .card-filter -> hace referencia al elemento input donde se escribe el texto a buscar
   // .card -> selector que contiene a cada tarjeta
